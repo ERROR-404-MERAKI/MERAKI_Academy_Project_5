@@ -1,5 +1,6 @@
 -- welcome to mtsql
-
+CREATE DATABASE meraki_academy_project_5
+USE meraki_academy_project_5
 CREATE TABLE roles (
     id INT AUTO_INCREMENT NOT NULL,
     role VARCHAR(255) NOT NULL,
