@@ -4,9 +4,13 @@ require("./models/db")
 
 
 const app = express();
+//Router
+const roleRouter = require("./routes/role");
 
 //built-in middleware
 app.use(express.json());
+app.use("/role", roleRouter);
+
 
 
 //basic server 
