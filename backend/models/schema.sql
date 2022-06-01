@@ -1,6 +1,11 @@
 -- welcome to mtsql
 
+CREATE DATABASE meraki_academy_project_5
+USE meraki_academy_project_5
+
+
 -- welcome to mtsql
+
 
 
 
