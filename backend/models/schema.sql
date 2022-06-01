@@ -1,5 +1,4 @@
 -- welcome to mtsql
-
 CREATE TABLE roles (
     id INT AUTO_INCREMENT NOT NULL,
     role VARCHAR(255) NOT NULL,
@@ -86,7 +85,8 @@ CREATE TABLE role_permissions (
     FOREIGN KEY permission_id REFERENCES permissions(id),
     PRIMARY KEY (id)
 );
-CREATE TABLE follow  (
+
+CREATE TABLE follow (
     id INT AUTO_INCREMENT NOT NULL,
     user_id INT NOT NULL,
     person_id INT NOT NULL,
@@ -94,5 +94,4 @@ CREATE TABLE follow  (
     FOREIGN KEY person_id REFERENCES users(id),
     is_deleted TINYINT DEFAULT 0,
     PRIMARY KEY (id)
-
 );
