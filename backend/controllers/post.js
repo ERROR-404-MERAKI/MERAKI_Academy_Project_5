@@ -23,4 +23,48 @@ const createNewPost = (req, res) => {
   });
 };
 
-module.exports = { createNewPost };
+// function to get All posts
+const getAllPost = (req, res) => {
+  const query = `SELECT * FROM posts WHERE is_deleted=0`;
+  connection.query(query, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    res.status(200).json({
+      success: true,
+      posts: result,
+    });
+  });
+};
+
+// function to get post by id
+const getPostById = (req, res) => {
+  const user_id = req.params.id;
+  const query = `SELECT * FROM posts WHERE is_deleted=0 AND user_id =?`;
+  const data = [user_id];
+  connection.query(query, data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    if(result.length===0){
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      })
+    }
+    res.status(200).json({
+      success: true,
+      posts: result,
+    });
+  });
+};
+
+module.exports = { createNewPost, getAllPost, getPostById };

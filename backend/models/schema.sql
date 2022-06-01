@@ -1,6 +1,7 @@
 -- -- welcome to mtsql
-/* --DROP DATABASE meraki_academy_project_5; */
-CREATE DATABASE meraki_academy_project_5;
+-- DROP DATABASE meraki_academy_project_5;
+
+-- CREATE DATABASE meraki_academy_project_5;
 
 USE meraki_academy_project_5;
 
