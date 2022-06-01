@@ -7,12 +7,18 @@ const app = express();
 const roleRouter = require("./routes/role");
 const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
+const postRouter = require("./routes/post");
+
+//import middleware
+
 
 //built-in middleware
 app.use(express.json());
 app.use("/role", roleRouter);
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
+
+app.use("/post", postRouter);
 
 //basic server
 
