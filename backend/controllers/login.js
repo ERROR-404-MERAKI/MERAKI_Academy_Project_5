@@ -14,7 +14,7 @@ const login = (req, res) => {
         .status(500)
         .json({ success: false, message: "server error", err });
     }
-    if (!result) {
+    if (!result.length) {
       return res
         .status(404)
         .json({ success: false, message: "The email doesn't exist" });
