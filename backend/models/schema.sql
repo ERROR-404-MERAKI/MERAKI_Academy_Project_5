@@ -1,5 +1,8 @@
 -- welcome to mtsql
+
 -- welcome to mtsql
+
+
 
 
 CREATE TABLE roles (
@@ -11,12 +14,12 @@ CREATE TABLE roles (
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT NOT NULL,
-    firstName VARCHAR(255) NUT NULL,
-    lastName VARCHAR(255) NUT NULL,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
     age INT NUT NULL,
-    img VARCHAR(255) NUT NULL,
-    email VARCHAR(255) NUT NULL UNIQUE,
-    password VARCHAR(255) NUT NULL,
+    ProfilePicture VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
     is_deleted TINYINT DEFAULT 0,
     FOREIGN KEY role_id REFERENCES roles(id),
     PRIMARY KEY (id)
@@ -25,8 +28,8 @@ CREATE TABLE users (
 CREATE TABLE posts (
     id INT AUTO_INCREMENT NOT NULL,
     description VARCHAR (255) NOT NULL,
-    media VARCHAR(255) NUT NULL,
-    date DATETIME NUT NULL,
+    media VARCHAR(255) NOT NULL,
+    date DATETIME DEFAULT 0,
     like INT DEFAULT 0,
     is_deleted TINYINT DEFAULT 0,
     PRIMARY KEY (id),
@@ -35,7 +38,7 @@ CREATE TABLE posts (
 CREATE TABLE bookmarks (
     id INT AUTO_INCREMENT NOT NULL,
     post_id INT,
-    user_id INT,
+    user_id INT NOT NULL,
     is_deleted TINYINT DEFAULT 0,
     FOREIGN KEY post_id REFERENCES posts (id),
     FOREIGN KEY user_id REFERENCES users (id),
@@ -45,7 +48,7 @@ CREATE TABLE bookmarks (
 CREATE TABLE messages (
     id INT AUTO_INCREMENT NOT NULL,
     message VARCHAR(255) NOT NULL,
-    user_id INT,
+    user_id INT NOT NULL,
     FOREIGN KEY user_id REFERENCES users(id),
     is_deleted TINYINT DEFAULT 0,
     PRIMARY KEY (id)
@@ -53,9 +56,9 @@ CREATE TABLE messages (
 
 CREATE TABLE storys (
     id INT AUTO_INCREMENT NOT NULL,
-    story VARCHAR (255) NUT NULL,
-    date DATETIME NUT NULL,
-    user_id INT,
+    story VARCHAR (255) NOT NULL,
+    date DATETIME NOT NULL,
+    user_id INT NOT NULL,
     FOREIGN KEY user_id REFERENCES users(id),
     is_deleted TINYINT DEFAULT 0,
     PRIMARY KEY (id)
@@ -65,7 +68,7 @@ CREATE TABLE comments (
     id INT AUTO_INCREMENT NOT NULL,
     comment VARCHAR(255) NOT NULL,
     date DATETIME,
-    user_id INT,
+    user_id INT NOT NULL,
     post_id INT,
     FOREIGN KEY user_id REFERENCES users(id),
     FOREIGN KEY post_id REFERENCES posts(id),
@@ -87,4 +90,14 @@ CREATE TABLE role_permissions (
     FOREIGN KEY role_id REFERENCES roles(id),
     FOREIGN KEY permission_id REFERENCES permissions(id),
     PRIMARY KEY (id)
-)
+);
+CREATE TABLE follow  (
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT NOT NULL,
+    person_id INT NOT NULL,
+    FOREIGN KEY user_id REFERENCES users(id),
+    FOREIGN KEY person_id REFERENCES users(id),
+    is_deleted TINYINT DEFAULT 0,
+    PRIMARY KEY (id)
+
+);
