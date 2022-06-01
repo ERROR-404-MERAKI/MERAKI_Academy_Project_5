@@ -1,7 +1,6 @@
 -- -- welcome to mtsql
 /* --DROP DATABASE meraki_academy_project_5; */
-
-/* CREATE DATABASE meraki_academy_project_5; */
+CREATE DATABASE meraki_academy_project_5;
 
 USE meraki_academy_project_5;
 
@@ -32,6 +31,8 @@ CREATE TABLE posts (
     media VARCHAR(255) NOT NULL,
     date DATETIME DEFAULT 0,
     likes INT,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id),
     is_deleted TINYINT DEFAULT 0,
     PRIMARY KEY (id)
 );
