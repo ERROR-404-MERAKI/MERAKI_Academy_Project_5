@@ -54,11 +54,11 @@ const getPostById = (req, res) => {
         err,
       });
     }
-    if(result.length===0){
+    if (result.length === 0) {
       return res.status(404).json({
         success: false,
         message: "User not found",
-      })
+      });
     }
     res.status(200).json({
       success: true,
@@ -67,4 +67,82 @@ const getPostById = (req, res) => {
   });
 };
 
-module.exports = { createNewPost, getAllPost, getPostById };
+// update posts by id
+const updatePostById = (req, res) => {
+  const post_id = req.params.id;
+  const { media, description } = req.body;
+
+  const query = `SELECT * FROM posts WHERE id=?`;
+  const data = [post_id];
+  connection.query(query, data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    if (!result.length) {
+      return res.status(404).json({
+        success: false,
+        message: "post not found",
+      });
+    }
+    const query = `UPDATE posts SET media = ? , description =? WHERE id =?`;
+    const data = [
+      media || result[0].media,
+      description || result[0].description,
+      post_id,
+    ];
+
+    connection.query(query, data, (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: "Server Error",
+          err,
+        });
+      }
+      res.status(201).json({
+        success: true,
+        message: "post Updated",
+        posts: result,
+      });
+    });
+  });
+};
+
+// delete posts by id
+
+const deletePostById = (req, res) => {
+  const post_id = req.params.id;
+  const query = `Update posts SET is_deleted=1 WHERE id =? `;
+  const data = [post_id];
+  connection.query(query, data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    if (result.changedRows > 0) {
+      return res.status(201).json({
+        success: true,
+        message: "post Deleted",
+        posts: result,
+      });
+    }
+    res.status(404).json({
+      success: false,
+      message: `The article with id ⇾ ${post_id} is not found`,
+    });
+  });
+};
+module.exports = {
+  createNewPost,
+  getAllPost,
+  getPostById,
+  updatePostById,
+  deletePostById,
+};
