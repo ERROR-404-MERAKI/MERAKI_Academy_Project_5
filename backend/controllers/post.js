@@ -139,7 +139,7 @@ const deletePostById = (req, res) => {
     }
     res.status(404).json({
       success: false,
-      message: `The article with id ⇾ ${post_id} is not found`,
+      message: `The post with id ⇾ ${post_id} is not found`,
     });
   });
 };
