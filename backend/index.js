@@ -9,8 +9,9 @@ const registerRouter = require("./routes/register");
 const loginRouter = require("./routes/login");
 const postRouter = require("./routes/post");
 const storyRouter = require("./routes/story");
-//import middleware
+const permissionRouter = require("./routes/permissions");
 
+//import middleware
 
 //built-in middleware
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use("/login", loginRouter);
 
 app.use("/post", postRouter);
 app.use("/story", storyRouter);
+app.use("/permission", permissionRouter);
 //basic server
 
 const PORT = process.env.PORT || 5000;
