@@ -67,6 +67,7 @@ const getPostById = (req, res) => {
   });
 };
 
+
 // update posts by id
 const updatePostById = (req, res) => {
   const post_id = req.params.id;
@@ -74,6 +75,7 @@ const updatePostById = (req, res) => {
 
   const query = `SELECT * FROM posts WHERE id=?`;
   const data = [post_id];
+
   connection.query(query, data, (err, result) => {
     if (err) {
       return res.status(500).json({
@@ -108,11 +110,13 @@ const updatePostById = (req, res) => {
         message: "post Updated",
         posts: result,
       });
+
+  
+
     });
   });
 };
 
-// delete posts by id
 
 const deletePostById = (req, res) => {
   const post_id = req.params.id;
@@ -146,3 +150,4 @@ module.exports = {
   updatePostById,
   deletePostById,
 };
+
