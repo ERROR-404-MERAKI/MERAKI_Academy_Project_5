@@ -21,7 +21,6 @@ const login = (req, res) => {
     }
 
     bcrypt.compare(password, result[0].password, async (err, response) => {
-      console.log("result", result);
       if (err) {
         return res
           .status(500)

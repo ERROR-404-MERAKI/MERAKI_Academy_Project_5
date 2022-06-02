@@ -42,6 +42,12 @@ const getAllPost = (req, res) => {
         err,
       });
     }
+    if (result.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No posts to show",
+      });
+    }
     res.status(200).json({
       success: true,
       posts: result,
@@ -52,8 +58,11 @@ const getAllPost = (req, res) => {
 // function to get post by id
 const getPostById = (req, res) => {
   const user_id = req.params.id;
-  const query = `SELECT * FROM posts WHERE is_deleted=0 AND user_id =?`;
-  const data = [user_id];
+  const limit = 5;
+  const page = req.query.page;
+  const offset = (page - 1) * limit;
+  const query = `SELECT * FROM posts WHERE is_deleted=0 AND user_id =? LIMIT ? OFFSET ?`;
+  const data = [user_id, limit, offset];
   connection.query(query, data, (err, result) => {
     if (err) {
       return res.status(500).json({
@@ -65,7 +74,7 @@ const getPostById = (req, res) => {
     if (result.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "User not found",
+        message: "No posts to show",
       });
     }
     res.status(200).json({
@@ -74,7 +83,6 @@ const getPostById = (req, res) => {
     });
   });
 };
-
 
 // update posts by id
 const updatePostById = (req, res) => {
@@ -118,13 +126,9 @@ const updatePostById = (req, res) => {
         message: "post Updated",
         posts: result,
       });
-
-  
-
     });
   });
 };
-
 
 const deletePostById = (req, res) => {
   const post_id = req.params.id;
@@ -158,4 +162,3 @@ module.exports = {
   updatePostById,
   deletePostById,
 };
-
