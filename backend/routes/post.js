@@ -13,7 +13,7 @@ const { createComment } = require("../controllers/comment");
 const postRouter = express.Router();
 
 //POST=> endpoint /post
-postRouter.post("/", authentication, authorization("ADD_AD"), createNewPost);
+postRouter.post("/", authentication, createNewPost);
 
 //GET => endpoint /post
 postRouter.get("/", getAllPost);
