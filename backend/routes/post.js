@@ -8,7 +8,7 @@ const {
   deletePostById,
 } = require("../controllers/post");
 const { authentication } = require("../middlewares/authentication");
-
+const {createComment}=require("../controllers/comment")
 const postRouter = express.Router();
 
 //POST=> endpoint /post
@@ -25,5 +25,6 @@ postRouter.put("/:id", updatePostById);
 
 //Delete => endpoint /post/id
 postRouter.delete("/:id", deletePostById);
-
+//post =>endpoint /comment
+postRouter.post("/:id/comment", authentication,createComment );
 module.exports = postRouter;
