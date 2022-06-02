@@ -8,11 +8,12 @@ const {
   deletePostById,
 } = require("../controllers/post");
 const { authentication } = require("../middlewares/authentication");
-const {createComment}=require("../controllers/comment")
+const { authorization } = require("../middlewares/authorization");
+const { createComment } = require("../controllers/comment");
 const postRouter = express.Router();
 
 //POST=> endpoint /post
-postRouter.post("/", authentication, createNewPost);
+postRouter.post("/", authentication, authorization("ADD_AD"), createNewPost);
 
 //GET => endpoint /post
 postRouter.get("/", getAllPost);
@@ -26,5 +27,5 @@ postRouter.put("/:id", updatePostById);
 //Delete => endpoint /post/id
 postRouter.delete("/:id", deletePostById);
 //post =>endpoint /comment
-postRouter.post("/:id/comment", authentication,createComment );
+postRouter.post("/:id/comment", authentication, createComment);
 module.exports = postRouter;
