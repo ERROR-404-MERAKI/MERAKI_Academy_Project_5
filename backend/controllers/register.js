@@ -39,7 +39,7 @@ const getAllUser = (req, res) => {
   const query = `SELECT * FROM users WHERE is_deleted=0;`;
   connection.query(query, (err, result) => {
     if (err) {
-     return res.status(500).json({
+      return res.status(500).json({
         success: false,
         massage: "server error",
         err: err,
@@ -52,7 +52,7 @@ const getAllUser = (req, res) => {
     });
   });
 };
-//git all user by id 
+//git all user by id
 const getUserById = (req, res) => {
   const id = req.params.id;
   const query = `SELECT * FROM users WHERE is_deleted=0 AND id =?`;
@@ -65,11 +65,41 @@ const getUserById = (req, res) => {
         err,
       });
     }
-    if(result.length===0){
+    if (result.length === 0) {
       return res.status(404).json({
         success: false,
         message: "User not found",
-      })
+      });
+    }
+    res.status(200).json({
+      success: true,
+      users: result,
+    });
+  });
+};
+//git all user by name
+const getUserByName = (req, res) => {
+  console.log("am user by name");
+  const firstName = req.params.firstName;
+  const query = `SELECT * FROM users WHERE is_deleted=0 AND firstName =?`;
+  const data = [firstName];
+  console.log(data,"aaaa");
+
+  connection.query(query, data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    console.log(result);
+    if (result.length === 0) {
+    
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
     }
     res.status(200).json({
       success: true,
@@ -78,5 +108,8 @@ const getUserById = (req, res) => {
   });
 };
 module.exports = {
-  register,getAllUser,getUserById
+  register,
+  getAllUser,
+  getUserById,
+  getUserByName,
 };
