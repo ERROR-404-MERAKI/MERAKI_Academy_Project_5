@@ -67,4 +67,31 @@ const getPostById = (req, res) => {
   });
 };
 
+//==================
+//git all user by id 
+const getUserById = (req, res) => {
+  const user_id = req.params.id;
+  const query = `SELECT * FROM users WHERE is_deleted=0 AND user_id =?`;
+  const data = [user_id];
+  connection.query(query, data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    if(result.length===0){
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      })
+    }
+    res.status(200).json({
+      success: true,
+      users: result,
+    });
+  });
+};
+
 module.exports = { createNewPost, getAllPost, getPostById };
