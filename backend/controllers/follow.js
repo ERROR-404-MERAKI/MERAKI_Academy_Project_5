@@ -14,7 +14,17 @@ const addFollow = (req, res) => {
         err: err,
       });
     }
-    console.log(result);
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        massage: "No followers",
+        err: err,
+      });
+    }
+    res.status(201).json({
+      success: true,
+      result,
+    });
   });
 };
 
