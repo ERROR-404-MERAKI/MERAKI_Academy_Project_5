@@ -5,7 +5,7 @@ const { authentication } = require("../middlewares/authentication");
 // create router
 const followRouter = express.Router();
 
-// endpoint /
+// endpoint /user/id
 followRouter.post("/:id", authentication, addFollow);
 
 module.exports = followRouter;
