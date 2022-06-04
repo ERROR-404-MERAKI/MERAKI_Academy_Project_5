@@ -1,5 +1,8 @@
 const express = require("express");
 require("dotenv").config();
+const cors = require("cors");
+
+
 require("./models/db");
 
 const app = express();
@@ -14,7 +17,7 @@ const followRouter = require("./routes/follow");
 const commentRouter = require("../backend/routes/comment");
 
 //import middleware
-
+app.use(cors());
 //built-in middleware
 app.use(express.json());
 app.use("/role", roleRouter);
