@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const register = async (req, res) => {
+  
   const { firstName, lastName, age, ProfilePicture, email, password, roleId } =
     req.body;
 
@@ -21,7 +22,8 @@ const register = async (req, res) => {
   ];
   connection.query(query, data, (err, result) => {
     if (err) {
-      res.status(409).json({
+      console.log(err.message);
+     return res.status(409).json({
         success: false,
         massage: "The email already exists",
         err,
