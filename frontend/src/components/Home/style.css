@@ -1,0 +1,77 @@
+.contenar-main{
+    display: flex;
+    flex-direction: column;
+}
+.nav-section{
+    height: 60px;
+    background-color: burlywood;
+}
+.post_home{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.storys-department{
+    display:flex ;
+    flex-direction: column;
+    border: 1px black solid;
+}
+.map_story{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    
+}
+.img_story{
+    height: 50px;
+    width: 50px;
+    border-radius: 9999px;
+}
+.middle_side{
+    width: 60%;
+    background-color: beige;
+}
+
+.left_side{
+    width: 20%;
+    background-color: aqua;
+
+}
+.right_side{
+    width: 20%;
+
+    background-color: brown;
+}
+.main_story{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px black solid; */
+}
+#button_b{
+    margin-right: 15px;
+    
+}
+#button_n{
+    margin-left: 15px;
+}
+.map_post{
+    border: 1px black solid;
+    margin: 2%;
+}
+#img_post{
+    height: 300px;
+    width: 70%;
+    margin-top: 2%;
+
+  
+}
+.main{
+    margin-top: 5%;
+
+}
+#p_post{
+    font-size: 1.5em;
+}
