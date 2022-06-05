@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const register = async (req, res) => {
-  
   const { firstName, lastName, age, ProfilePicture, email, password, roleId } =
     req.body;
 
@@ -23,7 +22,7 @@ const register = async (req, res) => {
   connection.query(query, data, (err, result) => {
     if (err) {
       console.log(err.message);
-     return res.status(409).json({
+      return res.status(409).json({
         success: false,
         massage: "The email already exists",
         err,
@@ -81,11 +80,9 @@ const getUserById = (req, res) => {
 };
 //git all user by name
 const getUserByName = (req, res) => {
-  console.log("am user by name");
-  const firstName = req.params.firstName;
-  const query = `SELECT * FROM users WHERE is_deleted=0 AND firstName =?`;
+  const { firstName } = req.body;
+  const query = `SELECT * FROM users WHERE firstName LIKE ? AND is_deleted=0`;
   const data = [firstName];
-  console.log(data,"aaaa");
 
   connection.query(query, data, (err, result) => {
     if (err) {
@@ -97,7 +94,6 @@ const getUserByName = (req, res) => {
     }
     console.log(result);
     if (result.length === 0) {
-    
       return res.status(404).json({
         success: false,
         message: "User not found",
@@ -109,9 +105,36 @@ const getUserByName = (req, res) => {
     });
   });
 };
+
+const getProfile = (req, res) => {
+  const userId = req.token.userId;
+  const query = `SELECT * FROM users WHERE id = ? AND is_deleted=0`;
+  const data = [userId];
+
+  connection.query(query, data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    if (result.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      user: result,
+    });
+  });
+};
 module.exports = {
   register,
   getAllUser,
   getUserById,
   getUserByName,
+  getProfile
 };
