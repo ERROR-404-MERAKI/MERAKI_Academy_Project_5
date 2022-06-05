@@ -21,7 +21,6 @@ const Login = () => {
       .post(`http://localhost:5000/login`, { email, password })
       .then((result) => {
         if (result.data.success) {
-          console.log(result);
           dispatch(toLogin(result.data.token));
           history("/home");
         }
