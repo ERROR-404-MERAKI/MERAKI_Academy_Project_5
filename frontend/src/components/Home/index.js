@@ -2,8 +2,6 @@ import "./style.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toLogin } from "../../redux/reducers/auth";
 import { addPosts, setPosts } from "../../redux/reducers/posts";
 import { addstorys, setStorys } from "../../redux/reducers/story";
 import Navbar from "../Navbar";
@@ -12,7 +10,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const [media, setMedia] = useState("");
   const [description, setDescrption] = useState("");
-  const [date, setDate] = useState("");
   const [message, setMessage] = useState("");
   const [story, setStory] = useState("");
   const [imgStory, setImgStory] = useState("");
@@ -51,28 +48,6 @@ const Home = () => {
     getAllPost();
   };
 
-  //=============================
-  //   function create new post
-  const createNewPost = () => {
-    axios
-      .post(
-        `http://localhost:5000/post`,
-        { media, description },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((result) => {
-        getAllPost();
-        dispatch(addPosts(result.data));
-        setMessage("Created Post");
-      })
-      .catch((err) => {
-        console.log(err, "err");
-      });
-  };
   //===============================
   let numberOfStory = localStorage.getItem("NOS") || 1;
 
@@ -212,17 +187,6 @@ const Home = () => {
           {/* ====================Post==================== */}
           <br />
           <div className="post_department">
-            <input
-              type="text"
-              placeholder="Add Media"
-              onChange={(e) => setMedia(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Add descrption"
-              onChange={(e) => setDescrption(e.target.value)}
-            />
-            <button onClick={createNewPost}>Add Post </button>
             <div className="main">
               {posts
                 ? posts.map((element, index) => {
