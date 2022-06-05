@@ -1,0 +1,26 @@
+.navbar {
+  display: flex;
+  position: relative;
+  gap: 10%;
+}
+.search_popup {
+  position: absolute;
+  height: auto;
+  width: 60vw;
+  z-index: 1;
+}
+.search_user {
+  height: auto;
+  width: 60vw;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  gap: 3%;
+}
+
+.p_pic {
+  border: 0.5px solid black;
+  border-radius: 360px;
+  height: 5vh;
+  width: 4vw;
+}

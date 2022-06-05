@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { toLogin } from "../../redux/reducers/auth";
 import { addPosts, setPosts } from "../../redux/reducers/posts";
 import { addstorys, setStorys } from "../../redux/reducers/story";
+import Navbar from "../Navbar";
+
 const Home = () => {
   const dispatch = useDispatch();
   const [media, setMedia] = useState("");
@@ -24,7 +26,7 @@ const Home = () => {
     };
   });
 
-  let numberOfPage = 4;
+  let numberOfPage = localStorage.getItem("NOP") || 1;
 
   const getAllPost = () => {
     axios
@@ -36,6 +38,19 @@ const Home = () => {
         console.log(err);
       });
   };
+
+  const backPost = () => {
+    numberOfPage--;
+    localStorage.setItem("NOP", numberOfPage);
+    getAllPost();
+  };
+  const nextPost = () => {
+    numberOfPage++;
+
+    localStorage.setItem("NOP", numberOfPage);
+    getAllPost();
+  };
+
   //=============================
   //   function create new post
   const createNewPost = () => {
@@ -59,7 +74,7 @@ const Home = () => {
       });
   };
   //===============================
-  let numberOfStory = 4;
+  let numberOfStory = localStorage.getItem("NOS") || 1;
 
   //
   const getAllStorys = () => {
@@ -74,15 +89,15 @@ const Home = () => {
   };
 
   const backStory = () => {
-    console.log(numberOfStory);
-    return numberOfStory--;
+    numberOfStory--;
+    localStorage.setItem("NOS", numberOfStory);
+    getAllStorys();
   };
   const nextStory = () => {
-    console.log(numberOfStory);
-    return numberOfStory++;
-    
+    numberOfStory++;
+    localStorage.setItem("NOS", numberOfStory);
+    getAllStorys();
   };
- 
 
   //================================
   const createStory = () => {
@@ -135,7 +150,9 @@ const Home = () => {
   // ==========================
   return (
     <div className="contenar-main ">
-      <div className="nav-section"></div>
+      <div className="nav-section">
+        <Navbar />
+      </div>
       <div className="post_home">
         <div className="left_side">
           <h1>hello from dev left</h1>
@@ -148,7 +165,6 @@ const Home = () => {
                   className="bb"
                   onClick={() => {
                     backStory();
-                    getAllStorys();
                   }}
                 >
                   back
@@ -170,7 +186,6 @@ const Home = () => {
                   className="bb"
                   onClick={() => {
                     nextStory();
-                    getAllStorys();
                   }}
                 >
                   next
@@ -223,6 +238,22 @@ const Home = () => {
                     );
                   })
                 : []}
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  backPost();
+                }}
+              >
+                back
+              </button>
+              <button
+                onClick={() => {
+                  nextPost();
+                }}
+              >
+                next
+              </button>
             </div>
           </div>
         </div>
