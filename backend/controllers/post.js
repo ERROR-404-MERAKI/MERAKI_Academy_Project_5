@@ -9,7 +9,6 @@ const createNewPost = (req, res) => {
 
   connection.query(query, data, (err, result) => {
     if (err) {
-      
       return res.status(500).json({
         success: false,
         massage: "Server error",
@@ -58,7 +57,7 @@ const getAllPost = (req, res) => {
 
 // function to get post by id
 const getPostById = (req, res) => {
-  const user_id = req.params.id;
+  const user_id = req.token.userId;
   const limit = 5;
   const page = req.query.page;
   const offset = (page - 1) * limit;

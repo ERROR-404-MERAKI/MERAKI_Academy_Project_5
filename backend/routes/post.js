@@ -14,23 +14,19 @@ const postRouter = express.Router();
 
 //POST=> endpoint /post
 postRouter.post("/", authentication, createNewPost);
-//comment => 
-postRouter.get("/:id/comment",getCommentById);
+//comment =>
+postRouter.get("/:id/comment", getCommentById);
+
 //GET => endpoint /post
 postRouter.get("/", getAllPost);
 
 //GET => endpoint /post/id
-postRouter.get("/:id", getPostById);
+postRouter.get("/profile", authentication, getPostById);
 
 //Put => endpoint /post/id
 postRouter.put("/:id", updatePostById);
 
 //Delete => endpoint /post/id
 postRouter.delete("/:id", deletePostById);
-
-
-
-
-
 
 module.exports = postRouter;

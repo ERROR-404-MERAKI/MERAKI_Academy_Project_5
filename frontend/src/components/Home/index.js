@@ -104,7 +104,6 @@ const Home = () => {
   };
   //===============comment ===================
   const createNewComment = (id) => {
-    //  console.log(id);
     axios
       .post(
         `http://localhost:5000/comment/${id}`,
@@ -116,9 +115,8 @@ const Home = () => {
         }
       )
       .then((result) => {
-        console.log(result);
         getAllPost();
-        getCommentById(id)
+        getCommentById(id);
         dispatch(addComment(result.data));
         setMessage("Created comment ");
       })
@@ -128,11 +126,9 @@ const Home = () => {
   };
 
   const getCommentById = (id) => {
-    console.log(id);
     axios
       .get(`http://localhost:5000/post/${id}/comment`)
       .then((result) => {
-        console.log(result.data.results);
         dispatch(setComments(result.data.results));
       })
       .catch((err) => {
@@ -162,11 +158,9 @@ const Home = () => {
   useEffect(() => {
     getAllStorys();
     getAllPost();
-    
   }, []);
 
   // ==========================
-  console.log(comments);
   return (
     <div className="contenar-main ">
       <div className="nav-section">
@@ -236,7 +230,6 @@ const Home = () => {
                 ? posts.map((element, index) => {
                     return (
                       <div className="map_post" key={index}>
-
                         <div>
                           <img id="img_post" src={element.media} />
                         </div>
@@ -246,13 +239,12 @@ const Home = () => {
                             onClick={() => {
                               setShow(element.id);
                               getCommentById(element.id);
-
                             }}
                           >
                             comment
                           </button>
                           {/* ========== comment ======== */}
-                          
+
                           <div
                             className="show_comment"
                             style={{
@@ -260,64 +252,57 @@ const Home = () => {
                             }}
                           >
                             <div className="main_comment">
-                               {/* ========img-comment======== */}
-                            <div className="right_s">
-                            <img className="img-c" src={element.media} />
-                            </div>
-                            <div className="left_s">
-                              
-                            <button
-                              onClick={() => {
-                                setShow(false);
-                              }}
-                            >
-                              close
-                            </button>
-                              {/* ====================== */}
-                              <br />
-                              <p id="p_post">{element.description}</p>
-                            <div className="comment_section">
-                              {comments &&
-                                comments.map((e, i) => {
-                                  return (
-                                    <div>
-                                      {element.id === e.post_id ? (
-                                        <p className="comment" key={i}>
-                                          {e.comment}
-                                        </p>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                  );
-                                })}
-                            </div>
-                            <br />
-                            <div className="input_button">
-                              <input className="Add_comment"
-                              type="text"
-                              placeholder="Add comment"
-                              onChange={(e) => {
-                                setComment(e.target.value);
-                              }}
-                            />
-                            <button className="buttonAdd"
-                              onClick={(e) => {
-                                createNewComment(element.id);
-                              }}
-                            >
-                              Add comment
-                            </button></div>
-                            
-                            </div>
-                              
-
-                            
-                           
-
-                          
-                            
-                           
+                              {/* ========img-comment======== */}
+                              <div className="right_s">
+                                <img className="img-c" src={element.media} />
+                              </div>
+                              <div className="left_s">
+                                <button
+                                  onClick={() => {
+                                    setShow(false);
+                                  }}
+                                >
+                                  close
+                                </button>
+                                {/* ====================== */}
+                                <br />
+                                <p id="p_post">{element.description}</p>
+                                <div className="comment_section">
+                                  {comments &&
+                                    comments.map((e, i) => {
+                                      return (
+                                        <div key={i}>
+                                          {element.id === e.post_id ? (
+                                            <p className="comment">
+                                              {e.comment}
+                                            </p>
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
+                                      );
+                                    })}
+                                </div>
+                                <br />
+                                <div className="input_button">
+                                  <input
+                                    className="Add_comment"
+                                    type="text"
+                                    placeholder="Add comment"
+                                    onChange={(e) => {
+                                      setComment(e.target.value);
+                                    }}
+                                  />
+                                  <button
+                                    className="buttonAdd"
+                                    onClick={(e) => {
+                                      createNewComment(element.id);
+                                    }}
+                                  >
+                                    Add comment
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
