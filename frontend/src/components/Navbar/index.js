@@ -190,7 +190,7 @@ const Navbar = () => {
                 <button onClick={createNewPost}>Add Post </button>
               </div>
             </div>
-
+            <button onClick={() => {history("/profile")}}>profile</button>
             <button className="logout" onClick={() => logout()}>
               Logout
             </button>

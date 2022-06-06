@@ -27,6 +27,7 @@ const Home = () => {
       };
     }
   );
+  
 
   let numberOfPage = localStorage.getItem("NOP") || 1;
 
@@ -34,7 +35,7 @@ const Home = () => {
     axios
       .get(`http://localhost:5000/post?page=${numberOfPage}`)
       .then((result) => {
-        dispatch(setPosts(result.data.posts));
+        dispatch(setPosts(result.data.posts.reverse()));
       })
       .catch((err) => {
         console.log(err);
@@ -61,7 +62,7 @@ const Home = () => {
     axios
       .get(`http://localhost:5000/story?page=${numberOfStory}`)
       .then((result) => {
-        dispatch(setStorys(result.data.result));
+        dispatch(setStorys(result.data.result.reverse()));
       })
       .catch((err) => {
         console.log(err, "am errrrrrrr");
@@ -211,7 +212,6 @@ const Home = () => {
               <input
                 type="file"
                 onChange={(e) => {
-                  console.log(e.target.files[0]);
                   setImgStory(e.target.files[0]);
                 }}
               ></input>
