@@ -20,6 +20,7 @@ const Navbar = () => {
   const [description, setDescrption] = useState("");
   const [date, setDate] = useState("");
   const [message, setMessage] = useState("");
+  const [imgPost, setImgPost] = useState("");
 
   //request to server
   const searchBox = () => {
@@ -82,6 +83,24 @@ const Navbar = () => {
       token: state.auth.token,
     };
   });
+
+  // ------------- Upload media Function
+  const uploadImage = async () => {
+    const data = new FormData();
+    data.append("file", imgPost);
+    data.append("upload_preset", "srcmongo");
+    data.append("cloud_name", "mousa");
+
+    fetch("https://api.cloudinary.com/v1_1/mousa/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setMedia(data.url);
+      })
+      .catch((err) => console.log(err));
+  };
 
   // logout function
   const logout = () => {
@@ -147,16 +166,27 @@ const Navbar = () => {
                   close
                 </button>
 
-                <input
-                  type="text"
-                  placeholder="Add Media"
-                  onChange={(e) => setMedia(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Add descrption"
-                  onChange={(e) => setDescrption(e.target.value)}
-                />
+                <div>
+                  <div>
+                    <input
+                      type="file"
+                      onChange={(e) => {
+                        setImgPost(e.target.files[0]);
+                      }}
+                    ></input>
+
+                    <button className="bb" onClick={uploadImage}>
+                      Add
+                    </button>
+                  </div>
+
+                  <input
+                    placeholder="Description"
+                    onChange={(e) => {
+                      setDescrption(e.target.value);
+                    }}
+                  />
+                </div>
                 <button onClick={createNewPost}>Add Post </button>
               </div>
             </div>
