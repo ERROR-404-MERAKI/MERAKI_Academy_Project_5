@@ -78,6 +78,7 @@ const getUserById = (req, res) => {
     });
   });
 };
+
 //git all user by name
 const getUserByName = (req, res) => {
   const { firstName } = req.body;
@@ -106,35 +107,9 @@ const getUserByName = (req, res) => {
   });
 };
 
-const getProfile = (req, res) => {
-  const userId = req.token.userId;
-  const query = `SELECT * FROM users WHERE id = ? AND is_deleted=0`;
-  const data = [userId];
-
-  connection.query(query, data, (err, result) => {
-    if (err) {
-      return res.status(500).json({
-        success: false,
-        message: "Server Error",
-        err,
-      });
-    }
-    if (result.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-    res.status(200).json({
-      success: true,
-      user: result,
-    });
-  });
-};
 module.exports = {
   register,
   getAllUser,
   getUserById,
   getUserByName,
-  getProfile
 };

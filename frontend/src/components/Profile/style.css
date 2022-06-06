@@ -1,0 +1,46 @@
+.profile-div {
+  display: flex;
+  flex-direction: column;
+}
+.nav_bar {
+  height: 55px;
+  background-color: rgb(110, 84, 49);
+}
+.user_info {
+  display: flex;
+  height: 200px;
+  background-color: rgb(60, 77, 94);
+}
+.pro_img {
+  height: 170px;
+  width: 170px;
+}
+.all_post {
+  align-items: center;
+}
+.U_posts {
+  width: 60%;
+  border: 1px solid black;
+  margin: 2%;
+  margin-left: 20%;
+}
+
+.img_posts {
+  height: 300px;
+  width: 70%;
+  margin-top: 2%;
+}
+
+.p_posts {
+  font-size: 1.5em;
+}
+
+.user_info_popup {
+  position: absolute;
+  height: 200px;
+  width: 300px;
+  z-index: 1px;
+  margin-top: 100px;
+  margin-left: 250px;
+  background-color: beige;
+}
