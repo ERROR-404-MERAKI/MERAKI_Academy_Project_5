@@ -72,3 +72,58 @@
 #p_post {
   font-size: 1.5em;
 }
+.show_comment{
+  position: absolute;
+  z-index: 10px;
+  width: 60%;
+  height: 400px;
+  background-color: chartreuse;
+ 
+  
+
+}
+.main_comment{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+ background-color:darkkhaki;
+}
+.right_s{
+  height: 100%;
+  width: 50%;
+background-color: darkorchid;
+/* margin-right: 30%; */
+ 
+}
+.left_s{
+  height: 100%;
+  width: 50%;
+/* margin-right: 10%; */
+/* justify-content: center;
+align-items: center; */
+}
+.img-c{
+  height: 100%;
+  width: 100%;
+}
+.input_button{
+  height: 40%;
+  width: 30%;
+  /* background-color: dimgrey; */
+  
+}
+.Add_comment{
+  height: 30px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+}
+.buttonAdd{
+  height: 30px;
+  width: 200px;
+}
+.comment_section{
+  height: 50%;
+  width: 50%;
+}
