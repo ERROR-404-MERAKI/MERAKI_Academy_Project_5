@@ -147,7 +147,7 @@ const Register = () => {
                 className="choosePic"
                 type="file"
                 onChange={(e) => {
-                  // console.log(e.target.files[0]);
+                 
                   setProfilePicture(e.target.files[0]);
                 }}
               ></input>
@@ -172,7 +172,7 @@ const Register = () => {
         <div className="toLog"><p>Have an account? </p><button onClick={()=>{
           history("/")
         }} className="chan">Log in</button></div>
-      </div>
+          </div>
     </div>
   );
 };
