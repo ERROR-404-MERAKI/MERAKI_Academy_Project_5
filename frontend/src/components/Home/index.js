@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addPosts, setPosts } from "../../redux/reducers/posts";
+import { addBookmark } from "../../redux/reducers/bookmark";
 import { addstorys, setStorys } from "../../redux/reducers/story";
 import Navbar from "../Navbar";
 import { addComment, setComments } from "../../redux/reducers/comment";
@@ -174,8 +175,7 @@ const Home = () => {
         }
       )
       .then((result) => {
-        console.log(result);
-        // dispatch(addBookmark(result));
+        dispatch(addBookmark(result.data));
       })
       .catch((err) => {
         console.log(err);
