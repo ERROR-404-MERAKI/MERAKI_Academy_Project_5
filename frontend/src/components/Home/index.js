@@ -2,11 +2,13 @@ import "./style.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addPosts, setPosts } from "../../redux/reducers/posts";
+import { updatePosts, setPosts } from "../../redux/reducers/posts";
 import { addBookmark } from "../../redux/reducers/bookmark";
 import { addstorys, setStorys } from "../../redux/reducers/story";
 import Navbar from "../Navbar";
 import { addComment, setComments } from "../../redux/reducers/comment";
+
+//==================Home =====================
 const Home = () => {
   const dispatch = useDispatch();
   const [media, setMedia] = useState("");
@@ -16,6 +18,7 @@ const Home = () => {
   const [imgStory, setImgStory] = useState("");
   const [comment, setComment] = useState("");
   const [show, setShow] = useState(false);
+  const [love, setLove] = useState(false);
 
   const { token, isLoggedIn, posts, storys, comments } = useSelector(
     (state) => {
@@ -155,6 +158,36 @@ const Home = () => {
       })
       .catch((err) => console.log(err));
   };
+    //==============like==============
+
+    const toLikes = (id, likes) => {
+      let newLikes = likes++;
+      setLove(true);
+      if (love) addLikes(id, likes, newLikes);
+    };
+  
+    const addLikes = (id, likes, newLikes) => {
+      newLikes++;
+  
+      axios
+        .put(
+          `http://localhost:5000/post/${id}`,
+          { newLikes },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((result) => {
+          
+          dispatch(updatePosts(id));
+          getAllPost();
+        })
+        .catch((err) => {
+          console.log(err, "err");
+        });
+    };
 
   useEffect(() => {
     getAllStorys();
@@ -263,6 +296,14 @@ const Home = () => {
                             }}
                           >
                             comment
+                          </button>
+                          {/* ====like==== */}
+                          <button
+                            onClick={() => {
+                              toLikes(element.id, element.likes);
+                            }}
+                          >
+                            like
                           </button>
                           <button onClick={() => createBookmark(element.id)}>
                             bookmark
