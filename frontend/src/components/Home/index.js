@@ -27,7 +27,6 @@ const Home = () => {
       };
     }
   );
-  
 
   let numberOfPage = localStorage.getItem("NOP") || 1;
 
@@ -161,6 +160,28 @@ const Home = () => {
     getAllPost();
   }, []);
 
+  // bookmark
+
+  const createBookmark = (id) => {
+    axios
+      .post(
+        `http://localhost:5000/bookmark/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result);
+        // dispatch(addBookmark(result));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   // ==========================
   return (
     <div className="contenar-main ">
@@ -242,6 +263,9 @@ const Home = () => {
                             }}
                           >
                             comment
+                          </button>
+                          <button onClick={() => createBookmark(element.id)}>
+                            bookmark
                           </button>
                           {/* ========== comment ======== */}
 

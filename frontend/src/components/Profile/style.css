@@ -44,3 +44,8 @@
   margin-left: 250px;
   background-color: beige;
 }
+
+.user_info_img {
+  display: flex;
+  gap: 10%;
+}
