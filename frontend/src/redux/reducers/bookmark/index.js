@@ -18,4 +18,4 @@ export const bookmarkSlice = createSlice({
 });
 
 export const { addBookmark, setBookmark } = bookmarkSlice.actions;
-export default bookmarkSlice.reducer; 
+export default bookmarkSlice.reducer;

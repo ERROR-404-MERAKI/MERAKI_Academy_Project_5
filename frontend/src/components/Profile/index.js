@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import { setBookmark } from "../../redux/reducers/bookmark";
 import "./style.css";
 import Navbar from "../Navbar";
 
 const Profile = () => {
+  const dispatch = useDispatch();
   // state section
   const [media, setMedia] = useState("");
-  const [ProfilePicture, setProfilePicture] = useState("");  const [firstName, setFirstName] = useState("");
+  const [ProfilePicture, setProfilePicture] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState(0);
   const [post, setPost] = useState("");
@@ -94,6 +97,21 @@ const Profile = () => {
       .then((result) => {
         console.log(result);
         setStatus(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getAllBookmark = () => {
+    axios
+      .get(`http://localhost:5000/bookmark/user/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        dispatch(setBookmark)
       })
       .catch((err) => {
         console.log(err);

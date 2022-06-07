@@ -6,6 +6,6 @@ const { authentication } = require("../middlewares/authentication");
 const bookmarkRouter = express.Router();
 
 bookmarkRouter.post("/:id", authentication, addBookmark);
-bookmarkRouter.get("/user/:id", authentication, allBookmark);
+bookmarkRouter.get("/user/", authentication, allBookmark);
 
 module.exports = bookmarkRouter;
