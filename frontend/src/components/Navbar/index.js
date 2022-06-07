@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toLogout } from "../../redux/reducers/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { addPosts, setPosts } from "../../redux/reducers/posts";
-
+//=================NavBar==============
 const Navbar = () => {
   // instance
   const dispatch = useDispatch();
