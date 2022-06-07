@@ -5,7 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { toLogout } from "../../redux/reducers/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { addPosts, setPosts } from "../../redux/reducers/posts";
-//=================NavBar==============
+import { AiFillHome } from "react-icons/ai";
+import { BsMessenger} from "react-icons/bs";
+import { GoDiffAdded} from "react-icons/go";
+import { BsSearch} from "react-icons/bs";
+
+
+
+
+//====BsSearch=============NavBar==============
 const Navbar = () => {
   // instance
   const dispatch = useDispatch();
@@ -111,6 +119,7 @@ const Navbar = () => {
   return (
     <div className="nav_header">
       {" "}
+     
       <div className="navbar">
         {token ? (
           <>
@@ -122,16 +131,27 @@ const Navbar = () => {
               }}
             ></Link>
 
-            <Link className="Link" to="/home">
-              Home
-            </Link>
+            <div
+              onClick={() => {
+                history("/home");
+              }}
+            >
+              <img
+                className="logo"
+                src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png
+"
+              />
+            </div>
 
             <div>
               <div className="search_bar">
                 <input
+                
+                  id="search"
                   type="search"
                   list="users"
                   placeholder="Search"
+                  
                   onChange={handleOnChange}
                 />
 
@@ -140,18 +160,21 @@ const Navbar = () => {
                     searchBox();
                   }}
                 >
-                  search
+                  
+                  <BsSearch id="icon"/>
                 </button>
+<AiFillHome id="icon"/>
+
               </div>
             </div>
-
+              <BsMessenger id="icon"/>
             <button
               onClick={() => {
                 setAddPost(true);
                 setStatus(false);
               }}
             >
-              add
+             <GoDiffAdded/>
             </button>
             <div
               className="add_poster"
@@ -190,7 +213,13 @@ const Navbar = () => {
                 <button onClick={createNewPost}>Add Post </button>
               </div>
             </div>
-            <button onClick={() => {history("/profile")}}>profile</button>
+            <button
+              onClick={() => {
+                history("/profile");
+              }}
+            >
+              profile
+            </button>
             <button className="logout" onClick={() => logout()}>
               Logout
             </button>

@@ -7,6 +7,10 @@ import { addBookmark } from "../../redux/reducers/bookmark";
 import { addstorys, setStorys } from "../../redux/reducers/story";
 import Navbar from "../Navbar";
 import { addComment, setComments } from "../../redux/reducers/comment";
+import { BsHeart } from "react-icons/bs";
+import { FaRegComment } from "react-icons/fa";
+import { BsBookmark } from "react-icons/bs";
+
 
 //==================Home =====================
 const Home = () => {
@@ -284,30 +288,38 @@ const Home = () => {
                 ? posts.map((element, index) => {
                     return (
                       <div className="map_post" key={index}>
-                        <div>
+                        <div className="img_main">
                           <img id="img_post" src={element.media} />
                         </div>
-                        <div>
-                          <p id="p_post">{element.description}</p>
-                          <button
+                        <div className="icon_main">
+                           {/* ====like==== */}
+                          <button id="icon_home"
+                            onClick={() => {
+                              toLikes(element.id, element.likes);
+                            }}
+                          ><BsHeart id="icon"/>
+                          </button>
+                          <button id="icon_home"
                             onClick={() => {
                               setShow(element.id);
                               getCommentById(element.id);
                             }}
                           >
-                            comment
+                           <FaRegComment id="icon"/>
                           </button>
-                          {/* ====like==== */}
-                          <button
-                            onClick={() => {
-                              toLikes(element.id, element.likes);
-                            }}
-                          >
-                            like
+                         
+                          
+
+                          <button id="icon_home" onClick={() => createBookmark(element.id)}>
+                           <BsBookmark id="icon"/>
                           </button>
-                          <button onClick={() => createBookmark(element.id)}>
-                            bookmark
-                          </button>
+                          <h4>{element.likes} Likes</h4>
+
+                          <p id="p_post">{element.description}</p>
+                          <br/>
+                          <p >{element.date}</p>
+
+
                           {/* ========== comment ======== */}
 
                           <div
