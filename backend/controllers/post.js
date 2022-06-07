@@ -87,7 +87,7 @@ const getPostById = (req, res) => {
 // update posts by id
 const updatePostById = (req, res) => {
   const post_id = req.params.id;
-  const { media, description } = req.body;
+  const { media, description, newLikes } = req.body;
 
   const query = `SELECT * FROM posts WHERE id=?`;
   const data = [post_id];
@@ -100,16 +100,19 @@ const updatePostById = (req, res) => {
         err,
       });
     }
+    // console.log(likes);
     if (!result.length) {
       return res.status(404).json({
         success: false,
         message: "post not found",
       });
     }
-    const query = `UPDATE posts SET media = ? , description =? WHERE id =?`;
+    const query = `UPDATE posts SET media = ? , description =? , likes=? WHERE id =?`;
     const data = [
       media || result[0].media,
       description || result[0].description,
+      newLikes ,
+      
       post_id,
     ];
 
@@ -121,7 +124,7 @@ const updatePostById = (req, res) => {
           err,
         });
       }
-      res.status(201).json({
+     return res.status(201).json({
         success: true,
         message: "post Updated",
         posts: result,
