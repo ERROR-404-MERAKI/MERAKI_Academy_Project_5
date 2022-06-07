@@ -7,11 +7,15 @@ import postReducer from "./reducers/posts";
 import storyReducer from "./reducers/story";
 
 import commentReducer from "./reducers/comment"
+
+import bookmarkSlice from "./reducers/bookmark";
 export default configureStore({
   reducer: {
     auth: authReducer,
     posts: postReducer,
     storys: storyReducer,
-    comments:commentReducer
+    comments:commentReducer,
+    bookmark: bookmarkSlice,
+
   },
 });

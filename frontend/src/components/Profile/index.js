@@ -7,8 +7,7 @@ import Navbar from "../Navbar";
 const Profile = () => {
   // state section
   const [media, setMedia] = useState("");
-  const [url, setUrl] = useState("");
-  const [firstName, setFirstName] = useState("");
+  const [ProfilePicture, setProfilePicture] = useState("");  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState(0);
   const [post, setPost] = useState("");
@@ -36,7 +35,7 @@ const Profile = () => {
       .then((resp) => resp.json())
       .then((data) => {
         console.log(data);
-        setUrl(data.url);
+        setProfilePicture(data.url);
         setStatus(false);
       })
       .catch((err) => console.log(err));
@@ -53,7 +52,7 @@ const Profile = () => {
       .then((result) => {
         console.log(result);
         if (result.data.success) {
-          setUrl(result.data.user[0].ProfilePicture);
+          setProfilePicture(result.data.user[0].ProfilePicture);
           setFirstName(result.data.user[0].firstName);
           setLastName(result.data.user[0].lastName);
           setAge(result.data.user[0].age);
@@ -76,6 +75,25 @@ const Profile = () => {
       .then((result) => {
         console.log(result);
         setPost(result.data.posts.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const editInfo = () => {
+    axios
+      .put(
+        `http://localhost:5000/user/edit`,
+        { firstName, lastName, ProfilePicture },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result);
+        setStatus(false);
       })
       .catch((err) => {
         console.log(err);
@@ -117,17 +135,26 @@ const Profile = () => {
           >
             upload
           </button>
+          <button
+            onClick={() => {
+              editInfo();
+            }}
+          >
+            Add
+          </button>
         </div>
         <div className="user_info_img">
           <button onClick={() => setStatus(true)}>
-            <img className="pro_img" src={url} />
+            <img className="pro_img" src={ProfilePicture} />
           </button>
         </div>
         <div className="user_info_data">
           <p>
             {firstName} {lastName}
           </p>
+          <button> edit </button>
         </div>
+        <div>{`${post.length} Posts`}</div>
       </div>
       <div className="all_post">
         {post
