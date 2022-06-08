@@ -45,12 +45,11 @@
 
 .left_side {
   width: 20%;
-  /* background-color: aqua; */
+  
 }
 .right_side {
   width: 20%;
 
-  /* background-color: brown; */
 }
 .main_story {
   display: flex;
