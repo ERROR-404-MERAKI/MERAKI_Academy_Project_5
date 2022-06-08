@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePosts, setPosts } from "../../redux/reducers/posts";
-import { addBookmark } from "../../redux/reducers/bookmark";
+import { addBookmark, deleteBookmark } from "../../redux/reducers/bookmark";
 import { addstorys, setStorys } from "../../redux/reducers/story";
 import Navbar from "../Navbar";
 import { addComment, setComments } from "../../redux/reducers/comment";
 import { BsHeart } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
 import { BsBookmark } from "react-icons/bs";
-
 
 //==================Home =====================
 const Home = () => {
@@ -23,6 +22,10 @@ const Home = () => {
   const [comment, setComment] = useState("");
   const [show, setShow] = useState(false);
   const [love, setLove] = useState(false);
+  const [status_b, setStatus_b] = useState(false);
+  const [showBook, setShowBook] = useState(0);
+  const [removeBook, setRemoveBook] = useState(0);
+  const [showButton, setShowButton] = useState(false);
 
   const { token, isLoggedIn, posts, storys, comments } = useSelector(
     (state) => {
@@ -162,41 +165,35 @@ const Home = () => {
       })
       .catch((err) => console.log(err));
   };
-    //==============like==============
+  //==============like==============
 
-    const toLikes = (id, likes) => {
-      let newLikes = likes++;
-      setLove(true);
-      if (love) addLikes(id, likes, newLikes);
-    };
-  
-    const addLikes = (id, likes, newLikes) => {
-      newLikes++;
-  
-      axios
-        .put(
-          `http://localhost:5000/post/${id}`,
-          { newLikes },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((result) => {
-          
-          dispatch(updatePosts(id));
-          getAllPost();
-        })
-        .catch((err) => {
-          console.log(err, "err");
-        });
-    };
+  const toLikes = (id, likes) => {
+    let newLikes = likes++;
+    setLove(true);
+    if (love) addLikes(id, likes, newLikes);
+  };
 
-  useEffect(() => {
-    getAllStorys();
-    getAllPost();
-  }, []);
+  const addLikes = (id, likes, newLikes) => {
+    newLikes++;
+
+    axios
+      .put(
+        `http://localhost:5000/post/${id}`,
+        { newLikes },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((result) => {
+        dispatch(updatePosts(id));
+        getAllPost();
+      })
+      .catch((err) => {
+        console.log(err, "err");
+      });
+  };
 
   // bookmark
 
@@ -212,12 +209,43 @@ const Home = () => {
         }
       )
       .then((result) => {
-        dispatch(addBookmark(result.data));
+        console.log(result, "create", id, "id");
+        if (result) {
+          dispatch(addBookmark(result.data));
+          setShowBook(id);
+          setStatus_b(true);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const removeBookmark = (id) => {
+    axios
+      .delete(`http://localhost:5000/bookmark/${id}`)
+      .then((result) => {
+        console.log(result, "remove", id, "id");
+
+        if (result) {
+          dispatch(deleteBookmark(result.data));
+          setRemoveBook(id);
+          setStatus_b(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  console.log(status_b);
+
+  useEffect(() => {
+    getAllStorys();
+    getAllPost();
+  }, []);
+
+  // bookmark
 
   // ==========================
   return (
@@ -292,33 +320,73 @@ const Home = () => {
                           <img id="img_post" src={element.media} />
                         </div>
                         <div className="icon_main">
-                           {/* ====like==== */}
-                          <button id="icon_home"
+                          {/* ====like==== */}
+                          <button
+                            id="icon_home"
                             onClick={() => {
                               toLikes(element.id, element.likes);
                             }}
-                          ><BsHeart id="icon"/>
+                          >
+                            <BsHeart id="icon" />
                           </button>
-                          <button id="icon_home"
+                          <button
+                            id="icon_home"
                             onClick={() => {
                               setShow(element.id);
                               getCommentById(element.id);
                             }}
                           >
-                           <FaRegComment id="icon"/>
+                            <FaRegComment id="icon" />
                           </button>
-                         
-                          
 
-                          <button id="icon_home" onClick={() => createBookmark(element.id)}>
-                           <BsBookmark id="icon"/>
+                          <button
+                            style={{ display: !status_b ? "block" : "none" }}
+                            onClick={() => {
+                              element.id === showBook && status_b ? (
+                                <></>
+                              ) : (
+                                createBookmark(element.id)
+                              );
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              className="bi bi-bookmark-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z" />
+                            </svg>{" "}
                           </button>
+                          <button
+                            style={{ display: status_b ? "block" : "none" }}
+                            onClick={() => {
+                              element.id === removeBook && status_b ? (
+                                removeBookmark(element.id)
+                              ) : (
+                                <></>
+                              );
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              className="bi bi-bookmark"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                            </svg>
+                          </button>
+
                           <h4>{element.likes} Likes</h4>
 
                           <p id="p_post">{element.description}</p>
-                          <br/>
-                          <p >{element.date}</p>
-
+                          <br />
+                          <p>{element.date}</p>
 
                           {/* ========== comment ======== */}
 
