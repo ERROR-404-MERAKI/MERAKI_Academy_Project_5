@@ -16,7 +16,6 @@ const addBookmark = (req, res) => {
     }
 
     res.status(201).json({
-
       success: true,
       massage: "Success bookmark added",
       result,
@@ -26,7 +25,7 @@ const addBookmark = (req, res) => {
 
 const allBookmark = (req, res) => {
   const userId = req.token.userId;
-  const query = `SELECT * FROM bookmarks INNER JOIN posts ON bookmarks.post_id = posts.id WHERE bookmarks.user_Id =? `;
+  const query = `SELECT * FROM bookmarks INNER JOIN posts ON bookmarks.post_id = posts.id WHERE bookmarks.user_Id =? AND bookmarks.is_deleted=0`;
   const data = [userId];
 
   connection.query(query, data, (err, result) => {
@@ -49,7 +48,36 @@ const allBookmark = (req, res) => {
     });
   });
 };
+
+const deleteBookmark = (req, res) => {
+  const postId = req.params.id;
+  const query = `UPDATE bookmarks SET is_deleted=1 WHERE post_id =? `;
+  const data = [postId];
+
+  connection.query(query, data, (err, result) => {
+    console.log(result);
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    if (result.changedRows > 0) {
+      return res.status(201).json({
+        success: true,
+        message: "bookmark Deleted",
+        posts: result,
+      });
+    }
+    res.status(404).json({
+      success: false,
+      message: `The post with id ⇾ ${postId} is not found`,
+    });
+  });
+};
 module.exports = {
   addBookmark,
   allBookmark,
+  deleteBookmark,
 };
