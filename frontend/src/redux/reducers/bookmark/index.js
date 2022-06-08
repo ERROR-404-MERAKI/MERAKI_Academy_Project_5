@@ -11,7 +11,6 @@ export const bookmarkSlice = createSlice({
       state.bookmark = action.payload;
     },
     addBookmark: (state, action) => {
-
       // action.payload =>data pushed to database
       state.bookmark.push(action.payload);
     },
@@ -23,5 +22,6 @@ export const bookmarkSlice = createSlice({
   },
 });
 
-export const { addBookmark, setBookmark,deleteBookmark } = bookmarkSlice.actions;
+export const { addBookmark, setBookmark, deleteBookmark } =
+  bookmarkSlice.actions;
 export default bookmarkSlice.reducer;

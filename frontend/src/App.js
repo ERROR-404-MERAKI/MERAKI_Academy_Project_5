@@ -13,15 +13,12 @@ import Bookmark from "./components/Bookmark";
 function App() {
   return (
     <div className="App">
-
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/saved" element={<Bookmark />} />
-
-
       </Routes>
     </div>
   );

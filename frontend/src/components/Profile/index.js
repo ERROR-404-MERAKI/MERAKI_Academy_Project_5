@@ -4,9 +4,11 @@ import axios from "axios";
 import { setBookmark } from "../../redux/reducers/bookmark";
 import "./style.css";
 import Navbar from "../Navbar";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const history = useNavigate();
   // state section
   const [media, setMedia] = useState("");
   const [ProfilePicture, setProfilePicture] = useState("");
