@@ -103,21 +103,6 @@ const Profile = () => {
       });
   };
 
-  const getAllBookmark = () => {
-    axios
-      .get(`http://localhost:5000/bookmark/user/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((result) => {
-        dispatch(setBookmark)
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
     userInfo();
     postUser();
@@ -174,7 +159,17 @@ const Profile = () => {
         </div>
         <div>{`${post.length} Posts`}</div>
       </div>
+
       <div className="all_post">
+        <div className="bookmark_nev">
+          <button
+            onClick={() => {
+              history("/profile/saved");
+            }}
+          >
+            bookmark
+          </button>
+        </div>
         {post
           ? post.map((element, index) => {
               return (
