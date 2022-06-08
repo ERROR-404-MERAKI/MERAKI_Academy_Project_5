@@ -4,9 +4,11 @@ import axios from "axios";
 import { setBookmark } from "../../redux/reducers/bookmark";
 import "./style.css";
 import Navbar from "../Navbar";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const history = useNavigate();
   // state section
   const [media, setMedia] = useState("");
   const [ProfilePicture, setProfilePicture] = useState("");
@@ -104,20 +106,9 @@ const Profile = () => {
       });
   };
 
-  const getAllBookmark = () => {
-    axios
-      .get(`http://localhost:5000/bookmark/user/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((result) => {
-        dispatch(setBookmark);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
+
+
   const deletePostBtId = (id) => {
     axios
       .put(
@@ -137,6 +128,7 @@ const Profile = () => {
         console.log(err);
       });
   };
+
 
   useEffect(() => {
     userInfo();
@@ -217,6 +209,7 @@ const Profile = () => {
             Tags
           </button>
         </div>
+
         <div className="all_post">
           {post
             ? post.map((element, index) => {
@@ -251,6 +244,36 @@ const Profile = () => {
                         </svg>
                       </button>
                     </div>
+
+        <div className="user_info_data">
+          <p>
+            {firstName} {lastName}
+          </p>
+          <button> edit </button>
+        </div>
+        <div>{`${post.length} Posts`}</div>
+      </div>
+
+      <div className="all_post">
+        <div className="bookmark_nev">
+          <button
+            onClick={() => {
+              history("/profile/saved");
+            }}
+          >
+            bookmark
+          </button>
+        </div>
+        {post
+          ? post.map((element, index) => {
+              return (
+                <div key={index} className="U_posts">
+                  <div>
+                    <img className="img_posts" src={element.media} />
+                  </div>
+                  <div>
+                    <p className="p_posts"> {element.description}</p>
+
                   </div>
                 );
               })
