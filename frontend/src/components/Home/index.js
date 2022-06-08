@@ -25,6 +25,7 @@ const Home = () => {
   const [status_b, setStatus_b] = useState(false);
   const [showBook, setShowBook] = useState(0);
   const [removeBook, setRemoveBook] = useState(0);
+  const [showButton, setShowButton] = useState(false);
 
   const { token, isLoggedIn, posts, storys, comments } = useSelector(
     (state) => {
@@ -194,28 +195,7 @@ const Home = () => {
       });
   };
 
-  useEffect(() => {
-    getAllStorys();
-    getAllPost();
-  }, []);
-
   // bookmark
-
-  // bookmark
-  const removeBookmark = (id) => {
-    axios
-      .delete(`http://localhost:5000/bookmark/${id}`)
-      .then((result) => {
-        if (result) {
-          dispatch(deleteBookmark(result.data));
-          setRemoveBook(id);
-          setStatus_b(false);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   const createBookmark = (id) => {
     axios
@@ -229,6 +209,7 @@ const Home = () => {
         }
       )
       .then((result) => {
+        console.log(result, "create", id, "id");
         if (result) {
           dispatch(addBookmark(result.data));
           setShowBook(id);
@@ -239,6 +220,32 @@ const Home = () => {
         console.log(err);
       });
   };
+
+  const removeBookmark = (id) => {
+    axios
+      .delete(`http://localhost:5000/bookmark/${id}`)
+      .then((result) => {
+        console.log(result, "remove", id, "id");
+
+        if (result) {
+          dispatch(deleteBookmark(result.data));
+          setRemoveBook(id);
+          setStatus_b(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  console.log(status_b);
+
+  useEffect(() => {
+    getAllStorys();
+    getAllPost();
+  }, []);
+
+  // bookmark
 
   // ==========================
   return (
@@ -333,9 +340,10 @@ const Home = () => {
                           </button>
 
                           <button
+                            style={{ display: !status_b ? "block" : "none" }}
                             onClick={() => {
-                              status_b ? (
-                                <>added</>
+                              element.id === showBook && status_b ? (
+                                <></>
                               ) : (
                                 createBookmark(element.id)
                               );
@@ -353,8 +361,13 @@ const Home = () => {
                             </svg>{" "}
                           </button>
                           <button
+                            style={{ display: status_b ? "block" : "none" }}
                             onClick={() => {
-                              removeBookmark(element.id);
+                              element.id === removeBook && status_b ? (
+                                removeBookmark(element.id)
+                              ) : (
+                                <></>
+                              );
                             }}
                           >
                             <svg
@@ -369,12 +382,6 @@ const Home = () => {
                             </svg>
                           </button>
 
-                          <button
-                            id="icon_home"
-                            onClick={() => createBookmark(element.id)}
-                          >
-                            <BsBookmark id="icon" />
-                          </button>
                           <h4>{element.likes} Likes</h4>
 
                           <p id="p_post">{element.description}</p>
