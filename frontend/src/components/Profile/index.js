@@ -17,6 +17,7 @@ const Profile = () => {
   const [age, setAge] = useState(0);
   const [post, setPost] = useState("");
   const [status, setStatus] = useState(false);
+  const [is_deleted, setis_deleted] = useState(0);
 
   // data from store
   const { token } = useSelector((state) => {
@@ -55,7 +56,7 @@ const Profile = () => {
         },
       })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         if (result.data.success) {
           setProfilePicture(result.data.user[0].ProfilePicture);
           setFirstName(result.data.user[0].firstName);
@@ -78,7 +79,7 @@ const Profile = () => {
         },
       })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         setPost(result.data.posts.reverse());
       })
       .catch((err) => {
@@ -104,6 +105,30 @@ const Profile = () => {
         console.log(err);
       });
   };
+
+
+
+
+  const deletePostBtId = (id) => {
+    axios
+      .put(
+        `http://localhost:5000/post/delete/${id}`,
+        { is_deleted },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((result) => {
+        setis_deleted(1);
+        postUser();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   useEffect(() => {
     userInfo();
@@ -182,6 +207,13 @@ const Profile = () => {
                   <div>
                     <p className="p_posts"> {element.description}</p>
                   </div>
+                  <button
+                    onClick={() => {
+                      deletePostBtId(element.id);
+                    }}
+                  >
+                    delete
+                  </button>{" "}
                 </div>
               );
             })

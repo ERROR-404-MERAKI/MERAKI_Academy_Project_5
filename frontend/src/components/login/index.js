@@ -43,7 +43,7 @@ const Login = () => {
         </div>
         <div className="rightSide">
           <div className="insideRight">
-          <div className="img_middle  zi">
+          <div className="img_middle  zi li">
           <img
             className="insta_img zi"
             src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png"
