@@ -27,6 +27,6 @@ postRouter.get("/profile", authentication, getPostById);
 postRouter.put("/:id", updatePostById);
 
 //Delete => endpoint /post/id
-postRouter.delete("/:id", deletePostById);
+postRouter.put("/delete/:id", deletePostById);
 
 module.exports = postRouter;
