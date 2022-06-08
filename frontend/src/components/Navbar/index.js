@@ -5,15 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { toLogout } from "../../redux/reducers/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { addPosts, setPosts } from "../../redux/reducers/posts";
-import { AiFillHome } from "react-icons/ai";
-import { BsMessenger} from "react-icons/bs";
-import { GoDiffAdded} from "react-icons/go";
-import { BsSearch} from "react-icons/bs";
+import { RiHome2Line } from "react-icons/ri";
+import { BsChatDots } from "react-icons/bs";
+import { GoDiffAdded } from "react-icons/go";
+import { BsSearch } from "react-icons/bs";
+import { BsHeart } from "react-icons/bs";
+import { BsPersonCircle } from "react-icons/bs";
+import { FiLogOut } from "react-icons/fi";
 
-
-
-
-//====BsSearch=============NavBar==============
+//====FiLogOut=============NavBar==============
 const Navbar = () => {
   // instance
   const dispatch = useDispatch();
@@ -119,110 +119,127 @@ const Navbar = () => {
   return (
     <div className="nav_header">
       {" "}
-     
       <div className="navbar">
         {token ? (
           <>
-            <Link
-              className="Link"
-              to="/profile"
-              onClick={() => {
-                userProfile();
-              }}
-            ></Link>
-
-            <div
-              onClick={() => {
-                history("/home");
-              }}
-            >
-              <img
-                className="logo"
-                src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png
+            <div className="dev_imgss">
+              <div
+                className="imggg"
+                onClick={() => {
+                  history("/home");
+                }}
+              >
+                <img
+                  className="logo"
+                  src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png
 "
-              />
+                />
+              </div>
             </div>
 
-            <div>
+            <div className="main_s">
               <div className="search_bar">
-                <input
-                
-                  id="search"
-                  type="search"
-                  list="users"
-                  placeholder="Search"
-                  
-                  onChange={handleOnChange}
-                />
-
                 <button
+                  id="icon1"
                   onClick={() => {
                     searchBox();
                   }}
                 >
-                  
-                  <BsSearch id="icon"/>
+                  <BsSearch id="search1"/>
                 </button>
-<AiFillHome id="icon"/>
-
+                <input
+                  id="search"
+                  type="search"
+                  list="users"
+                  placeholder="Search"
+                  onChange={handleOnChange}
+                />
               </div>
             </div>
-              <BsMessenger id="icon"/>
-            <button
-              onClick={() => {
-                setAddPost(true);
-                setStatus(false);
-              }}
-            >
-             <GoDiffAdded/>
-            </button>
-            <div
-              className="add_poster"
-              style={{ display: addPost ? "block" : "none" }}
-            >
-              <div className="post_input">
-                <button
-                  onClick={() => {
-                    setAddPost(false);
-                  }}
-                >
-                  close
-                </button>
+            <div className="icon_section">
+             <button id="icon2"> <RiHome2Line id="icon" /> </button>
 
-                <div>
-                  <div>
-                    <input
-                      type="file"
-                      onChange={(e) => {
-                        setImgPost(e.target.files[0]);
-                      }}
-                    ></input>
+             <button id="icon2"><BsChatDots id="icon" /></button> 
+              <button
+                id="icon2"
+                onClick={() => {
+                  setAddPost(true);
+                  setStatus(false);
+                }}
+              >
+                
+                <svg id="icon1" width="20" height="20" viewBox="0 0 16 16">
+                  <path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z" />
+                  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
+                </svg>
+              </button>
+              <button id="icon2"><BsHeart id="icon1" /></button>
+              
 
-                    <button className="bb" onClick={uploadImage}>
-                      Add
-                    </button>
-                  </div>
-
-                  <input
-                    placeholder="Description"
-                    onChange={(e) => {
-                      setDescrption(e.target.value);
+              <div
+                className="add_poster"
+                style={{ display: addPost ? "block" : "none" }}
+              >
+                <div className="post_input">
+                  <button
+                    onClick={() => {
+                      setAddPost(false);
                     }}
-                  />
+                  >
+                    close
+                  </button>
+
+                  <div>
+                    <div>
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          setImgPost(e.target.files[0]);
+                        }}
+                      ></input>
+
+                      <button className="bb" onClick={uploadImage}>
+                        Add
+                      </button>
+                    </div>
+
+                    <input
+                      placeholder="Description"
+                      onChange={(e) => {
+                        setDescrption(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <button onClick={createNewPost}>Add Post </button>
                 </div>
-                <button onClick={createNewPost}>Add Post </button>
               </div>
+              <button
+                id="icon2"
+                onClick={() => {
+                  history("/profile");
+                }}
+              >
+                <svg id="icon1" width="16" height="16" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                  <path
+                    fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+                  />
+                </svg>
+              </button>
+              <button id="icon1" onClick={() => logout()}>
+                <svg id="icon1" width="16" height="16" viewBox="0 0 16 16">
+                  <path
+                    fill-rule="evenodd"
+                    d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
+                  />
+                </svg>
+              </button>
             </div>
-            <button
-              onClick={() => {
-                history("/profile");
-              }}
-            >
-              profile
-            </button>
-            <button className="logout" onClick={() => logout()}>
-              Logout
-            </button>
           </>
         ) : (
           <>
