@@ -22,9 +22,6 @@
   border-radius: 8px;
   box-sizing: border-box;
   margin-top: 16px;
-  margin-left: 10%;
-
-  
 }
 .map_story {
   display: flex;
@@ -37,28 +34,54 @@
 .img_story {
   height: 50px;
   width: 50px;
+  border: 1px solid rgb(133, 152, 86);
   border-radius: 9999px;
+}
+.img_story:hover{
+  border: 2px solid rgb(203, 128, 58);
 }
 .middle_side {
   width: 50%;
 }
 
 .left_side {
-  width: 20%;
+  width: 25%;
   
 }
 .right_side {
-  width: 20%;
+  width: 25%;
 
 }
 .main_story {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  width: 100%;
   align-items: center;
+  justify-content: space-around;
+  
   
   /* border: 1px black solid; */
 }
+.set{
+  cursor: pointer;
+  border-radius: 9999px;
+}
+
+.svg{
+  border-radius: 9999px;
+}
+.svg:hover{
+  box-shadow: 5px 5px 5px rgb(50, 59, 62);
+}
+.button_story{
+  width: 94%;
+  display: flex;
+justify-content: flex-end;
+gap: 20px;
+
+}
+
+
 #button_b {
   margin-right: 15px;
 }
@@ -72,20 +95,24 @@
   background-color: white;
   margin: 2%;
   width: 90%;
-  margin-left: 10%;
+  height: 550px;
 }
 
 #img_post {
-  height: 450px;
+  height: 100%;
   width: 100%;
   margin-top: 2%;
 }
 .img_main {
- /* width: 70%; */
+ height: 70%;
 
 }
 #p_post {
-  font-size: 1.5em;
+  height: 20%;
+  display: flex;
+  margin-left: 15px;
+  margin-top: 10px;
+  gap: 5px;
 }
 .show_comment {
   position: absolute;
@@ -142,17 +169,73 @@ align-items: center; */
   background-color: white;
   border: 0ch;
   border-color: white;
-  margin-left: 1%;
-  margin-bottom: 2%;
+  
   
 }
 #icon{
   height: 25px;
   width: 40px;
-  
- 
+  cursor: pointer;
+  border-radius: 9999px;
+}
+
+
+#icon:hover{
+  color: tomato; 
+ /*  box-shadow: 10px 5px 5px rgb(50, 59, 62); */
+}
+.headicon{
+  margin-top: 15px;
+  width: 100%;
+  height: 20%;
+  display: flex;
 }
 .icon_main{
- margin-right: 65%;
+ display: flex;
+height: 30%;
+flex-direction: column;
+}
 
+.bookmarkmark{
+  all: unset;
+  cursor: pointer;
+  margin-left: 80%;
+}
+
+.numLikes{
+  height: 10%;
+  display: flex;
+  margin-left: 10px;
+}
+.desc{
+  max-width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.datee{
+  display: flex;
+  margin-left: 10px;
+  font-size: 10px;
+}
+.footerpost{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 30%;
+  width: 99%;
+  border: 2px solid rgba(219,219,219);
+  color: #77A7FF;
+}
+
+.azx{
+  border: 0px;
+  width: 90%;
+  height: 100%;
+  padding-left: 10px;
+}
+
+.cruser{
+  cursor: pointer;
 }
