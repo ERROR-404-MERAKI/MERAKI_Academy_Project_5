@@ -274,7 +274,10 @@ const Navbar = () => {
               return (
                 <div key={index} className="search_user">
                   <img className="p_pic" src={user.ProfilePicture} />
-                  <p>{`${user.firstName} ${user.lastName}`}</p>
+                  <Link
+                    onClick={() => history(`/profile/${user.id}`)}
+                    to={`/profile/${user.id}`}
+                  >{`${user.firstName} ${user.lastName}`}</Link>
                 </div>
               );
             })}{" "}
