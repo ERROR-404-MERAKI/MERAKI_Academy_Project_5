@@ -58,7 +58,7 @@ const getAllPost = (req, res) => {
 // function to get post by id
 const getPostById = (req, res) => {
   const user_id = req.token.userId;
-  const limit = 5;
+  const limit = 12;
   const page = req.query.page;
   const offset = (page - 1) * limit;
   const query = `SELECT * FROM posts WHERE is_deleted=0 AND user_id =? LIMIT ? OFFSET ?`;

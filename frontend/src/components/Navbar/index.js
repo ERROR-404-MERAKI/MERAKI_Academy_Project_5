@@ -145,7 +145,7 @@ const Navbar = () => {
                     searchBox();
                   }}
                 >
-                  <BsSearch id="search1"/>
+                  <BsSearch id="search1" />
                 </button>
                 <input
                   id="search"
@@ -157,9 +157,14 @@ const Navbar = () => {
               </div>
             </div>
             <div className="icon_section">
-             <button id="icon2"> <RiHome2Line id="icon" /> </button>
+              <button id="icon2">
+                {" "}
+                <RiHome2Line id="icon" />{" "}
+              </button>
 
-             <button id="icon2"><BsChatDots id="icon" /></button> 
+              <button id="icon2">
+                <BsChatDots id="icon" />
+              </button>
               <button
                 id="icon2"
                 onClick={() => {
@@ -167,14 +172,14 @@ const Navbar = () => {
                   setStatus(false);
                 }}
               >
-                
                 <svg id="icon1" width="20" height="20" viewBox="0 0 16 16">
                   <path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z" />
                   <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
                 </svg>
               </button>
-              <button id="icon2"><BsHeart id="icon1" /></button>
-              
+              <button id="icon2">
+                <BsHeart id="icon1" />
+              </button>
 
               <div
                 className="add_poster"
@@ -198,9 +203,7 @@ const Navbar = () => {
                         }}
                       ></input>
 
-                      <button className="bb" onClick={uploadImage}>
-                        Add
-                      </button>
+                      <button onClick={uploadImage}>Add</button>
                     </div>
 
                     <input
