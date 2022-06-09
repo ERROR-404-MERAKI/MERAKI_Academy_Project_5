@@ -38,7 +38,7 @@ const Profile = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
+        
         setProfilePicture(data.url);
         setStatus(false);
       })
@@ -150,6 +150,39 @@ const Profile = () => {
       </div>
       <div className="main">
         <div className="user_info">
+        <div
+          className="user_info_popup"
+          style={{ display: status ? "block" : "none" }}
+        >
+          <button
+            onClick={() => {
+              setStatus(false);
+            }}
+          >
+            X
+          </button>
+          <input
+            type="file"
+            onChange={(e) => {
+              setMedia(e.target.files[0]);
+            }}
+          />
+          <button
+            onClick={() => {
+              uploadImage();
+            }}
+          >
+            upload
+          </button>
+          <button
+            onClick={() => {
+              editInfo();
+            }}
+          >
+            Add
+          </button>
+        </div>
+
           <div className="user_info_img">
             <button className="pro_img bu" onClick={() => setStatus(true)}>
               <img className="pro_img" src={ProfilePicture} />
