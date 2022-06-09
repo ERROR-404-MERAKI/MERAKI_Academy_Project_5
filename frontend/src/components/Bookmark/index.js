@@ -39,6 +39,7 @@ const Bookmark = () => {
               <div key={index}>
                 <img src={element.media} />
               </div>
+              
             );
           })
         : []}

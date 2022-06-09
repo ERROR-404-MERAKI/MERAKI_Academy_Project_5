@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { setBookmark } from "../../redux/reducers/bookmark";
+import { setBookmark ,deleteBookmark} from "../../redux/reducers/bookmark";
+
 import "./style.css";
 import Navbar from "../Navbar";
 
@@ -16,11 +17,16 @@ const Profile = () => {
   const [post, setPost] = useState("");
   const [status, setStatus] = useState(false);
   const [is_deleted, setis_deleted] = useState(0);
+  const [showStatus, setshowStatus] = useState(false);
+  const [removeBook, setRemoveBook] = useState(0);
+  const [status_b, setStatus_b] = useState(false);
+
 
   // data from store
-  const { token } = useSelector((state) => {
+  const { token, bookmark } = useSelector((state) => {
     return {
       token: state.auth.token,
+      bookmark: state.bookmark.bookmark,
     };
   });
 
@@ -38,7 +44,6 @@ const Profile = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        
         setProfilePicture(data.url);
         setStatus(false);
       })
@@ -112,7 +117,8 @@ const Profile = () => {
         },
       })
       .then((result) => {
-        dispatch(setBookmark);
+        dispatch(setBookmark(result.data.posts));
+       
       })
       .catch((err) => {
         console.log(err);
@@ -137,11 +143,28 @@ const Profile = () => {
         console.log(err);
       });
   };
+  //============remove BookMark ==========
+  const removeBookmark = (id) => {
+    axios
+      .delete(`http://localhost:5000/bookmark/${id}`)
+      .then((result) => {
+        console.log(result);
+        if (result) {
+          dispatch(deleteBookmark(result.data));
+          setRemoveBook(id);
+          setStatus_b(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     userInfo();
     postUser();
   }, []);
+  
 
   return (
     <div className="profile_div">
@@ -150,38 +173,38 @@ const Profile = () => {
       </div>
       <div className="main">
         <div className="user_info">
-        <div
-          className="user_info_popup"
-          style={{ display: status ? "block" : "none" }}
-        >
-          <button
-            onClick={() => {
-              setStatus(false);
-            }}
+          <div
+            className="user_info_popup"
+            style={{ display: status ? "block" : "none" }}
           >
-            X
-          </button>
-          <input
-            type="file"
-            onChange={(e) => {
-              setMedia(e.target.files[0]);
-            }}
-          />
-          <button
-            onClick={() => {
-              uploadImage();
-            }}
-          >
-            upload
-          </button>
-          <button
-            onClick={() => {
-              editInfo();
-            }}
-          >
-            Add
-          </button>
-        </div>
+            <button
+              onClick={() => {
+                setStatus(false);
+              }}
+            >
+              X
+            </button>
+            <input
+              type="file"
+              onChange={(e) => {
+                setMedia(e.target.files[0]);
+              }}
+            />
+            <button
+              onClick={() => {
+                uploadImage();
+              }}
+            >
+              upload
+            </button>
+            <button
+              onClick={() => {
+                editInfo();
+              }}
+            >
+              Add
+            </button>
+          </div>
 
           <div className="user_info_img">
             <button className="pro_img bu" onClick={() => setStatus(true)}>
@@ -208,14 +231,18 @@ const Profile = () => {
           </div>
         </div>
         <div className="navBottom">
-          <button className="buttonNavB">
+          <button
+            onClick={() => {
+              setshowStatus(false);
+            }}
+            className="buttonNavB"
+          >
             <svg width="16" height="16" viewBox="0 0 16 16">
               <path d="M5 2V0H0v5h2v6H0v5h5v-2h6v2h5v-5h-2V5h2V0h-5v2H5zm6 1v2h2v6h-2v2H5v-2H3V5h2V3h6zm1-2h3v3h-3V1zm3 11v3h-3v-3h3zM4 15H1v-3h3v3zM1 4V1h3v3H1z" />
-            </svg>{" "}
-            posts{" "}
+            </svg>
+            posts
           </button>
           <button className="buttonNavB">
-            {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -234,7 +261,14 @@ const Profile = () => {
             </svg>{" "}
             Video
           </button>
-          <button className="buttonNavB">
+          {/* =========bookmark========== */}
+          <button
+            onClick={() => {
+              setshowStatus(true);
+              getAllBookmark();
+            }}
+            className="buttonNavB"
+          >
             {" "}
             <svg width="16" height="16" viewBox="0 0 16 16">
               <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
@@ -250,44 +284,94 @@ const Profile = () => {
             Tags
           </button>
         </div>
-        <div className="all_post">
-          {post
-            ? post.map((element, index) => {
-                return (
-                  <div key={index} className="U_posts">
-                    <div>
-                      <img className="img_posts" src={element.media} />
+
+        <div className="post_post" style={{ display: showStatus == false ? "block" : "none" }}>
+          <div className="all_post">
+            {post
+              ? post.map((element, index) => {
+                  return (
+                    <div key={index} className="U_posts">
+                      <div>
+                        <img className="img_posts" src={element.media} />
+                      </div>
+                      <div>
+                        <p className="p_posts"> {element.description}</p>
+                      </div>
+                      <div className="reactionPost">
+                        <button
+                          className="buto"
+                          onClick={() => {
+                            deletePostBtId(element.id);
+                          }}
+                        >
+                          <svg width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708z" />
+                            <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+                          </svg>
+                        </button>
+                        <button className="buto">
+                          <svg width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" />
+                          </svg>
+                        </button>
+                        <button className="buto">
+                          <svg width="16" height="16" viewBox="0 0 16 16">
+                            <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
-                    <div>
-                      <p className="p_posts"> {element.description}</p>
-                    </div>
-                    <div className="reactionPost">
+                  );
+                })
+              : []}
+          </div>
+        </div>
+        <div className="post_post" style={{ display: showStatus == true ? "block" : "none" }}>
+          <div className="all_post">
+            {bookmark.map((element, index) => {
+              // console.log(element);
+              return (
+                
+                <div className="U_posts">
+                   <div>
+                        <img className="img_posts" src={element.media} />
+                      </div>
+
+                        <div>
+                        <p className="p_posts"> {element.description}</p>
+                      </div>
+                      <div>
                       <button
-                        className="buto"
-                        onClick={() => {
-                          deletePostBtId(element.id);
-                        }}
-                      >
-                        <svg width="16" height="16" viewBox="0 0 16 16">
-                          <path d="M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708z" />
-                          <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
-                        </svg>
-                      </button>{" "}
-                      <button className="buto">
-                        <svg width="16" height="16" viewBox="0 0 16 16">
-                          <path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" />
-                        </svg>
-                      </button>
-                      <button className="buto">
-                        <svg width="16" height="16" viewBox="0 0 16 16">
-                          <path d="m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                );
-              })
-            : []}
+                            
+                            onClick={() => {
+                              console.log(element.id);
+                              element.id === removeBook && status_b ? (
+                                removeBookmark(element.id)
+                              ) : (
+                                <></>
+                              );
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              className="bi bi-bookmark"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                            </svg>
+                          </button>
+                      </div>
+                 
+                </div>
+              );
+            }
+            )
+            }
+            
+          </div>
         </div>
       </div>
     </div>
