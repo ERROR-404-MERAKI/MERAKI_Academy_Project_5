@@ -121,6 +121,46 @@ border-bottom: #f2f3f5;
 
 
 }
+
+.add_poster {
+  position: absolute;
+  height: 400px;
+  width: 500px;
+  z-index: 10px;
+  margin-top: 60%;
+  margin-left: -220px;
+  border-radius: 5px;
+  background-color: rgb(132, 109, 187);}
+
+  .search_popup {
+    position: absolute;
+    height: 70%;
+    width: 58%;
+    z-index: 10px;
+    margin-top: 10%;
+    margin-left: 250px;
+    border-radius: 5px;
+    background-color: blueviolet;
+  }
+
+  .search_user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px groove;
+    margin-top: 20px;
+  
+    gap: 5px;
+    margin-left: 5px;
+  }
+  .p_pic {
+    border-radius: 9999px;
+    width: 30px;
+    height: 30px;
+  }
+    
+  
+
 /* .icon_section{
   display: flex;
   flex-direction: row;
