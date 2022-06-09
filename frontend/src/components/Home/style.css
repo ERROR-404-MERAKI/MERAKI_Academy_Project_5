@@ -30,12 +30,14 @@
   justify-content: center;
   box-sizing: border-box;
   margin-top: 3%;
+  
 }
 .img_story {
   height: 50px;
   width: 50px;
   border: 1px solid rgb(133, 152, 86);
   border-radius: 9999px;
+  cursor: pointer;
 }
 .img_story:hover{
   border: 2px solid rgb(203, 128, 58);
@@ -93,9 +95,10 @@ gap: 20px;
   border: 1px rgb(219, 219, 219) solid;
   border-radius: 8px;
   background-color: white;
-  margin: 2%;
+  margin-top: 15px;
+  margin-bottom: 30px;
   width: 90%;
-  height: 550px;
+  height: 580px;
 }
 
 #img_post {
@@ -238,4 +241,18 @@ flex-direction: column;
 
 .cruser{
   cursor: pointer;
+}
+
+.headerName{
+  height: 5%;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-left: 5px;
+}
+.imgpoUs{
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  margin-top: 3px;
 }

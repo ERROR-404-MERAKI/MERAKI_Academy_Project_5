@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { setBookmark ,deleteBookmark} from "../../redux/reducers/bookmark";
+import { setBookmark, deleteBookmark } from "../../redux/reducers/bookmark";
 
 import "./style.css";
 import Navbar from "../Navbar";
@@ -20,7 +20,7 @@ const Profile = () => {
   const [showStatus, setshowStatus] = useState(false);
   const [removeBook, setRemoveBook] = useState(0);
   const [status_b, setStatus_b] = useState(false);
-
+  const [edit, setEdit] = useState(false);
 
   // data from store
   const { token, bookmark } = useSelector((state) => {
@@ -45,7 +45,6 @@ const Profile = () => {
       .then((resp) => resp.json())
       .then((data) => {
         setProfilePicture(data.url);
-        setStatus(false);
       })
       .catch((err) => console.log(err));
   };
@@ -118,7 +117,6 @@ const Profile = () => {
       })
       .then((result) => {
         dispatch(setBookmark(result.data.posts));
-       
       })
       .catch((err) => {
         console.log(err);
@@ -164,7 +162,6 @@ const Profile = () => {
     userInfo();
     postUser();
   }, []);
-  
 
   return (
     <div className="profile_div">
@@ -177,35 +174,57 @@ const Profile = () => {
             className="user_info_popup"
             style={{ display: status ? "block" : "none" }}
           >
-            <button
-              onClick={() => {
-                setStatus(false);
-              }}
-            >
-              X
-            </button>
-            <input
-              type="file"
-              onChange={(e) => {
-                setMedia(e.target.files[0]);
-              }}
-            />
-            <button
-              onClick={() => {
-                uploadImage();
-              }}
-            >
-              upload
-            </button>
-            <button
-              onClick={() => {
-                editInfo();
-              }}
-            >
-              Add
-            </button>
+            <div className="mainEdit">
+              <div className="HeaderUpload">
+                <h4>Change Profile Photo</h4>
+              </div>
+              <div className="sec_Chose">
+                <label>
+                  {" "}
+                  <h3 className="cruser">Upload Photo</h3>
+                  <input
+                    d="inputTag"
+                    className="choosePic"
+                    type="file"
+                    onChange={(e) => {
+                      setMedia(e.target.files[0]);
+                    }}
+                  />
+                </label>
+                <button
+                  className="bb set"
+                  onClick={() => {
+                    uploadImage();
+                  }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16">
+                    <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z" />
+                    <path d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3z" />
+                  </svg>{" "}
+                </button>
+              </div>
+              <div className="thirdSe">
+                <button
+                  className="butSh"
+                  onClick={() => {
+                    editInfo();
+                  }}
+                >
+                  Share
+                </button>
+              </div>
+              <div className="X">
+                <button
+                  className="XB db"
+                  onClick={() => {
+                    setStatus(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
           </div>
-
           <div className="user_info_img">
             <button className="pro_img bu" onClick={() => setStatus(true)}>
               <img className="pro_img" src={ProfilePicture} />
@@ -216,7 +235,42 @@ const Profile = () => {
               <p className="nameUser">
                 {firstName} {lastName}
               </p>
-              <button className="editButton"> Edit Profile </button>
+              <button
+                className="editButton"
+                onClick={() => {
+                  setEdit(true);
+                  setStatus(false)
+                }}
+              >
+                {" "}
+                Edit Profile{" "}
+              </button>
+              <div
+                className="user_info_popup"
+                style={{ display: edit ? "block" : "none" }}
+              >
+                <div className="mainEdit">
+                <div className="HeaderUpload">
+                  Edit Yoer User
+                </div>
+                <div className="sec_Chosetow">
+                  <div className="ff">
+                  First Name: <input className="mz" placeholder="Insert First Name.."></input></div><br/>
+                  <div className="ff">
+                  Second Name: <input placeholder="Insert Second Name.."></input></div>
+                </div>
+                  <div className="X">
+                    <button
+                      className="XB db"
+                      onClick={() => {
+                        setEdit(false);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="activeUser">
               <div>{`${post.length} Posts`}</div>
@@ -285,7 +339,10 @@ const Profile = () => {
           </button>
         </div>
 
-        <div className="post_post" style={{ display: showStatus == false ? "block" : "none" }}>
+        <div
+          className="post_post"
+          style={{ display: showStatus == false ? "block" : "none" }}
+        >
           <div className="all_post">
             {post
               ? post.map((element, index) => {
@@ -326,51 +383,48 @@ const Profile = () => {
               : []}
           </div>
         </div>
-        <div className="post_post" style={{ display: showStatus == true ? "block" : "none" }}>
+        <div
+          className="post_post"
+          style={{ display: showStatus == true ? "block" : "none" }}
+        >
           <div className="all_post">
             {bookmark.map((element, index) => {
               // console.log(element);
               return (
-                
                 <div className="U_posts">
-                   <div>
-                        <img className="img_posts" src={element.media} />
-                      </div>
+                  <div>
+                    <img className="img_posts" src={element.media} />
+                  </div>
 
-                        <div>
-                        <p className="p_posts"> {element.description}</p>
-                      </div>
-                      <div>
-                      <button
-                            
-                            onClick={() => {
-                              console.log(element.id);
-                              element.id === removeBook && status_b ? (
-                                removeBookmark(element.id)
-                              ) : (
-                                <></>
-                              );
-                            }}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              className="bi bi-bookmark"
-                              viewBox="0 0 16 16"
-                            >
-                              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
-                            </svg>
-                          </button>
-                      </div>
-                 
+                  <div>
+                    <p className="p_posts"> {element.description}</p>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => {
+                        console.log(element.id);
+                        element.id === removeBook && status_b ? (
+                          removeBookmark(element.id)
+                        ) : (
+                          <></>
+                        );
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className="bi bi-bookmark"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               );
-            }
-            )
-            }
-            
+            })}
           </div>
         </div>
       </div>

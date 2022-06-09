@@ -349,9 +349,10 @@ const Home = () => {
             <div className="main">
               {posts
                 ? posts.map((element, index) => {
-                  
+                  console.log(element);
                     return (
                       <div className="map_post" key={index}>
+                        <div className="headerName"><img className="imgpoUs" src={element.ProfilePicture} /> {element.firstName} {element.lastName}</div>
                         <div className="img_main">
                           <img id="img_post" src={element.media} />
                         </div>
@@ -423,7 +424,7 @@ const Home = () => {
                           <div className="numLikes">
                             <h4>{element.likes} Likes</h4>
                           </div>
-                          <p id="p_post"><h4>{element.id}:</h4> <p className="desc">{element.description}</p></p>
+                          <p id="p_post"><h5>{element.firstName} {element.lastName}:</h5> <p className="desc">{element.description}</p></p>
                           <div className="datee">
                           <p>{element.date}</p>
                           </div>
