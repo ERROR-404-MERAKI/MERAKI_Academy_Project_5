@@ -3,9 +3,8 @@ const connection = require("../models/db");
 const addFollow = (req, res) => {
   const person_id = req.params.id;
   const user_id = req.token.userId;
-
-  const query = `INSERT INTO follow (person_id,user_id) VALUES (? ,?)`;
-  const data = [person_id, user_id];
+  const query = `SELECT * FROM users WHERE person_id = ?`;
+  const data = [person_id];
   connection.query(query, data, (err, result) => {
     if (err) {
       return res.status(500).json({
@@ -14,19 +13,93 @@ const addFollow = (req, res) => {
         err: err,
       });
     }
-    if (!result) {
-      return res.status(404).json({
-        success: false,
-        massage: "No followers",
-        err: err,
+    if (result.length) {
+      const query = `UPDATE users SET is_deleted=0 WHERE person_id =?`;
+      const data = [person_id];
+
+      connection.query(query, data, (err, result) => {
+        if (err) {
+          return res.status(500).json({
+            success: false,
+            massage: "server error",
+            err: err,
+          });
+        }
+        res.status(200).json({
+          success: true,
+          message: "user updated",
+        });
+      });
+    } else {
+      const query = `INSERT INTO follow (person_id,user_id) VALUES (? ,?)`;
+      const data = [person_id, user_id];
+
+      connection.query(query, data, (err, result) => {
+        if (err) {
+          return res.status(500).json({
+            success: false,
+            massage: "server error",
+            err: err,
+          });
+        }
+        res.status(201).json({
+          success: true,
+          massage: "Success user added",
+          result,
+        });
       });
     }
-    res.status(201).json({
-      success: true,
-      result,
-    });
   });
 };
+
+// remove user
+const deleteFollow = (req, res) => {
+  const person_id = req.params.id;
+  const query = `SELECT * FROM follow WHERE person_id =? AND is_deleted=0 `;
+  const data = [person_id];
+
+  connection.query(query, data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    if (result) {
+      const query = `UPDATE follow SET is_deleted=1 WHERE person_id =?`;
+      const data = [person_id];
+
+      connection.query(query, data, (err, result) => {
+        if (err) {
+          return res.status(500).json({
+            success: false,
+            message: "Server Error",
+            err,
+          });
+        }
+        if (result.changedRows > 0) {
+          res.status(200).json({
+            success: true,
+            message: "user removed",
+            posts: result,
+          });
+        } else {
+          res.status(404).json({
+            success: false,
+            message: `The user with id ⇾ ${person_id} is already removed`,
+          });
+        }
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: `The user with id ⇾ ${person_id} is not found`,
+      });
+    }
+  });
+};
+
 // git user info
 const getProfile = (req, res) => {
   const userId = req.token.userId;
@@ -129,4 +202,10 @@ const updateUser = (req, res) => {
   });
 };
 
-module.exports = { addFollow, getProfile, getProfileUser, updateUser };
+module.exports = {
+  addFollow,
+  getProfile,
+  getProfileUser,
+  updateUser,
+  deleteFollow,
+};
