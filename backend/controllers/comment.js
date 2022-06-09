@@ -24,7 +24,7 @@ const createComment = (req, res) => {
 const getCommentById = (req, res) => {
   const id = req.params.id;
   //console.log(id);
-  const query = `SELECT * FROM comments WHERE post_id=?`;
+  const query = `SELECT * FROM comments INNER JOIN users ON comments.user_id = users.id WHERE comments.post_id=?`;
   const data = [id];
 
   connection.query(query, data, (err, results) => {
