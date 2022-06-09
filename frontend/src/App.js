@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Bookmark from "./components/Bookmark";
+import ProfileUser from "./components/ProfileUser";
 //===========================
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/saved" element={<Bookmark />} />
+        <Route path="/profile/saved" element={<Bookmark />} />
+        <Route path="/profile/:id" element={<ProfileUser />} />
       </Routes>
     </div>
   );
