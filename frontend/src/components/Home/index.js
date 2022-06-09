@@ -27,7 +27,7 @@ const Home = () => {
   const [removeBook, setRemoveBook] = useState(0);
   const [showButton, setShowButton] = useState(false);
 
-  const { token, isLoggedIn, posts, storys, comments } = useSelector(
+  const { token, posts, storys, comments } = useSelector(
     (state) => {
       return {
         token: state.auth.token,
@@ -209,7 +209,7 @@ const Home = () => {
         }
       )
       .then((result) => {
-        console.log(result, "create", id, "id");
+        
         if (result) {
           dispatch(addBookmark(result.data));
           setShowBook(id);
@@ -225,7 +225,7 @@ const Home = () => {
     axios
       .delete(`http://localhost:5000/bookmark/${id}`)
       .then((result) => {
-        console.log(result, "remove", id, "id");
+        
 
         if (result) {
           dispatch(deleteBookmark(result.data));
@@ -238,7 +238,6 @@ const Home = () => {
       });
   };
 
-  console.log(status_b);
 
   useEffect(() => {
     getAllStorys();
