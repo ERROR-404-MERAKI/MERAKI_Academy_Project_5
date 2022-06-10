@@ -11,6 +11,7 @@ const ProfileUser = () => {
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState(0);
   const [post, setPost] = useState("");
+  const [follower, setFollower] = useState(0);
   const [status, setStatus] = useState(false);
 
   const { id } = useParams();
@@ -69,9 +70,26 @@ const ProfileUser = () => {
       });
   };
 
+  const getUserFollower = () => {
+    axios
+      .get(`http://localhost:5000/user/follower`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        console.log(result);
+        setFollower(result.data.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     gitUser();
     postUser();
+    getUserFollower();
   }, []);
 
   return (
@@ -102,7 +120,7 @@ const ProfileUser = () => {
             </div>
             <div className="activeUser">
               <div>{`${post.length} Posts`}</div>
-              <div>{`280 Follower`}</div>
+              <div>{`${follower.length} Followers`}</div>
               <div>{`205 Following`}</div>
             </div>
             <div className="bio">

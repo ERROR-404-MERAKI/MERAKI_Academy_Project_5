@@ -5,6 +5,7 @@ const {
   updateUser,
   getProfileUser,
   deleteFollow,
+  getFollower
 } = require("../controllers/follow");
 const { authentication } = require("../middlewares/authentication");
 
@@ -23,5 +24,10 @@ followRouter.put("/edit", authentication, updateUser);
 followRouter.get("/profile/name/:id", getProfileUser);
 // endpoint /user/edit
 followRouter.delete("/:id", authentication, deleteFollow);
+
+followRouter.get("/follower", authentication, getFollower);
+
+
+
 
 module.exports = followRouter;

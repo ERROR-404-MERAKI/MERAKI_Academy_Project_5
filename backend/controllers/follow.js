@@ -3,7 +3,7 @@ const connection = require("../models/db");
 const addFollow = (req, res) => {
   const person_id = req.params.id;
   const user_id = req.token.userId;
-  const query = `SELECT * FROM users WHERE person_id = ?`;
+  const query = `SELECT * FROM follow WHERE person_id = ?`;
   const data = [person_id];
   connection.query(query, data, (err, result) => {
     if (err) {
@@ -14,7 +14,7 @@ const addFollow = (req, res) => {
       });
     }
     if (result.length) {
-      const query = `UPDATE users SET is_deleted=0 WHERE person_id =?`;
+      const query = `UPDATE follow SET is_deleted=0 WHERE person_id =?`;
       const data = [person_id];
 
       connection.query(query, data, (err, result) => {
@@ -97,6 +97,31 @@ const deleteFollow = (req, res) => {
         message: `The user with id ⇾ ${person_id} is not found`,
       });
     }
+  });
+};
+
+const getFollower = (req, res) => {
+  const user_id = req.token.userId;
+  const query = `SELECT * FROM follow WHERE user_id =?`;
+  const data = [user_id];
+  connection.query(query, data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    if (!result.length) {
+      return res.status(404).json({
+        success: false,
+        message: "No Followers",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      user: result,
+    });
   });
 };
 
@@ -209,4 +234,5 @@ module.exports = {
   getProfileUser,
   updateUser,
   deleteFollow,
+  getFollower
 };
