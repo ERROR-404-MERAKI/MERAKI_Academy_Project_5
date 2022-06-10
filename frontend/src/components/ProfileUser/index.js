@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../Navbar";
+import "./style.css";
+
 const ProfileUser = () => {
   // state section
   const [media, setMedia] = useState("");
@@ -139,7 +141,7 @@ const ProfileUser = () => {
             posts{" "}
           </button>
         </div>
-        <div className="all_post">
+        <div className="all_posts">
           {" "}
           {post
             ? post.map((element, index) => {

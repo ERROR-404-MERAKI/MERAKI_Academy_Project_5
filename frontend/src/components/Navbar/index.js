@@ -74,6 +74,7 @@ const Navbar = () => {
       .then((result) => {
         dispatch(addPosts(result.data));
         setAddPost(false);
+        getAllPost()
       })
       .catch((err) => {
         console.log(err, "err");
@@ -109,6 +110,20 @@ const Navbar = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  let numberOfPage = localStorage.getItem("NOP") || 1;
+
+  const getAllPost = () => {
+    axios
+      .get(`http://localhost:5000/post?page=${numberOfPage}`)
+      .then((result) => {
+        dispatch(setPosts(result.data.posts.reverse()));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   // logout function
   const logout = () => {

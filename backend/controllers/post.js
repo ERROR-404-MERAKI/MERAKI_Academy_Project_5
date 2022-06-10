@@ -1,8 +1,11 @@
 const connection = require("../models/db");
+const { format } = require("date-fns");
+console.log(format(new Date(), `yyyy-MM-dd hh:mm:ss`));
 
 // function to creat a post
 const createNewPost = (req, res) => {
-  const { media, description, date, likes } = req.body;
+  const { media, description, likes } = req.body;
+  const date = format(new Date(), `hh:mm`);
   const user_id = req.token.userId;
   const query = `INSERT INTO posts (media, description, date,likes,user_id) VALUES (?,?,?,?,?);`;
   const data = [media, description, date, likes, user_id];
@@ -29,7 +32,7 @@ const getAllPost = (req, res) => {
   const page = req.query.page;
   const offset = (page - 1) * limit;
   const query =
-    "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.is_deleted=0 limit " +
+    "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.idUser WHERE posts.is_deleted=0 limit " +
     limit +
     " OFFSET " +
     offset;

@@ -33,7 +33,7 @@ const login = (req, res) => {
         });
       }
       const payload = {
-        userId: result[0].id,
+        userId: result[0].idUser,
         role_id: result[0].roleId,
         name: result[0].firstName,
       };
