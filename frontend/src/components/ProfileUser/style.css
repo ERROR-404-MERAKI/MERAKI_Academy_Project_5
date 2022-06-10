@@ -1,0 +1,7 @@
+.all_posts {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    
+   }

@@ -73,7 +73,7 @@ const Home = () => {
         dispatch(setStorys(result.data.result.reverse()));
       })
       .catch((err) => {
-        console.log(err, "am errrrrrrr");
+        console.log(err);
       });
   };
 
@@ -349,7 +349,6 @@ const Home = () => {
             <div className="main">
               {posts
                 ? posts.map((element, index) => {
-                  console.log(element);
                     return (
                       <div className="map_post" key={index}>
                         <div className="headerName"><img className="imgpoUs" src={element.ProfilePicture} /> {element.firstName} {element.lastName}</div>
