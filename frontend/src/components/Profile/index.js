@@ -8,6 +8,7 @@ import Navbar from "../Navbar";
 
 const Profile = () => {
   const dispatch = useDispatch();
+
   // state section
   const [media, setMedia] = useState("");
   const [ProfilePicture, setProfilePicture] = useState("");
