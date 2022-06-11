@@ -12,7 +12,11 @@ const Profile = () => {
   const [media, setMedia] = useState("");
   const [ProfilePicture, setProfilePicture] = useState("");
   const [firstName, setFirstName] = useState("");
+  const [newfirstName, setNewFirstName] = useState("");
+
   const [lastName, setLastName] = useState("");
+  const [newlastName, setNewLastName] = useState("");
+
   const [age, setAge] = useState(0);
   const [post, setPost] = useState("");
   const [status, setStatus] = useState(false);
@@ -21,6 +25,7 @@ const Profile = () => {
   const [removeBook, setRemoveBook] = useState(0);
   const [status_b, setStatus_b] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [bio, setBio] = useState("");
 
   // data from store
   const { token, bookmark } = useSelector((state) => {
@@ -62,6 +67,7 @@ const Profile = () => {
           setProfilePicture(result.data.user[0].ProfilePicture);
           setFirstName(result.data.user[0].firstName);
           setLastName(result.data.user[0].lastName);
+          setBio(result.data.user[0].bio);
           setAge(result.data.user[0].age);
         }
       })
@@ -90,7 +96,7 @@ const Profile = () => {
     axios
       .put(
         `http://localhost:5000/user/edit`,
-        { firstName, lastName, ProfilePicture },
+         {firstName:newfirstName, lastName:newlastName ,ProfilePicture , bio} ,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -98,6 +104,7 @@ const Profile = () => {
         }
       )
       .then((result) => {
+        userInfo()
         setStatus(false);
       })
       .catch((err) => {
@@ -158,6 +165,7 @@ const Profile = () => {
     userInfo();
     postUser();
   }, []);
+  
 
   return (
     <div className="profile_div">
@@ -246,11 +254,14 @@ const Profile = () => {
                 style={{ display: edit ? "block" : "none" }}
               >
                 <div className="mainEdit">
-                  <div className="HeaderUpload">Edit Yoer User</div>
+                  <div className="HeaderUpload">Edit Your profile</div>
                   <div className="sec_Chosetow">
-                    <div className="ff">
+                    <div className="ff nnn">
                       First Name:{" "}
                       <input
+                        onChange={(e) => {
+                          setNewFirstName(e.target.value);
+                        }}
                         className="mz"
                         placeholder="Insert First Name.."
                       ></input>
@@ -258,17 +269,36 @@ const Profile = () => {
                     <br />
                     <div className="ff">
                       Second Name:{" "}
-                      <input placeholder="Insert Second Name.."></input>
+                      <input
+                        className="mz"
+                        onChange={(e) => {
+                          setNewLastName(e.target.value);
+                        }}
+                        placeholder="Insert Second Name.."
+                      ></input>
+                    </div>
+                    <br />
+
+                    <div className="ff bbb">
+                      Add Bio:{" "}
+                      <input
+                        className="mz"
+                        onChange={(e) => {
+                          setBio(e.target.value);
+                        }}
+                        placeholder="Insert Bio.."
+                      ></input>
                     </div>
                   </div>
                   <div className="X">
                     <button
                       className="XB db"
                       onClick={() => {
+                        editInfo()
                         setEdit(false);
                       }}
                     >
-                      Cancel
+                      update
                     </button>
                   </div>
                 </div>
@@ -281,7 +311,7 @@ const Profile = () => {
             </div>
             <div className="bio">
               <div>
-                <p className="pBio">Bio: We are ERROR 404 TEAM .. Join us</p>
+                <p className="pBio">{bio}</p>
               </div>
             </div>
           </div>

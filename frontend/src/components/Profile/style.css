@@ -127,14 +127,15 @@
  }
  .user_info_popup {
    position: absolute;
-   height: 200px;
-   width: 300px;
+   height: 300px;
+   width: 400px;
    z-index: 1px;
-   margin-top: 80px;
+   margin-top: 300px;
    margin-left: 250px;
    background-color: rgb(255, 255, 255);
    border: 2px solid rgb(219,219,219);
    border-radius: 8px;
+
  }
  .post_post{
    height: 100%;
@@ -142,6 +143,8 @@
    margin-top: 15px;
  }
  .mainEdit{
+  height: 100%;
+  width: 100%;
    display: flex;
    flex-direction: column;
    box-shadow: 5px 7px #dcd6d6;
@@ -198,13 +201,22 @@
     justify-content: center;
     align-items: center;
     color: #77A7FF;
-    height: 90px;
+    height: 200px;
     border-bottom: 1px ridge;
     
   }
-  .ff{
+  .ff {
     display: flex;
     justify-content: center;
+
+  }
+  .nnn {
+    margin-left: 20px;
+  }
+  .bbb{
+    margin-left: 47px;
+    margin-top: 5px;
+
   }
   .mz{
     margin-left: 20px;
