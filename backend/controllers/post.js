@@ -1,6 +1,5 @@
 const connection = require("../models/db");
 const { format } = require("date-fns");
-console.log(format(new Date(), `yyyy-MM-dd hh:mm:ss`));
 
 // function to creat a post
 const createNewPost = (req, res) => {
@@ -129,7 +128,7 @@ const updatePostById = (req, res) => {
         err,
       });
     }
-    // console.log(likes);
+
     if (!result.length) {
       return res.status(404).json({
         success: false,

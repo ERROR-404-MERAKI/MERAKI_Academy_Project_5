@@ -7,7 +7,6 @@ const createPermission = (req, res) => {
   const data = [permission];
 
   connection.query(query, data, (err, result) => {
-    console.log("result", result);
     if (err) {
       return res.status(500).json({
         success: false,

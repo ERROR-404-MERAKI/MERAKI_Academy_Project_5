@@ -128,11 +128,10 @@ const getFollower = (req, res) => {
 // git user info
 const getProfile = (req, res) => {
   const userId = req.token.userId;
-  const query = `SELECT * FROM users WHERE id = ? AND is_deleted=0`;
+  const query = `SELECT * FROM users WHERE idUser = ? AND is_deleted=0`;
   const data = [userId];
 
   connection.query(query, data, (err, result) => {
-    console.log(result);
     if (err) {
       return res.status(500).json({
         success: false,
@@ -211,7 +210,6 @@ const updateUser = (req, res) => {
     ];
 
     connection.query(query, data, (err, result) => {
-      console.log(result);
       if (err) {
         return res.status(500).json({
           success: false,
@@ -234,5 +232,5 @@ module.exports = {
   getProfileUser,
   updateUser,
   deleteFollow,
-  getFollower
+  getFollower,
 };
