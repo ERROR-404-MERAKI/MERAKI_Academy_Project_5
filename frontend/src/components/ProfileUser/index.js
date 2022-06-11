@@ -120,8 +120,8 @@ const ProfileUser = () => {
               </button>
             </div>
             <div className="activeUser">
-              <div>{`${post.length} Posts`}</div>
-              <div>{`${follower.length} Followers`}</div>
+              <div>{`${post.length || 0} Posts`}</div>
+              <div>{`${follower.length || 0} Followers`}</div>
               <div>{`205 Following`}</div>
             </div>
             <div className="bio">

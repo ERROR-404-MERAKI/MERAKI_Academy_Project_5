@@ -155,7 +155,7 @@ const getProfile = (req, res) => {
 // git user info
 const getProfileUser = (req, res) => {
   const userId = req.params.id;
-  const query = `SELECT * FROM users WHERE id = ? AND is_deleted=0`;
+  const query = `SELECT * FROM users WHERE idUser = ? AND is_deleted=0`;
   const data = [userId];
 
   connection.query(query, data, (err, result) => {
