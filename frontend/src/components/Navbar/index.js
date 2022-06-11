@@ -286,8 +286,8 @@ const Navbar = () => {
                 <div key={index} className="search_user">
                   <img className="p_pic" src={user.ProfilePicture} />
                   <Link
-                    onClick={() => history(`/profile/${user.id}`)}
-                    to={`/profile/${user.id}`}
+                    onClick={() => history(`/profile/${user.idUser}`)}
+                    to={`/profile/${user.idUser}`}
                   >{`${user.firstName} ${user.lastName}`}</Link>
                 </div>
               );
