@@ -18,10 +18,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/profile/saved" element={<Bookmark />} />
-        <Route path="/profile/saved" element={<Bookmark />} />
-        <Route path="/profile/:id" element={<ProfileUser />} />
+        <Route path="/user/:id" element={<ProfileUser />} />
       </Routes>
     </div>
   );
