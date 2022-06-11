@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./style.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toLogout } from "../../redux/reducers/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { addPosts, setPosts } from "../../redux/reducers/posts";
@@ -12,9 +12,17 @@ import { BsSearch } from "react-icons/bs";
 import { BsHeart } from "react-icons/bs";
 import { BsPersonCircle } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
+import Profile from "../Profile";
 
 //====FiLogOut=============NavBar==============
 const Navbar = () => {
+  // data from store
+
+  const { token } = useSelector((state) => {
+    return {
+      token: state.auth.token,
+    };
+  });
   // instance
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -29,6 +37,7 @@ const Navbar = () => {
   const [date, setDate] = useState("");
   const [message, setMessage] = useState("");
   const [imgPost, setImgPost] = useState("");
+  const [userId, setUserId] = useState("");
 
   //request to server
   const searchBox = () => {
@@ -46,14 +55,16 @@ const Navbar = () => {
 
   const userProfile = () => {
     axios
-      .get(`http://localhost:5000/register/profile`, {
+      .get(`http://localhost:5000/user/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((result) => {})
+      .then((result) => {
+        setUserId(result.data.user[0].idUser);
+      })
       .catch((err) => {
-        /* console.log(err); */
+        console.log(err);
       });
   };
 
@@ -84,12 +95,6 @@ const Navbar = () => {
     e.preventDefault();
     setFirstName(`%${e.target.value}%`);
   };
-  // data from store
-  const { token } = useSelector((state) => {
-    return {
-      token: state.auth.token,
-    };
-  });
 
   // ------------- Upload media Function
   const uploadImage = async () => {
@@ -127,6 +132,9 @@ const Navbar = () => {
     dispatch(toLogout());
     history("/");
   };
+  useEffect(() => {
+    userProfile();
+  }, []);
 
   return (
     <div className="nav_header">
@@ -157,7 +165,12 @@ const Navbar = () => {
                     searchBox();
                   }}
                 >
-                  <svg className="svgsearch" width="16" height="16" viewBox="0 0 16 16">
+                  <svg
+                    className="svgsearch"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                  >
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                   </svg>
                 </button>
@@ -239,7 +252,7 @@ const Navbar = () => {
               <button
                 id="icon2"
                 onClick={() => {
-                  history("/profile");
+                  history(`/profile/${userId}`);
                 }}
               >
                 <svg id="icon1" width="20" height="20" viewBox="0 0 16 16">
@@ -285,10 +298,15 @@ const Navbar = () => {
               return (
                 <div key={index} className="search_user">
                   <img className="p_pic" src={user.ProfilePicture} />
-                  <Link
-                    onClick={() => history(`/profile/${user.idUser}`)}
-                    to={`/profile/${user.idUser}`}
-                  >{`${user.firstName} ${user.lastName}`}</Link>
+                  {user.idUser !== userId ? (
+                    <Link
+                      to={`/user/${user.idUser}`}
+                    >{`${user.firstName} ${user.lastName}`}</Link>
+                  ) : (
+                    <Link
+                      to={`/profile/${user.idUser}`}
+                    >{`${user.firstName} ${user.lastName}`}</Link>
+                  )}
                 </div>
               );
             })}{" "}
