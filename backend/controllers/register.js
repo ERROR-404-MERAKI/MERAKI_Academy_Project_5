@@ -21,7 +21,6 @@ const register = async (req, res) => {
   ];
   connection.query(query, data, (err, result) => {
     if (err) {
-      console.log(err.message);
       return res.status(409).json({
         success: false,
         massage: "The email already exists",
@@ -93,7 +92,7 @@ const getUserByName = (req, res) => {
         err,
       });
     }
-    console.log(result);
+
     if (result.length === 0) {
       return res.status(404).json({
         success: false,
