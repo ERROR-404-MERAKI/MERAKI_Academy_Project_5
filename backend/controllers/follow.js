@@ -182,7 +182,7 @@ const getProfileUser = (req, res) => {
 
 const updateUser = (req, res) => {
   const userId = req.token.userId;
-  const { firstName, lastName, ProfilePicture } = req.body;
+  const { firstName, lastName, ProfilePicture ,bio } = req.body;
 
   const query = `SELECT * FROM users WHERE idUser=?`;
   const data = [userId];
@@ -201,11 +201,12 @@ const updateUser = (req, res) => {
         message: "user not found",
       });
     }
-    const query = `UPDATE users SET firstName=? , lastName =? ,ProfilePicture =? WHERE idUser=? `;
+    const query = `UPDATE users SET firstName=? , lastName =? ,ProfilePicture =? , bio =? WHERE idUser=? `;
     const data = [
       firstName || result[0].firstName,
       lastName || result[0].lastName,
       ProfilePicture || result[0].ProfilePicture,
+      bio || result[0].bio,
       userId,
     ];
 
