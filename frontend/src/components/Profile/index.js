@@ -58,7 +58,6 @@ const Profile = () => {
         },
       })
       .then((result) => {
-        // console.log(result);
         if (result.data.success) {
           setProfilePicture(result.data.user[0].ProfilePicture);
           setFirstName(result.data.user[0].firstName);
@@ -81,7 +80,6 @@ const Profile = () => {
         },
       })
       .then((result) => {
-        // console.log(result);
         setPost(result.data.posts.reverse());
       })
       .catch((err) => {
@@ -100,7 +98,6 @@ const Profile = () => {
         }
       )
       .then((result) => {
-        console.log(result);
         setStatus(false);
       })
       .catch((err) => {
@@ -146,7 +143,6 @@ const Profile = () => {
     axios
       .delete(`http://localhost:5000/bookmark/${id}`)
       .then((result) => {
-        console.log(result);
         if (result) {
           dispatch(deleteBookmark(result.data));
           setRemoveBook(id);
@@ -239,7 +235,7 @@ const Profile = () => {
                 className="editButton"
                 onClick={() => {
                   setEdit(true);
-                  setStatus(false)
+                  setStatus(false);
                 }}
               >
                 {" "}
@@ -250,15 +246,21 @@ const Profile = () => {
                 style={{ display: edit ? "block" : "none" }}
               >
                 <div className="mainEdit">
-                <div className="HeaderUpload">
-                  Edit Yoer User
-                </div>
-                <div className="sec_Chosetow">
-                  <div className="ff">
-                  First Name: <input className="mz" placeholder="Insert First Name.."></input></div><br/>
-                  <div className="ff">
-                  Second Name: <input placeholder="Insert Second Name.."></input></div>
-                </div>
+                  <div className="HeaderUpload">Edit Yoer User</div>
+                  <div className="sec_Chosetow">
+                    <div className="ff">
+                      First Name:{" "}
+                      <input
+                        className="mz"
+                        placeholder="Insert First Name.."
+                      ></input>
+                    </div>
+                    <br />
+                    <div className="ff">
+                      Second Name:{" "}
+                      <input placeholder="Insert Second Name.."></input>
+                    </div>
+                  </div>
                   <div className="X">
                     <button
                       className="XB db"
@@ -389,7 +391,6 @@ const Profile = () => {
         >
           <div className="all_post">
             {bookmark.map((element, index) => {
-              // console.log(element);
               return (
                 <div className="U_posts">
                   <div>
@@ -402,7 +403,6 @@ const Profile = () => {
                   <div>
                     <button
                       onClick={() => {
-                        console.log(element.id);
                         element.id === removeBook && status_b ? (
                           removeBookmark(element.id)
                         ) : (
