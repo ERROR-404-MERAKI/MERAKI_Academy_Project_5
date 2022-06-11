@@ -32,12 +32,12 @@ const getAllStory = (req, res) => {
 //Create Story
 const createStory = (req, res) => {
   const { story, date } = req.body;
-  const user_id  = req.token.userId;
+  const user_id = req.token.userId;
   const query = `INSERT INTO storys (story,date,user_id) VALUES (?,?,?);`;
   const data = [story, date, user_id];
   connection.query(query, data, (err, result) => {
     if (err) {
-    return  res.status(500).json({
+      return res.status(500).json({
         success: false,
         massage: "server error",
         err: err,
