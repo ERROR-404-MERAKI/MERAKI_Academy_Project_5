@@ -80,7 +80,6 @@ const ProfileUser = () => {
         },
       })
       .then((result) => {
-        console.log(result);
         setFollower(result.data.user);
       })
       .catch((err) => {
