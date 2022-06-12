@@ -1,0 +1,18 @@
+.admin_sec{
+    height: 650px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.admin_left{
+    height: 100%;
+    width: 20%;
+    border-right: 1px ridge;
+}
+.admin_mid{
+    height: 100%;
+    width: 60%;
+}
+.admin_right{
+    border-left: 1px ridge; 
+}
