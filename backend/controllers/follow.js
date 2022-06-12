@@ -3,9 +3,11 @@ const connection = require("../models/db");
 const addFollow = (req, res) => {
   const person_id = req.params.id;
   const user_id = req.token.userId;
-  const query = `SELECT * FROM follow WHERE person_id = ?`;
-  const data = [person_id];
+  const query = `SELECT * FROM follow WHERE person_id = ? AND user_id=?`;
+  const data = [person_id, user_id];
+
   connection.query(query, data, (err, result) => {
+    console.log(result,"create");
     if (err) {
       return res.status(500).json({
         success: false,
@@ -14,7 +16,7 @@ const addFollow = (req, res) => {
       });
     }
     if (result.length) {
-      const query = `UPDATE follow SET is_deleted=0 WHERE person_id =?`;
+      const query = `UPDATE follow SET is_deleted=0`;
       const data = [person_id];
 
       connection.query(query, data, (err, result) => {
@@ -27,6 +29,7 @@ const addFollow = (req, res) => {
         }
         res.status(200).json({
           success: true,
+          is_deleted: 0,
           message: "user updated",
         });
       });
@@ -55,7 +58,7 @@ const addFollow = (req, res) => {
 // remove user
 const deleteFollow = (req, res) => {
   const person_id = req.params.id;
-  const query = `SELECT * FROM follow WHERE person_id =? AND is_deleted=0 `;
+  const query = `SELECT * FROM follow WHERE person_id =?`;
   const data = [person_id];
 
   connection.query(query, data, (err, result) => {
@@ -66,7 +69,7 @@ const deleteFollow = (req, res) => {
         err,
       });
     }
-    if (result) {
+    if (result.length) {
       const query = `UPDATE follow SET is_deleted=1 WHERE person_id =?`;
       const data = [person_id];
 
@@ -81,8 +84,9 @@ const deleteFollow = (req, res) => {
         if (result.changedRows > 0) {
           res.status(200).json({
             success: true,
+            is_deleted: 1,
             message: "user removed",
-            posts: result,
+            result,
           });
         } else {
           res.status(404).json({
@@ -102,7 +106,7 @@ const deleteFollow = (req, res) => {
 
 const getFollower = (req, res) => {
   const user_id = req.token.userId;
-  const query = `SELECT * FROM follow WHERE user_id =?`;
+  const query = `SELECT * FROM follow WHERE user_id =? `;
   const data = [user_id];
   connection.query(query, data, (err, result) => {
     if (err) {
@@ -182,7 +186,7 @@ const getProfileUser = (req, res) => {
 
 const updateUser = (req, res) => {
   const userId = req.token.userId;
-  const { firstName, lastName, ProfilePicture ,bio } = req.body;
+  const { firstName, lastName, ProfilePicture, bio } = req.body;
 
   const query = `SELECT * FROM users WHERE idUser=?`;
   const data = [userId];

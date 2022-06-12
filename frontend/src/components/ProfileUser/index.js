@@ -14,7 +14,7 @@ const ProfileUser = () => {
   const [age, setAge] = useState(0);
   const [post, setPost] = useState("");
   const [follower, setFollower] = useState(0);
-  const [status, setStatus] = useState(false);
+  // const [status, setStatus] = useState(1);
 
   const { id } = useParams();
 
@@ -65,7 +65,7 @@ const ProfileUser = () => {
         }
       )
       .then((result) => {
-        console.log(result);
+        getUserFollower();
       })
       .catch((err) => {
         console.log(err);
@@ -86,7 +86,21 @@ const ProfileUser = () => {
         console.log(err);
       });
   };
-
+  const unFollow = () => {
+    axios
+      .delete(`http://localhost:5000/user/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        getUserFollower();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log(follower);
   useEffect(() => {
     gitUser();
     postUser();
@@ -109,15 +123,53 @@ const ProfileUser = () => {
               <p className="nameUser">
                 {firstName} {lastName}
               </p>
-              <button
-                className="editButton"
-                onClick={() => {
-                  followUser();
-                }}
-              >
-                {" "}
-                Follow{" "}
-              </button>
+              <div>
+                {follower ? (
+                  follower.map((element, index) => {
+                    return (
+                      <div key={index}>
+                        {element.person_id == id && element.is_deleted == 1 ? (
+                          <button
+                            className="editButton"
+                            onClick={() => {
+                              followUser();
+                              console.log("follow");
+                            }}
+                          >
+                            {" "}
+                            Follow{" "}
+                          </button>
+                        ) : (
+                          <button
+                            className="editButton"
+                            onClick={() => {
+                              unFollow();
+                              console.log("unfollow");
+                            }}
+                          >
+                            {" "}
+                            unfollow{" "}
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div>
+                    {
+                      <button
+                        className="editButton"
+                        onClick={() => {
+                          followUser();
+                        }}
+                      >
+                        {" "}
+                        Follow{" "}
+                      </button>
+                    }
+                  </div>
+                )}
+              </div>
             </div>
             <div className="activeUser">
               <div>{`${post.length || 0} Posts`}</div>
