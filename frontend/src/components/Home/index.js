@@ -414,7 +414,8 @@ const Home = () => {
                           </div>
 
                           <div id="p_post">
-                            <h5>
+                            
+                            <h5 >
                               {element.firstName} {element.lastName}:
                             </h5>{" "}
                             <p className="desc">{element.description}</p>
@@ -422,7 +423,7 @@ const Home = () => {
                           <div className="datee">
                             <p>{element.date}</p>
                           </div>
-                          <div className="footerpost">
+                          <div>
                             <input
                               className="azx"
                               placeholder="Add a comment.."
@@ -443,25 +444,48 @@ const Home = () => {
                                 <img className="img-c" src={element.media} />
                               </div>
                               <div className="left_s">
-                                <button
-                                  onClick={() => {
-                                    setShow(false);
-                                  }}
-                                >
-                                  close
-                                </button>
+                                <div className="close">
+                                  <button
+                                    className="closeb"
+                                    onClick={() => {
+                                      setShow(false);
+                                    }}
+                                  >
+                                    X
+                                  </button>
+                                </div>
+
                                 {/* ====================== */}
-                                <br />
-                                <p id="p_post">{element.description}</p>
+                                
+                               
+                                <div className="fl_co">
+                                              <img className="imgpoUs" src={element.ProfilePicture}/>
+                                              <div className="h5_co"><h5 id="ww">{element.firstName}</h5><h5>{element.lastName} :</h5> </div>{" "}
+                                        <p>{element.description}</p>
+
+                                              </div>
+                                              <br/>
+                                    
                                 <div className="comment_section">
                                   {comments &&
                                     comments.map((e, i) => {
+                                      console.log(e);
+
                                       return (
                                         <div key={i}>
                                           {element.id === e.post_id ? (
-                                            <p className="comment">
-                                              {e.comment}
-                                            </p>
+                                            <div className="main_co">
+                                              <div className="fl_co1">
+                                              <img className="imgpoUs" src={e.ProfilePicture}/>
+                                              <div className="h5_co"><h5>{e.firstName}</h5><h5>{e.lastName}:</h5></div>
+                                              </div>
+                                              <div className="p_co">
+                                              <p className="comment">
+                                                {e.comment}
+                                              </p>
+                                              </div>
+                                              <br/>
+                                            </div>
                                           ) : (
                                             ""
                                           )}
@@ -472,7 +496,7 @@ const Home = () => {
                                 <br />
                                 <div className="input_button">
                                   <input
-                                    className="Add_comment"
+                                    className="azx2"
                                     type="text"
                                     placeholder="Add comment"
                                     onChange={(e) => {
@@ -485,7 +509,7 @@ const Home = () => {
                                       createNewComment(element.id);
                                     }}
                                   >
-                                    Add comment
+                                    post
                                   </button>
                                 </div>
                               </div>
