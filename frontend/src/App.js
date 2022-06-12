@@ -9,6 +9,8 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Bookmark from "./components/Bookmark";
 import ProfileUser from "./components/ProfileUser";
+import Admin from "./components/Admin";
+
 //===========================
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
         <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/profile/saved" element={<Bookmark />} />
         <Route path="/user/:id" element={<ProfileUser />} />
+        <Route path="/admin" element={<Admin />} />
+
       </Routes>
     </div>
   );
