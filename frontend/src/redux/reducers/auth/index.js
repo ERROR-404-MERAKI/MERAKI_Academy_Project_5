@@ -5,6 +5,7 @@ export const auth = createSlice({
   initialState: {
     token: localStorage.getItem("token") || "",
     isLoggedIn: localStorage.getItem("token") ? true : false,
+    user:[],
   },
   reducers: {
     toLogin: (state, action) => {
@@ -17,8 +18,11 @@ export const auth = createSlice({
       state.isLoggedIn = false;
       localStorage.clear();
     },
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
-export const { toLogin, toLogout } = auth.actions;
+export const { toLogin, toLogout ,setUser} = auth.actions;
 export default auth.reducer;

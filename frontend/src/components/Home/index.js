@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePosts, setPosts } from "../../redux/reducers/posts";
+import { setUser } from "../../redux/reducers/auth";
+
 import { addBookmark, deleteBookmark } from "../../redux/reducers/bookmark";
 import { addstorys, setStorys } from "../../redux/reducers/story";
 import Navbar from "../Navbar";
 import { addComment, setComments } from "../../redux/reducers/comment";
 import { BsHeart } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
-import { BsBookmark } from "react-icons/bs";
+
 
 //==================Home =====================
 const Home = () => {
@@ -27,13 +29,14 @@ const Home = () => {
   const [removeBook, setRemoveBook] = useState(0);
   const [showButton, setShowButton] = useState(false);
 
-  const { token, posts, storys, comments } = useSelector((state) => {
+  const { token, posts, storys, comments ,user } = useSelector((state) => {
     return {
       token: state.auth.token,
       isLoggedIn: state.auth.isLoggedIn,
       posts: state.posts.posts,
       storys: state.storys.storys,
       comments: state.comments.commented,
+      user:state.auth.user
     };
   });
 
@@ -60,6 +63,18 @@ const Home = () => {
 
     localStorage.setItem("NOP", numberOfPage);
     getAllPost();
+  };
+  //================git All User=========
+  const getAllUser = () => {
+    axios
+      .get(`http://localhost:5000/register`)
+      .then((result) => {
+        console.log(result.data.result);
+        dispatch(setUser(result.data.result));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   //===============================
@@ -233,6 +248,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    getAllUser()
     getAllStorys();
     getAllPost();
   }, []);
@@ -329,6 +345,9 @@ const Home = () => {
               </button>
             </div>
           </div>
+          {/* =========================================== */}
+      
+          
           {/* ====================Post==================== */}
           <br />
           <div className="post_department">
@@ -539,7 +558,24 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="right_side"></div>
+        <div className="right_side">
+         <div><h5>Suggestions For You</h5></div> 
+        {
+        user.map((u ,i)=>{
+          console.log(u);
+          return(
+            <div className="headerName" >
+            <img className="imgpoUs" src={u.ProfilePicture}/>
+            <h5>{u.firstName}</h5>
+            <h5>{u.lastName}</h5>
+
+
+            </div>
+          )
+        })
+      }
+
+        </div>
       </div>
     </div>
   );
