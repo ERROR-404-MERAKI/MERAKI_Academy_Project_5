@@ -36,7 +36,14 @@ const register = async (req, res) => {
 };
 //GetAllUsers
 const getAllUser = (req, res) => {
-  const query = `SELECT * FROM users WHERE is_deleted=0;`;
+  const limit = 5;
+  const page = req.query.page;
+  const offset = (page - 1) * limit;
+  const query =
+    "SELECT * FROM users WHERE is_deleted=0 limit " +
+    limit +
+    " OFFSET " +
+    offset;
   connection.query(query, (err, result) => {
     if (err) {
       return res.status(500).json({

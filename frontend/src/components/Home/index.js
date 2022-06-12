@@ -12,7 +12,6 @@ import { addComment, setComments } from "../../redux/reducers/comment";
 import { BsHeart } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
 
-
 //==================Home =====================
 const Home = () => {
   const dispatch = useDispatch();
@@ -29,14 +28,14 @@ const Home = () => {
   const [removeBook, setRemoveBook] = useState(0);
   const [showButton, setShowButton] = useState(false);
 
-  const { token, posts, storys, comments ,user } = useSelector((state) => {
+  const { token, posts, storys, comments, user } = useSelector((state) => {
     return {
       token: state.auth.token,
       isLoggedIn: state.auth.isLoggedIn,
       posts: state.posts.posts,
       storys: state.storys.storys,
       comments: state.comments.commented,
-      user:state.auth.user
+      user: state.auth.user,
     };
   });
 
@@ -69,7 +68,6 @@ const Home = () => {
     axios
       .get(`http://localhost:5000/register`)
       .then((result) => {
-        console.log(result.data.result);
         dispatch(setUser(result.data.result));
       })
       .catch((err) => {
@@ -248,7 +246,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getAllUser()
+    getAllUser();
     getAllStorys();
     getAllPost();
   }, []);
@@ -346,8 +344,7 @@ const Home = () => {
             </div>
           </div>
           {/* =========================================== */}
-      
-          
+
           {/* ====================Post==================== */}
           <br />
           <div className="post_department">
@@ -433,8 +430,7 @@ const Home = () => {
                           </div>
 
                           <div id="p_post">
-                            
-                            <h5 >
+                            <h5>
                               {element.firstName} {element.lastName}:
                             </h5>{" "}
                             <p className="desc">{element.description}</p>
@@ -475,16 +471,20 @@ const Home = () => {
                                 </div>
 
                                 {/* ====================== */}
-                                
-                               
-                                <div className="fl_co">
-                                              <img className="imgpoUs" src={element.ProfilePicture}/>
-                                              <div className="h5_co"><h5 id="ww">{element.firstName}</h5><h5>{element.lastName} :</h5> </div>{" "}
-                                        <p>{element.description}</p>
 
-                                              </div>
-                                              <br/>
-                                    
+                                <div className="fl_co">
+                                  <img
+                                    className="imgpoUs"
+                                    src={element.ProfilePicture}
+                                  />
+                                  <div className="h5_co">
+                                    <h5 id="ww">{element.firstName}</h5>
+                                    <h5>{element.lastName} :</h5>{" "}
+                                  </div>{" "}
+                                  <p>{element.description}</p>
+                                </div>
+                                <br />
+
                                 <div className="comment_section">
                                   {comments &&
                                     comments.map((e, i) => {
@@ -495,15 +495,21 @@ const Home = () => {
                                           {element.id === e.post_id ? (
                                             <div className="main_co">
                                               <div className="fl_co1">
-                                              <img className="imgpoUs" src={e.ProfilePicture}/>
-                                              <div className="h5_co"><h5>{e.firstName}</h5><h5>{e.lastName}:</h5></div>
+                                                <img
+                                                  className="imgpoUs"
+                                                  src={e.ProfilePicture}
+                                                />
+                                                <div className="h5_co">
+                                                  <h5>{e.firstName}</h5>
+                                                  <h5>{e.lastName}:</h5>
+                                                </div>
                                               </div>
                                               <div className="p_co">
-                                              <p className="comment">
-                                                {e.comment}
-                                              </p>
+                                                <p className="comment">
+                                                  {e.comment}
+                                                </p>
                                               </div>
-                                              <br/>
+                                              <br />
                                             </div>
                                           ) : (
                                             ""
@@ -559,22 +565,22 @@ const Home = () => {
           </div>
         </div>
         <div className="right_side">
-         <div><h5>Suggestions For You</h5></div> 
-        {
-        user.map((u ,i)=>{
-          console.log(u);
-          return(
-            <div className="headerName" >
-            <img className="imgpoUs" src={u.ProfilePicture}/>
-            <h5>{u.firstName}</h5>
-            <h5>{u.lastName}</h5>
-
-
-            </div>
-          )
-        })
-      }
-
+          <div className="headsug">
+            <h5>Suggestions you may like</h5>
+          </div>
+          {user.map((u, i) => {
+            return (
+              <div className="headerName1" key={i}>
+                <img className="imgpoUs" src={u.ProfilePicture} />
+                <h6>{u.firstName}</h6>
+                <h6>{u.lastName}</h6>
+                <div className="ff410">
+                  {" "}
+                  <button className="r410">Follow</button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
