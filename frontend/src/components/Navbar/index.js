@@ -5,14 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { toLogout } from "../../redux/reducers/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { addPosts, setPosts } from "../../redux/reducers/posts";
-import { RiHome2Line } from "react-icons/ri";
-import { BsChatDots } from "react-icons/bs";
-import { GoDiffAdded } from "react-icons/go";
-import { BsSearch } from "react-icons/bs";
-import { BsHeart } from "react-icons/bs";
-import { BsPersonCircle } from "react-icons/bs";
-import { FiLogOut } from "react-icons/fi";
-import Profile from "../Profile";
+
 
 //====FiLogOut=============NavBar==============
 const Navbar = () => {
@@ -312,29 +305,37 @@ const Navbar = () => {
         className="search_popup"
         style={{ display: status ? "block" : "none" }}
       >
+        <div className="xUp">
         <button
-          className="search_b"
+          className="buttonX"
           onClick={() => {
             setStatus(false);
           }}
         >
-          close
+          X
         </button>
+        </div>
+        <div className="headerAdd"> 
+          <h3>Search results</h3>
+        </div>
         {names ? (
           <>
             {names.map((user, index) => {
               return (
                 <div key={index} className="search_user">
-                  <img className="p_pic" src={user.ProfilePicture} />
+                  <div>
+                  <img className="p_pic" src={user.ProfilePicture} /></div>
+                  <div className="mmid">
                   {user.idUser !== userId ? (
-                    <Link
+                    <Link className="link_name"
                       to={`/user/${user.idUser}`}
                     >{`${user.firstName} ${user.lastName}`}</Link>
                   ) : (
                     <Link
                       to={`/profile/${user.idUser}`}
                     >{`${user.firstName} ${user.lastName}`}</Link>
-                  )}
+                  )}</div>
+                  <div className="bbut1"><button className="rzz" >Follow</button></div>
                 </div>
               );
             })}{" "}
