@@ -12,7 +12,42 @@
 .admin_mid{
     height: 100%;
     width: 60%;
+    display: flex;
+    flex-direction: column;
 }
 .admin_right{
     border-left: 1px ridge; 
 }
+.table{
+    
+    width: 100%;
+    display: flex;
+    flex-direction: row; 
+    margin-top: 20px; 
+    gap: 10px;
+    justify-content: space-between;
+    color: rgb(68, 68, 68);
+    border-top: 2px ridge;
+    border-right: 2px ridge;
+
+
+}
+#t1{
+    background-color: blanchedalmond;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+.main_table{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.tr{
+    width: 100%;
+    display: flex;
+    justify-content: space-around; 
+}
+
