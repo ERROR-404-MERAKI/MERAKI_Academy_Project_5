@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../Navbar";
+import { setId } from "../../redux/reducers/users/index";
 import "./style.css";
 
 const ProfileUser = () => {
@@ -13,15 +14,20 @@ const ProfileUser = () => {
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState(0);
   const [post, setPost] = useState("");
+  const [users, setUsers] = useState(0);
   const [follower, setFollower] = useState(0);
+  const [following, setFollowing] = useState(0);
+
   // const [status, setStatus] = useState(1);
 
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   // data from store
-  const { token } = useSelector((state) => {
+  const { token, person_id } = useSelector((state) => {
     return {
       token: state.auth.token,
+      person_id: state.userId.userId,
     };
   });
 
@@ -34,6 +40,7 @@ const ProfileUser = () => {
         setFirstName(result.data.user[0].firstName);
         setLastName(result.data.user[0].lastName);
         setAge(result.data.user[0].age);
+        dispatch(setId(id));
       })
       .catch((err) => {
         console.log(err);
@@ -80,11 +87,11 @@ const ProfileUser = () => {
         },
       })
       .then((result) => {
-        setFollower(result.data.user);
+        setUsers(result.data.user);
+        followerId();
+        followingId();
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const unFollow = () => {
     axios
@@ -100,7 +107,30 @@ const ProfileUser = () => {
         console.log(err);
       });
   };
-  console.log(follower);
+
+  const followerId = () => {
+    axios
+      .get(`http://localhost:5000/user/follower/${id}`)
+      .then((result) => {
+        setFollower(result.data.user);
+        getUserFollower();
+      })
+      .catch((err) => {});
+  };
+
+  const followingId = () => {
+    axios
+      .get(`http://localhost:5000/user/following}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        setFollowing(result.data.user);
+        getUserFollower();
+      })
+      .catch((err) => {});
+  };
   useEffect(() => {
     gitUser();
     postUser();
@@ -124,8 +154,8 @@ const ProfileUser = () => {
                 {firstName} {lastName}
               </p>
               <div>
-                {follower ? (
-                  follower.map((element, index) => {
+                {users ? (
+                  users.map((element, index) => {
                     return (
                       <div key={index}>
                         {element.person_id == id && element.is_deleted == 1 ? (
@@ -133,7 +163,6 @@ const ProfileUser = () => {
                             className="editButton"
                             onClick={() => {
                               followUser();
-                              console.log("follow");
                             }}
                           >
                             {" "}
@@ -156,7 +185,7 @@ const ProfileUser = () => {
                   })
                 ) : (
                   <div>
-                    {
+                    {id == person_id && (
                       <button
                         className="editButton"
                         onClick={() => {
@@ -166,7 +195,7 @@ const ProfileUser = () => {
                         {" "}
                         Follow{" "}
                       </button>
-                    }
+                    )}
                   </div>
                 )}
               </div>
@@ -174,7 +203,7 @@ const ProfileUser = () => {
             <div className="activeUser">
               <div>{`${post.length || 0} Posts`}</div>
               <div>{`${follower.length || 0} Followers`}</div>
-              <div>{`205 Following`}</div>
+              <div>{`${following.length || 0} Following`}</div>
             </div>
             <div className="bio">
               <div>

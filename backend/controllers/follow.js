@@ -7,7 +7,6 @@ const addFollow = (req, res) => {
   const data = [person_id, user_id];
 
   connection.query(query, data, (err, result) => {
-    console.log(result,"create");
     if (err) {
       return res.status(500).json({
         success: false,
@@ -129,6 +128,57 @@ const getFollower = (req, res) => {
   });
 };
 
+const followers = (req, res) => {
+  const person_id = req.params.id;
+  const query = `SELECT * FROM follow WHERE person_id =? AND is_deleted = 0 `;
+  const data = [person_id];
+  connection.query(query, data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    if (!result.length) {
+      return res.status(404).json({
+        success: false,
+        message: "No Followers",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: `follower for person_id ${person_id}`,
+      user: result,
+    });
+  });
+};
+
+const following = (req, res) => {
+  const user_id = req.token.userId;
+  const query = `SELECT * FROM follow WHERE user_id =? AND is_deleted = 0 `;
+  const data = [user_id];
+  connection.query(query, data, (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server Error",
+        err,
+      });
+    }
+    if (!result.length) {
+      return res.status(404).json({
+        success: false,
+        message: "No following",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: `following for user_id ${user_id}`,
+      user: result,
+    });
+  });
+};
 // git user info
 const getProfile = (req, res) => {
   const userId = req.token.userId;
@@ -238,4 +288,6 @@ module.exports = {
   updateUser,
   deleteFollow,
   getFollower,
+  followers,
+  following,
 };
