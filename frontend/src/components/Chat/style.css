@@ -1,0 +1,15 @@
+.DM {
+  display: flex;
+  width: 100%;
+}
+
+.users-chat {
+  width: 25%;
+  height: 100%;
+  background-color: aquamarine;
+}
+
+.chat-box {
+  width: 75%;
+  height: 100%;
+}
