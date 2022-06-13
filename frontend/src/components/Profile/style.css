@@ -50,10 +50,15 @@
    
  }
  .editButton{
-   width: 100px;
+   width: 80px;
    border-color: rgb(219,219,219);
    border-radius: 2px;
    background-color: rgb(255, 255, 255);
+   cursor: pointer;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+ }
+ .editButton:hover{
+  border: 1px solid #1f2125  ;
  }
  .activeUser{
    display: flex;
@@ -67,7 +72,8 @@
  .pBio{ 
    margin-left: 20px;
    margin-top: 5px;
-   font-size: 10px;
+   font-size: 12px;
+   font-family: 'Courier New', Courier, monospace;
  }
  .navBottom{
    border-bottom: 2px ridge;
@@ -125,6 +131,9 @@
    cursor: pointer;
    margin-top: 3px;
  }
+ .dede:hover{
+  background-color: tomato;
+ }
  .user_info_popup {
    position: absolute;
    height: 300px;
@@ -172,6 +181,19 @@
    align-items: center;
    border-bottom: 1px ridge;
  }
+ .insight{
+  width: 80px;
+  border-color: rgb(219,219,219);
+   border-radius: 2px;
+   background-color: rgb(255, 255, 255);
+   cursor: pointer;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+ }
+
+ .insight:hover{
+  border: 1px solid #1f2125 ;
+}
+
  .sec_Chose{
    display: flex;
    justify-content: center;

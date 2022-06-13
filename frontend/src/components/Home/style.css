@@ -10,6 +10,12 @@
   background-color: white;
  
 }
+.FooterCCo{
+  display: flex;
+  height: 15%;
+  border-top: 1px ridge;
+  align-items: center;
+}
 .post_home {
   display: flex;
   flex-direction: row;
@@ -120,10 +126,10 @@ gap: 20px;
 
 }
 #p_post {
-  height: 20%;
+  height: 15%;
   display: flex;
-  margin-left: 15px;
-  margin-top: 10px;
+  margin-left: 10px;
+  margin-top: 1px;
   gap: 5px;
 }
 .show_comment {
@@ -280,10 +286,17 @@ flex-direction: column;
   border: 2px solid rgba(219,219,219);
   color: #77A7FF;
 }
+.bbllue{
+  color: #6498f8;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+
 
 .azx{
   border: 0px;
-  width: 90%;
+  width: 87%;
   height: 100%;
   padding-left: 10px;
 }
@@ -339,11 +352,23 @@ gap: 5px;
   gap: 5px;
 }
 .headerName1{
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 5px;
   margin-top: 10px;
-  margin-left: 15px;
+justify-content: center;
+
+ 
+}
+.onnne{
+  width: 10%;
+}
+.secconnd{
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .headerName{
   display: flex;
@@ -352,7 +377,7 @@ gap: 5px;
   cursor: pointer;
 }
 .ff410{
-  width: 100%;
+  width: 30%;
   display: flex;
   justify-content: flex-end;
 }
