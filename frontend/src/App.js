@@ -10,6 +10,7 @@ import Profile from "./components/Profile";
 import Bookmark from "./components/Bookmark";
 import ProfileUser from "./components/ProfileUser";
 import Admin from "./components/Admin";
+import Chat from "./components/Chat";
 
 //===========================
 
@@ -24,7 +25,7 @@ function App() {
         <Route path="/profile/saved" element={<Bookmark />} />
         <Route path="/user/:id" element={<ProfileUser />} />
         <Route path="/admin" element={<Admin />} />
-
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </div>
   );
