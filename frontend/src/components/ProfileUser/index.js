@@ -81,7 +81,7 @@ const ProfileUser = () => {
 
   const getUserFollower = () => {
     axios
-      .get(`http://localhost:5000/user/follower`, {
+      .get(`http://localhost:5000/user/follower/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -136,7 +136,8 @@ const ProfileUser = () => {
     postUser();
     getUserFollower();
   }, []);
-
+  console.log(users);
+  console.log(id, "iiiiid moo");
   return (
     <div className="profile_div">
       <div className="nav_bar">
@@ -156,6 +157,7 @@ const ProfileUser = () => {
               <div>
                 {users ? (
                   users.map((element, index) => {
+                     {console.log( element.person_id == id && element.is_deleted == 1)} 
                     return (
                       <div key={index}>
                         {element.person_id == id && element.is_deleted == 1 ? (
@@ -173,7 +175,6 @@ const ProfileUser = () => {
                             className="editButton"
                             onClick={() => {
                               unFollow();
-                              console.log("unfollow");
                             }}
                           >
                             {" "}

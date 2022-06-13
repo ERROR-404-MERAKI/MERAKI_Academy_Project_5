@@ -27,7 +27,7 @@ followRouter.get("/profile/name/:id", getProfileUser);
 // endpoint /user/edit
 followRouter.delete("/:id", authentication, deleteFollow);
 
-followRouter.get("/follower", authentication, getFollower);
+followRouter.get("/follower/:id", authentication, getFollower);
 
 followRouter.get("/follower/:id", followers);
 

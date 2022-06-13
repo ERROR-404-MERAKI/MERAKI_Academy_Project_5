@@ -105,8 +105,9 @@ const deleteFollow = (req, res) => {
 
 const getFollower = (req, res) => {
   const user_id = req.token.userId;
-  const query = `SELECT * FROM follow WHERE user_id =? `;
-  const data = [user_id];
+  const person_id = req.params.id;
+  const query = `SELECT * FROM follow WHERE user_id =? AND person_id =? `;
+  const data = [user_id, person_id];
   connection.query(query, data, (err, result) => {
     if (err) {
       return res.status(500).json({
