@@ -66,7 +66,7 @@ const Home = () => {
   //================git All User=========
   const getAllUser = () => {
     axios
-      .get(`http://localhost:5000/register`)
+      .get(`http://localhost:5000/register?page=1`)
       .then((result) => {
         dispatch(setUser(result.data.result));
       })
