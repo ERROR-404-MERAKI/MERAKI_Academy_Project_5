@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
-
+const socket = require("socket.io");
 
 require("./models/db");
 
@@ -15,8 +15,11 @@ const storyRouter = require("./routes/story");
 const permissionRouter = require("./routes/permissions");
 const followRouter = require("./routes/follow");
 const commentRouter = require("../backend/routes/comment");
-
 const bookmarkRouter = require("./routes/bookmark");
+const messageRouter = require("./routes/message");
+
+
+
 
 //import middleware
 app.use(cors());
@@ -31,10 +34,33 @@ app.use("/permission", permissionRouter);
 app.use("/user", followRouter);
 app.use("/comment", commentRouter);
 app.use("/bookmark", bookmarkRouter);
+app.use("/message",messageRouter);
+
 //basic server
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`server on ${PORT}`);
+});
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    method: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`user connected  ${socket.id}...`);
+  socket.on("JOIN_ROOM", (data) => {
+    console.log(data);
+    socket.join(data);
+  });
+  socket.on("SEND_MESSAGE", (data) => {
+    console.log(data);
+    socket.to(data.room).emit("RECEIVE_MESSAGE", data.content);
+  });
+  socket.on("disconnect", () => {
+    console.log(`user left...`);
+  });
 });
