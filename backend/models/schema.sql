@@ -50,12 +50,14 @@ CREATE TABLE bookmarks (
 );
 
 CREATE TABLE messages (
-    id INT AUTO_INCREMENT NOT NULL,
+    roomId INT AUTO_INCREMENT NOT NULL,
     message VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
+    persion_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(idUser),
+    FOREIGN KEY (persion_id) REFERENCES users(idUser),
     is_deleted TINYINT DEFAULT 0,
-    PRIMARY KEY (id)
+    PRIMARY KEY (roomId)
 );
 
 CREATE TABLE storys (
