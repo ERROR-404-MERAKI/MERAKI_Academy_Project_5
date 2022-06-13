@@ -71,7 +71,7 @@ const Admin = () => {
   });
   const getAllUser = () => {
     axios
-      .get(`http://localhost:5000/register`)
+      .get(`http://localhost:5000/register?page=1`)
       .then((result) => {
         console.log(result.data.result);
         dispatch(setUser(result.data.result));
