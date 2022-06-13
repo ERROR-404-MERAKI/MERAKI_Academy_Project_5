@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./style.css";
 import { io } from "socket.io-client";
 import Navbar from "../Navbar";
+import { useSelector } from "react-redux";
 
 const ENDPOINT = "http://localhost:5000";
 const socket = io.connect(ENDPOINT);
