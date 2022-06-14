@@ -6,7 +6,7 @@ const messageRouter = express.Router();
 
 // endpoint /login 
 messageRouter.post("/:id", authentication, createMessage );
-messageRouter.get("/", authentication, gitAllMessage );
+messageRouter.get("/:id", authentication, gitAllMessage );
 
 
 module.exports = messageRouter;
