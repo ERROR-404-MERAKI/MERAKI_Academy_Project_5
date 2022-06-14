@@ -8,7 +8,6 @@ import "./style.css";
 
 const ProfileUser = () => {
   // state section
-  const [media, setMedia] = useState("");
   const [ProfilePicture, setProfilePicture] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -17,8 +16,6 @@ const ProfileUser = () => {
   const [users, setUsers] = useState(0);
   const [follower, setFollower] = useState(0);
   const [following, setFollowing] = useState(0);
-
-  // const [status, setStatus] = useState(1);
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -88,11 +85,10 @@ const ProfileUser = () => {
       })
       .then((result) => {
         setUsers(result.data.user);
-        followerId();
-        followingId();
       })
       .catch((err) => {});
   };
+
   const unFollow = () => {
     axios
       .delete(`http://localhost:5000/user/${id}`, {
@@ -110,8 +106,9 @@ const ProfileUser = () => {
 
   const followerId = () => {
     axios
-      .get(`http://localhost:5000/user/follower/${id}`)
+      .get(`http://localhost:5000/user/follow/${id}`)
       .then((result) => {
+        console.log(result.data.user, "follow");
         setFollower(result.data.user);
         getUserFollower();
       })
@@ -120,17 +117,21 @@ const ProfileUser = () => {
 
   const followingId = () => {
     axios
-      .get(`http://localhost:5000/user/following}`, {
+      .get(`http://localhost:5000/user/following`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((result) => {
+        console.log(result.data.user, "following");
+
         setFollowing(result.data.user);
         getUserFollower();
       })
       .catch((err) => {});
   };
+  console.log(users);
+
   useEffect(() => {
     gitUser();
     postUser();
@@ -157,7 +158,11 @@ const ProfileUser = () => {
               <div>
                 {users ? (
                   users.map((element, index) => {
-                     {console.log( element.person_id == id && element.is_deleted == 1)} 
+                    {
+                      console.log(
+                        element.person_id == id && element.is_deleted == 1
+                      );
+                    }
                     return (
                       <div key={index}>
                         {element.person_id == id && element.is_deleted == 1 ? (
@@ -165,6 +170,8 @@ const ProfileUser = () => {
                             className="editButton"
                             onClick={() => {
                               followUser();
+                              followingId();
+                              followerId();
                             }}
                           >
                             {" "}
@@ -175,6 +182,8 @@ const ProfileUser = () => {
                             className="editButton"
                             onClick={() => {
                               unFollow();
+                              followingId();
+                              followerId();
                             }}
                           >
                             {" "}
