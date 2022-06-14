@@ -12,21 +12,25 @@ const socket = io.connect(ENDPOINT);
 const Chat = () => {
   const { id } = useParams();
 
-  const { isLoggedIn, token } = useSelector((state) => {
+  const { isLoggedIn, token, myId } = useSelector((state) => {
     return {
       isLoggedIn: state.auth.isLoggedIn,
       token: state.auth.token,
+      myId: state.userId.myuser,
     };
   });
+
+  const myUserid = localStorage.getItem("myId");
 
   const [message, setMessage] = useState("");
   const [room, setRoom] = useState("");
   const [userName, setUserName] = useState("");
   const [messageList, setMessageList] = useState("");
+  const [mes, setMes] = useState("");
   const [following, setFollowing] = useState(0);
 
   // get message
-
+  console.log(myUserid);
   const getMessages = () => {
     axios
       .get(`http://localhost:5000/message/${id}`, {
@@ -35,7 +39,8 @@ const Chat = () => {
         },
       })
       .then((result) => {
-        console.log(result);
+        console.log(result.data.message);
+        setMessageList(result.data.message);
       })
       .catch((err) => {
         console.log(err);
@@ -48,7 +53,6 @@ const Chat = () => {
 
   const sendMessage = () => {
     const messageContent = {
-      room: room,
       content: {
         sender: userName,
         message: message,
@@ -72,14 +76,35 @@ const Chat = () => {
       })
       .catch((err) => {});
   };
-  console.log(following);
+
+  const send = () => {
+    socket.emit("reciveMessage", {
+      message: message,
+      idPerson: id,
+    });
+    socket.on("RECEIVE_MESSAGE", (data) => {
+      setMessageList([...messageList, data]);
+    });
+  };
+
+  socket.on("Get_Message", (data) => {
+    console.log(data);
+     setMes(data.message)
+  });
 
   useEffect(() => {
     followingId();
     socket.on("RECEIVE_MESSAGE", (data) => {
       setMessageList([...messageList, data]);
     });
-    // getMessages()
+    socket.on("connect", () => {
+      socket.emit("info", {
+        socketId: socket.id,
+        id: myUserid,
+      });
+    });
+
+    getMessages();
     // getMessages();
   }, []);
 
@@ -90,13 +115,15 @@ const Chat = () => {
       </div>
       <div className="DM">
         <div className="users-chat">
-          <div>
+          <div className="chatMain">
+            
             {following
               ? following.map((element, index) => {
                   return (
-                    <div key={index}>
-                      <img src={element.ProfilePicture} />
+                    <div key={index} className="leftSeccrion">
+                      <img className="imgpoUs" src={element.ProfilePicture} />
                       <Link
+                        className="linkName"
                         to={`/chat/${element.person_id}`}
                       >{`${element.firstName} ${element.lastName}`}</Link>
                     </div>
@@ -106,7 +133,38 @@ const Chat = () => {
           </div>
         </div>
         <div className="chat-box">
-          <div></div>
+          <div className="topGetMes">
+            <div className="mapareej">
+              {messageList
+                ? messageList.map((element, index) => {
+                    {
+                      console.log(element);
+                    }
+                    return (
+                      <div
+                        key={index}
+                        className="mapMes"
+                        onClick={() => {
+                          setRoom(element.roomId);
+                          setUserName(element.firstName);
+                        }}
+                      >
+                        <div className="ttopz">
+                          <img
+                            className="imgpoUs"
+                            src={element.ProfilePicture}
+                          />
+                          <div>
+                            {element.firstName} {element.lastName}
+                          </div>
+                        </div>
+                        <div className="chatMessages">{element.message}</div>
+                      </div>
+                    );
+                  })
+                : []}
+            </div>
+          </div>
           <div>
             <input
               type="text"
@@ -115,7 +173,7 @@ const Chat = () => {
             />
             <button
               onClick={() => {
-                sendMessage();
+                send();
               }}
             >
               Send

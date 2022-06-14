@@ -18,9 +18,6 @@ const commentRouter = require("../backend/routes/comment");
 const bookmarkRouter = require("./routes/bookmark");
 const messageRouter = require("./routes/message");
 
-
-
-
 //import middleware
 app.use(cors());
 //built-in middleware
@@ -34,7 +31,7 @@ app.use("/permission", permissionRouter);
 app.use("/user", followRouter);
 app.use("/comment", commentRouter);
 app.use("/bookmark", bookmarkRouter);
-app.use("/message",messageRouter);
+app.use("/message", messageRouter);
 
 //basic server
 
@@ -50,17 +47,34 @@ const io = socket(server, {
   },
 });
 
+let array = [];
+let arrayToperson = [];
+
 io.on("connection", (socket) => {
-  console.log(`user connected  ${socket.id}...`);
-  socket.on("JOIN_ROOM", (data) => {
-    console.log(data);
-    socket.join(data);
+  socket.on("info", (data) => {
+    array.push(data);
+    console.log(array, "anaaaaaaas");
   });
+  socket.on("reciveMessage", (data) => {
+    console.log(data, "areeeeeeeeeeeeeeeeeeejj");
+    const newArray = array.find((element) => {
+      return (element.id = data.idPerson);
+    });
+
+    console.log(newArray);
+    socket.to(newArray.socketId).emit("Get_Message", data);
+  });
+
   socket.on("SEND_MESSAGE", (data) => {
-    console.log(data);
+    console.log(data, "seeend message");
     socket.to(data.room).emit("RECEIVE_MESSAGE", data.content);
   });
+
   socket.on("disconnect", () => {
     console.log(`user left...`);
+    array = array.filter((element) => {
+      return element.socketId != socket.id;
+    });
+    console.log(array);
   });
 });

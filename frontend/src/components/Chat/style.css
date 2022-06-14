@@ -1,15 +1,72 @@
+.chat{
+  height: 650px;
+}
+
 .DM {
   display: flex;
   width: 100%;
+  height: 100%;
 }
 
 .users-chat {
   width: 25%;
   height: 100%;
-  background-color: aquamarine;
+  border-right: 1px ridge;
 }
 
 .chat-box {
   width: 75%;
   height: 100%;
+}
+.chatMain{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 50px;
+}
+
+.leftSeccrion{
+  display: flex;
+  height: 50px;
+  flex-direction: row;
+  width: 100%;
+  border-bottom: 1px ridge;
+  gap: 7px;
+  margin-left: 15px;
+  align-items: center;
+}
+
+.linkName{
+  display: flex;
+  text-decoration: none;
+}
+
+
+.topGetMes{
+  height: 70%;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+}
+.ttopz{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 7px;
+  margin-left: 15px;
+  align-items: center;
+}
+
+.mapareej{
+  width: 50%;
+  border-radius: 8px;
+ background-color: rgb(225, 221, 221);
+  border: 1px solid rgb(177, 171, 171);
+}
+.chatMessages{
+  width: 100%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  display: flex;
+  justify-content: center;
 }

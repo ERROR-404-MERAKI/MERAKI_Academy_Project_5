@@ -106,7 +106,7 @@ const deleteFollow = (req, res) => {
 const getFollower = (req, res) => {
   const user_id = req.token.userId;
   const person_id = req.params.id;
-  const query = `SELECT * FROM follow WHERE user_id =? AND person_id =? `;
+  const query = `SELECT * FROM follow WHERE user_id =? AND person_id =?`;
   const data = [user_id, person_id];
   connection.query(query, data, (err, result) => {
     if (err) {
@@ -157,7 +157,7 @@ const followers = (req, res) => {
 
 const following = (req, res) => {
   const user_id = req.token.userId;
-  const query = `SELECT * FROM follow WHERE user_id =? AND is_deleted = 0 `;
+  const query = `SELECT * FROM follow INNER JOIN users ON follow.person_id = users.idUser WHERE follow.user_id =? AND follow.is_deleted = 0 `;
   const data = [user_id];
   connection.query(query, data, (err, result) => {
     if (err) {
