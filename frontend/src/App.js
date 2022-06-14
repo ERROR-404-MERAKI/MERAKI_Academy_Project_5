@@ -25,7 +25,7 @@ function App() {
         <Route path="/profile/saved" element={<Bookmark />} />
         <Route path="/user/:id" element={<ProfileUser />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/chat/:id" element={<Chat />} />
       </Routes>
     </div>
   );
