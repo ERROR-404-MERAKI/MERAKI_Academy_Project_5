@@ -25,8 +25,9 @@ const createMessage = (req,res) => {
 };
 const gitAllMessage =(req,res)=>{
     const user_id = req.token.userId;
-    const query = `SELECT * FROM messages INNER JOIN users ON messages.user_id = users.idUser WHERE messages.is_deleted=0 AND messages.user_id =?`;
-    const data = [user_id];
+    const persion_id = req.params.id;
+    const query = `SELECT * FROM messages INNER JOIN users ON messages.user_id = users.idUser WHERE messages.is_deleted=0 AND messages.user_id =? AND messages.persion_id =?`;
+    const data = [user_id , persion_id];
     connection.query(query, data, (err, result) => {
       if (err) {
         return res.status(500).json({
