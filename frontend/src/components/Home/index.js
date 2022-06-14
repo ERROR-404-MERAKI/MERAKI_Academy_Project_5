@@ -441,13 +441,19 @@ const Home = () => {
                           <div className="FooterCCo">
                             <input
                               className="azx"
-                              placeholder="Add a comment.." onChange={(e)=>{
-                                setComment(e.target.value)
+                              placeholder="Add a comment.."
+                              onChange={(e) => {
+                                setComment(e.target.value);
                               }}
                             ></input>
-                            <p className="cruser bbllue" onClick={()=>{
-                              createNewComment(element.id)
-                            }}>post</p>
+                            <p
+                              className="cruser bbllue"
+                              onClick={() => {
+                                createNewComment(element.id);
+                              }}
+                            >
+                              post
+                            </p>
                           </div>
                           {/* ========== comment ======== */}
 
@@ -492,8 +498,6 @@ const Home = () => {
                                 <div className="comment_section">
                                   {comments &&
                                     comments.map((e, i) => {
-                                     
-
                                       return (
                                         <div key={i}>
                                           {element.id === e.post_id ? (
@@ -575,9 +579,15 @@ const Home = () => {
           {user.map((u, i) => {
             return (
               <div className="headerName1" key={i}>
-               <div className="onnne"> <img className="imgpoUs" src={u.ProfilePicture} /></div>
-               <div className="secconnd"> <h6>{u.firstName}</h6>
-                <h6>{u.lastName}</h6></div>
+                <div className="onnne">
+                  {" "}
+                  <img className="imgpoUs" src={u.ProfilePicture} />
+                </div>
+                <div className="secconnd">
+                  {" "}
+                  <h6>{u.firstName}</h6>
+                  <h6>{u.lastName}</h6>
+                </div>
                 <div className="ff410">
                   {" "}
                   <button className="r410">Follow</button>
