@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import "./style.css";
 import Navbar from "../Navbar";
 
+import { setMyuser } from "../../redux/reducers/users";
+
 const Profile = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -72,6 +74,8 @@ const Profile = () => {
           setBio(result.data.user[0].bio);
           setAge(result.data.user[0].age);
           setRoleAdmin(result.data.user[0].roleId);
+          dispatch(setMyuser(result.data.user[0].idUser));
+          localStorage.setItem("myId",result.data.user[0].idUser)
         }
       })
       .catch((err) => {
