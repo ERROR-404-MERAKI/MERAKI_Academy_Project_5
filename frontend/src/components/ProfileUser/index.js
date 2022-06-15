@@ -167,7 +167,7 @@ const ProfileUser = () => {
                       <div key={index}>
                         {element.person_id == id && element.is_deleted == 1 ? (
                           <button
-                            className="editButton"
+                            className="editButton-flw"
                             onClick={() => {
                               followUser();
                               followingId();
@@ -179,7 +179,7 @@ const ProfileUser = () => {
                           </button>
                         ) : (
                           <button
-                            className="editButton"
+                            className="editButton-fle"
                             onClick={() => {
                               unFollow();
                               followingId();
@@ -187,8 +187,7 @@ const ProfileUser = () => {
                             }}
                           >
                             {" "}
-                            unfollow{" "}
-                          </button>
+                            <svg aria-label="Following" class="_ab6-" color="#262626" fill="#262626" height="15" role="img" viewBox="0 0 95.28 70.03" width="20"><path d="M64.23 69.98c-8.66 0-17.32-.09-26 0-3.58.06-5.07-1.23-5.12-4.94-.16-11.7 8.31-20.83 20-21.06 7.32-.15 14.65-.14 22 0 11.75.22 20.24 9.28 20.1 21 0 3.63-1.38 5.08-5 5-8.62-.1-17.28 0-25.98 0zm19-50.8A19 19 0 1164.32 0a19.05 19.05 0 0118.91 19.18zM14.76 50.01a5 5 0 01-3.37-1.31L.81 39.09a2.5 2.5 0 01-.16-3.52l3.39-3.7a2.49 2.49 0 013.52-.16l7.07 6.38 15.73-15.51a2.48 2.48 0 013.52 0l3.53 3.58a2.49 2.49 0 010 3.52L18.23 48.57a5 5 0 01-3.47 1.44z"></path></svg>                          </button>
                         )}
                       </div>
                     );
@@ -223,11 +222,74 @@ const ProfileUser = () => {
           </div>
         </div>
 
-        <div className="navBottom">
-          <button className="buttonNavB">
-            <svg width="16" height="16" viewBox="0 0 16 16">
-              <path d="M5 2V0H0v5h2v6H0v5h5v-2h6v2h5v-5h-2V5h2V0h-5v2H5zm6 1v2h2v6h-2v2H5v-2H3V5h2V3h6zm1-2h3v3h-3V1zm3 11v3h-3v-3h3zM4 15H1v-3h3v3zM1 4V1h3v3H1z" />
-            </svg>{" "}
+        <div className="navBottom-pro">
+          <button className="buttonNavB-pro">
+            <svg
+              aria-label=""
+              className="_ab6-"
+              color="#262626"
+              fill="#262626"
+              height="12"
+              role="img"
+              viewBox="0 0 24 24"
+              width="12"
+            >
+              <rect
+                fill="none"
+                height="18"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                width="18"
+                x="3"
+                y="3"
+              ></rect>
+              <line
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                x1="9.015"
+                x2="9.015"
+                y1="3"
+                y2="21"
+              ></line>
+              <line
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                x1="14.985"
+                x2="14.985"
+                y1="3"
+                y2="21"
+              ></line>
+              <line
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                x1="21"
+                x2="3"
+                y1="9.015"
+                y2="9.015"
+              ></line>
+              <line
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                x1="21"
+                x2="3"
+                y1="14.985"
+                y2="14.985"
+              ></line>
+            </svg>
             posts{" "}
           </button>
         </div>
