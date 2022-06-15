@@ -75,7 +75,7 @@ const Profile = () => {
           setAge(result.data.user[0].age);
           setRoleAdmin(result.data.user[0].roleId);
           dispatch(setMyuser(result.data.user[0].idUser));
-          localStorage.setItem("myId",result.data.user[0].idUser)
+          localStorage.setItem("myId", result.data.user[0].idUser);
         }
       })
       .catch((err) => {
@@ -269,6 +269,16 @@ const Profile = () => {
                 style={{ display: edit ? "block" : "none" }}
               >
                 <div className="mainEdit">
+                  <div className="X-butt">
+                    {" "}
+                    <button
+                      onClick={() => {
+                        setEdit(false);
+                      }}
+                    >
+                      X
+                    </button>
+                  </div>
                   <div className="HeaderUpload">Edit Your profile</div>
                   <div className="sec_Chosetow">
                     <div className="ff nnn">
