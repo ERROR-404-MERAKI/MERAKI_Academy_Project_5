@@ -15,7 +15,6 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const roleId = "1";
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState(false);
   const [image, setImage] = useState("");
   const [url, setUrl] = useState("");
 
@@ -41,8 +40,8 @@ const Register = () => {
         ProfilePicture: image,
       })
       .then((result) => {
-        setMessage(result.data.message);
-        //console.log(result);
+        setMessage('Account Successfully Created');
+        
       })
       .catch((err) => {
         console.log(err.response.data.message);
@@ -172,6 +171,8 @@ const Register = () => {
         <div className="toLog"><p>Have an account? </p><button onClick={()=>{
           history("/")
         }} className="chan">Log in</button></div>
+          <div><h4 className="mee">{message}</h4></div>
+
           </div>
     </div>
   );
