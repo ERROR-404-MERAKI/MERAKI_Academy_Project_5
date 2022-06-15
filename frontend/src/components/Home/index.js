@@ -22,6 +22,8 @@ const Home = () => {
   const [imgStory, setImgStory] = useState("");
   const [comment, setComment] = useState("");
   const [show, setShow] = useState(false);
+  const [showStory, setShowStory] = useState(false);
+
   const [love, setLove] = useState(false);
   const [status_b, setStatus_b] = useState(false);
   const [showBook, setShowBook] = useState(0);
@@ -271,27 +273,42 @@ const Home = () => {
                     backStory();
                   }}
                 >
-                  {" "}
                   <svg
                     className="svg"
                     width="20"
                     height="20"
                     viewBox="0 0 16 16"
                   >
-                    <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
+                    <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
                   </svg>
                 </button>
+                {/* */}
               </div>
+              {/* ============================= */}
               <div className="map_story">
                 {storys
                   ? storys.map((element, index) => {
+                    console.log(element);
                       return (
                         <div key={index}>
-                          <img className="img_story" src={element.story} />
+                          <img onClick={()=>{
+                            setShowStory(true)
+                          }} className="img_story" src={element.story} />
+                          <div className="show_story"
+                            style={{
+                              display: showStory == element.id ? "block" : "none",
+                            }}>
+                              <div className="sss"> 
+                              <img className="img-c" src={element.story} />
+                              </div>
+                          
+                            </div>
                         </div>
+                        
                       );
                     })
                   : []}
+                 
               </div>
               <div>
                 <button
@@ -306,7 +323,7 @@ const Home = () => {
                     height="20"
                     viewBox="0 0 16 16"
                   >
-                    <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+                    <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
                   </svg>
                 </button>
               </div>
@@ -394,14 +411,15 @@ const Home = () => {
                                 );
                               }}
                             >
-                              <svg
+                               <svg
+                                xmlns="http://www.w3.org/2000/svg"
                                 width="16"
                                 height="16"
-                                className="bi bi-bookmark-fill"
                                 viewBox="0 0 16 16"
                               >
-                                <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z" />
-                              </svg>{" "}
+                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                              </svg>
+                             
                             </button>
                             <button
                               className="bookmarkmark"
@@ -415,14 +433,13 @@ const Home = () => {
                               }}
                             >
                               <svg
-                                xmlns="http://www.w3.org/2000/svg"
                                 width="16"
                                 height="16"
-                                className="bi bi-bookmark"
+                                className="bi bi-bookmark-fill"
                                 viewBox="0 0 16 16"
                               >
-                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
-                              </svg>
+                                <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z" />
+                              </svg>{" "}
                             </button>
                           </div>
                           <div className="numLikes">
@@ -555,24 +572,35 @@ const Home = () => {
                 : []}
             </div>
             <div>
-              <button
+              <button className="bbset"
                 onClick={() => {
                   backPost();
                 }}
               >
-                back
+                <svg width="16" height="16" viewBox="0 0 16 16">
+                  <path
+                    fill-rule="evenodd"
+                    d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"
+                  />
+                </svg>
               </button>
-              <button
+              <button className="bbset"
                 onClick={() => {
                   nextPost();
                 }}
               >
-                next
+                <svg width="16" height="16" viewBox="0 0 16 16">
+                  <path
+                    fill-rule="evenodd"
+                    d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"
+                  />
+                </svg>
               </button>
             </div>
           </div>
         </div>
         <div className="right_side">
+          <div className="mosaaaa">
           <div className="headsug">
             <h5>Suggestions you may like</h5>
           </div>
@@ -593,8 +621,10 @@ const Home = () => {
                   <button className="r410">Follow</button>
                 </div>
               </div>
+
             );
           })}
+          </div>
         </div>
       </div>
     </div>
