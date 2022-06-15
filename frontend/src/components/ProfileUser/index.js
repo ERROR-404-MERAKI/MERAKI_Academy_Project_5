@@ -201,7 +201,7 @@ const ProfileUser = () => {
                   <div>
                     {id == person_id && (
                       <button
-                        className="editButton"
+                        className="editButton-flw"
                         onClick={() => {
                           followUser();
                         }}
