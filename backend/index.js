@@ -53,28 +53,26 @@ let arrayToperson = [];
 io.on("connection", (socket) => {
   socket.on("info", (data) => {
     array.push(data);
-    console.log(array, "anaaaaaaas");
   });
   socket.on("reciveMessage", (data) => {
-    console.log(data, "areeeeeeeeeeeeeeeeeeejj");
     const newArray = array.find((element) => {
       return (element.id = data.idPerson);
     });
 
-    console.log(newArray);
+    console.log(newArray,"hasan");
     socket.to(newArray.socketId).emit("Get_Message", data);
   });
+  console.log(array,"areej");
+
+
 
   socket.on("SEND_MESSAGE", (data) => {
-    console.log(data, "seeend message");
     socket.to(data.room).emit("RECEIVE_MESSAGE", data.content);
   });
 
   socket.on("disconnect", () => {
-    console.log(`user left...`);
     array = array.filter((element) => {
       return element.socketId != socket.id;
     });
-    console.log(array);
   });
 });

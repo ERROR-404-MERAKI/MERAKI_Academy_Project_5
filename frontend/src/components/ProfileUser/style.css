@@ -1,7 +1,40 @@
 .all_posts {
-    width: 60%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    
-   }
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.navBottom-pro {
+  display: flex;
+  justify-content: center;
+}
+.buttonNavB-pro {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  all: unset;
+  cursor: pointer;
+}
+.editButton-flw {
+  background-color: #1877f2;
+  height: 27px;
+  width: 80px;
+  font-family: Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: aliceblue;
+  cursor: pointer;
+  font-weight: 500;
+  border: 1px solid rgb(0, 149, 246);
+  border-radius: 3px;
+}
+
+.editButton-fle {
+  height: 27px;
+  width: 50px;
+  font-family: Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  cursor: pointer;
+  color: aliceblue;
+  font-weight: 500;
+  border-radius: 3px;
+  border: 1px solid rgb(219, 219, 219);
+}

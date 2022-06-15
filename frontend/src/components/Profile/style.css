@@ -1,255 +1,259 @@
 .profile-div {
   width: 100%;
   height: 100%;
- }
- 
- .main{
-   display: flex;
-   flex-direction: column;
-   align-items: center;
- }
- 
- .user_info {
-   width: 60%;
-   display: flex;
-   flex-direction:  row;
-   gap: 15px;
-   height: 200px;
-   border-bottom: 2px ridge;
- }
- 
- .pro_img{
-   border-radius: 9999px;
-   height: 170px;
-   width: 170px;
- }
- .bu{
-   all:unset
- }
- .infoUsser{
-   display: flex;
-   flex-direction: column;
-   width: 50%;
-   height: 100%;
- }
- .userNamee{
-   width: 100%;
-   height: 40%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   gap: 15px;
- }
- .nameUser{
-   display:  flex;
-   text-transform: capitalize;
-   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-   font-size: 20px;
-   font-weight: 300;
-   color: rgb(38,38,38);
-   
- }
- .editButton{
-   width: 80px;
-   border-color: rgb(219,219,219);
-   border-radius: 2px;
-   background-color: rgb(255, 255, 255);
-   cursor: pointer;
-   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
- }
- .editButton:hover{
-  border: 1px solid #1f2125  ;
- }
- .activeUser{
-   display: flex;
-   justify-content: space-around;
- }
- .bio{
-   height: 30%;
-   display: flex;
-   align-items: center;
- }
- .pBio{ 
-   margin-left: 20px;
-   margin-top: 5px;
-   font-size: 12px;
-   font-family: 'Courier New', Courier, monospace;
- }
- .navBottom{
-   border-bottom: 2px ridge;
-   width: 60% ;
-   height: 30px;
-   display: flex;
-   justify-content: space-between;
- }
- 
- .buttonNavB{
-   display: flex;
-   align-items: center;
-   gap: 4px;
-   all: unset;
-   cursor: pointer;
- }
- .nav_bar {
-   height: 55px;
- }
- .all_post {
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user_info {
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  height: 200px;
+  border-bottom: 2px ridge;
+}
+.user_info_img {
+  display: flex;
+  align-items: stretch;
+  margin-right: 30px;
+}
+.pro_img {
+  border-radius: 9999px;
+  height: 130px;
+  width: 130px;
+}
+.bu {
+  all: unset;
+}
+.infoUsser {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 50%;
+  height: 100%;
+}
+.userNamee {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+}
+.nameUser {
+  display: flex;
+  text-transform: capitalize;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: rgb(38, 38, 38);
+}
+.editButton {
+  width: 80px;
+  border-color: rgb(219, 219, 219);
+  border-radius: 2px;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.editButton:hover {
+  border: 1px solid #1f2125;
+}
+.activeUser {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+}
+.bio {
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.pBio {
+  margin-top: 5px;
+  font-size: 12px;
+  font-family: "Courier New", Courier, monospace;
+}
+.navBottom {
+  border-bottom: 2px ridge;
+  width: 60%;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonNavB {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  all: unset;
+  cursor: pointer;
+}
+.nav_bar {
+  height: 55px;
+}
+.all_post {
   width: 100%;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
-  
- }
- 
- 
- .U_posts {
-   display: flex;
-   flex-direction: column;
-  width: 30%;
-  height: 250px;
-  border: 1px solid rgb(219,219,219);
-   margin-left: 2%;
- }
- 
- .img_posts {
-   
-  width: 200px;
-  height: 200px;
- }
- 
- .p_posts {
-   font-size: 12px;
-   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
- }
- .reactionPost{
-   display: flex;
-   justify-content: space-around;
- }
- .buto{
-   all: unset;
-   font-size: 10px;
-   cursor: pointer;
-   margin-top: 3px;
- }
- .dede:hover{
-  background-color: tomato;
- }
- .user_info_popup {
-   position: absolute;
-   height: 300px;
-   width: 400px;
-   z-index: 1px;
-   margin-top: 300px;
-   margin-left: 250px;
-   background-color: rgb(255, 255, 255);
-   border: 2px solid rgb(219,219,219);
-   border-radius: 8px;
-
- }
- .post_post{
-   height: 100%;
-   width: 60%;
-   margin-top: 15px;
- }
- .mainEdit{
-  height: 100%;
-  width: 100%;
-   display: flex;
-   flex-direction: column;
-   box-shadow: 5px 7px #dcd6d6;
- }
- .X{
-  
-   width: 100%;
-   height: 40px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   
- }
- .XB{
-   all: unset;
-   cursor: pointer;
-   margin-right: 7px;
-   margin-top: 3px;
- }
-
- .HeaderUpload{
-   height: 70px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   border-bottom: 1px ridge;
- }
- .insight{
-  width: 80px;
-  border-color: rgb(219,219,219);
-   border-radius: 2px;
-   background-color: rgb(255, 255, 255);
-   cursor: pointer;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
- }
-
- .insight:hover{
-  border: 1px solid #1f2125 ;
 }
 
- .sec_Chose{
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   color: #77A7FF;
-   height: 30px;
-  }
-  .thirdSe{
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px ridge;
-  }
-  .butSh{
-    border-radius: 8px;
-    border: 1px;
-    cursor: pointer;
-  }
-  .butSh:hover{
-    border: 2px solid #77A7FF;
-   
-  }
-  .sec_Chosetow{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: #77A7FF;
-    height: 200px;
-    border-bottom: 1px ridge;
-    
-  }
-  .ff {
-    display: flex;
-    justify-content: center;
+.U_posts {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 250px;
+  border: 1px solid rgb(219, 219, 219);
+  margin-left: 2%;
+}
 
-  }
-  .nnn {
-    margin-left: 20px;
-  }
-  .bbb{
-    margin-left: 47px;
-    margin-top: 5px;
+.img_posts {
+  width: 200px;
+  height: 200px;
+}
 
-  }
-  .mz{
-    margin-left: 20px;
-   
-  }
-  .db{
-    margin-bottom: 3px
-  }
-  .db:hover{
-    color: tomato;
-  }
-  .buttonNavB:hover{
-    color: #77A7FF;
-  }
+.p_posts {
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+}
+.reactionPost {
+  display: flex;
+  justify-content: space-around;
+}
+.buto {
+  all: unset;
+  font-size: 10px;
+  cursor: pointer;
+  margin-top: 3px;
+}
+.dede:hover {
+  background-color: tomato;
+}
+.user_info_popup {
+  position: absolute;
+  height: 300px;
+  width: 400px;
+  z-index: 1px;
+  margin-top: 325px;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(219, 219, 219);
+  border-radius: 8px;
+}
+.X-butt {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.X-butt button {
+  border: none;
+}
+.post_post {
+  height: 100%;
+  width: 60%;
+  margin-top: 15px;
+}
+.mainEdit {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 5px 7px #dcd6d6;
+}
+.X {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.XB {
+  all: unset;
+  cursor: pointer;
+  margin-right: 7px;
+  margin-top: 3px;
+}
+
+.HeaderUpload {
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px ridge;
+}
+.insight {
+  width: 80px;
+  border-color: rgb(219, 219, 219);
+  border-radius: 2px;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+.insight:hover {
+  border: 1px solid #1f2125;
+}
+
+.sec_Chose {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #77a7ff;
+  height: 30px;
+}
+.thirdSe {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px ridge;
+}
+.butSh {
+  border-radius: 8px;
+  border: 1px;
+  cursor: pointer;
+}
+.butSh:hover {
+  border: 2px solid #77a7ff;
+}
+.sec_Chosetow {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #77a7ff;
+  height: 200px;
+  border-bottom: 1px ridge;
+}
+.ff {
+  display: flex;
+  justify-content: center;
+}
+.nnn {
+  margin-left: 20px;
+}
+.bbb {
+  margin-left: 47px;
+  margin-top: 5px;
+}
+.mz {
+  margin-left: 20px;
+}
+.db {
+  margin-bottom: 3px;
+}
+.db:hover {
+  color: tomato;
+}
+.buttonNavB:hover {
+  color: #77a7ff;
+}
