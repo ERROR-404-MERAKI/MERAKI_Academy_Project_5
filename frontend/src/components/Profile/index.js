@@ -30,7 +30,8 @@ const Profile = () => {
   const [edit, setEdit] = useState(false);
   const [bio, setBio] = useState("");
   const [roleAdmin, setRoleAdmin] = useState(false);
-
+  const [follower, setFollower] = useState(0);
+  const [following, setFollowing] = useState(0);
   // data from store
   const { token, bookmark } = useSelector((state) => {
     return {
@@ -168,9 +169,37 @@ const Profile = () => {
       });
   };
 
+  const followerId = () => {
+    axios
+      .get(`http://localhost:5000/user/visitProfile/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        setFollower(result.data.user);
+      })
+      .catch((err) => {});
+  };
+
+  const followingId = () => {
+    axios
+      .get(`http://localhost:5000/user/followingProfile/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        setFollowing(result.data.user);
+      })
+      .catch((err) => {});
+  };
+
   useEffect(() => {
     userInfo();
     postUser();
+    followerId();
+    followingId();
   }, []);
 
   return (
@@ -330,9 +359,9 @@ const Profile = () => {
               </div>
             </div>
             <div className="activeUser">
-              <div>{`${post.length} Posts`}</div>
-              <div>{`280 Follower`}</div>
-              <div>{`205 Following`}</div>
+              <div>{`${post.length || 0} Posts`}</div>
+              <div>{`${follower.length || 0} Follower`}</div>
+              <div>{`${following.length || 0} Following`}</div>
             </div>
             <div className="bio">
               <div>

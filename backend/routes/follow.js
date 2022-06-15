@@ -8,6 +8,8 @@ const {
   getFollower,
   followers,
   following,
+  followersMyProfile,
+  followingMyProfile,
 } = require("../controllers/follow");
 const { authentication } = require("../middlewares/authentication");
 
@@ -29,8 +31,12 @@ followRouter.delete("/:id", authentication, deleteFollow);
 
 followRouter.get("/follower/:id", authentication, getFollower);
 
-followRouter.get("/follower/:id", followers);
+followRouter.get("/visit/:id", followers);
 
-followRouter.get("/following", authentication, following);
+followRouter.get("/following/:id", following);
+
+followRouter.get("/visitProfile",authentication, followersMyProfile);
+
+followRouter.get("/followingProfile",authentication, followingMyProfile);
 
 module.exports = followRouter;
