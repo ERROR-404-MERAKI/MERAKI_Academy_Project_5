@@ -16,6 +16,7 @@ const ProfileUser = () => {
   const [users, setUsers] = useState(0);
   const [follower, setFollower] = useState(0);
   const [following, setFollowing] = useState(0);
+  const [bio, setBio] = useState(0);
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -37,6 +38,8 @@ const ProfileUser = () => {
         setFirstName(result.data.user[0].firstName);
         setLastName(result.data.user[0].lastName);
         setAge(result.data.user[0].age);
+        setBio(result.data.user[0].bio);
+
         dispatch(setId(id));
       })
       .catch((err) => {
@@ -70,6 +73,8 @@ const ProfileUser = () => {
       )
       .then((result) => {
         getUserFollower();
+        followingId();
+        followerId();
       })
       .catch((err) => {
         console.log(err);
@@ -98,6 +103,8 @@ const ProfileUser = () => {
       })
       .then((result) => {
         getUserFollower();
+        followingId();
+        followerId();
       })
       .catch((err) => {
         console.log(err);
@@ -106,9 +113,8 @@ const ProfileUser = () => {
 
   const followerId = () => {
     axios
-      .get(`http://localhost:5000/user/follow/${id}`)
+      .get(`http://localhost:5000/user/visit/${id}`)
       .then((result) => {
-        console.log(result.data.user, "follow");
         setFollower(result.data.user);
         getUserFollower();
       })
@@ -117,28 +123,21 @@ const ProfileUser = () => {
 
   const followingId = () => {
     axios
-      .get(`http://localhost:5000/user/following`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .get(`http://localhost:5000/user/following/${id}`)
       .then((result) => {
-        console.log(result.data.user, "following");
-
         setFollowing(result.data.user);
         getUserFollower();
       })
       .catch((err) => {});
   };
-  console.log(users);
 
   useEffect(() => {
     gitUser();
     postUser();
     getUserFollower();
+    followerId();
+    followingId();
   }, []);
-  console.log(users);
-  console.log(id, "iiiiid moo");
   return (
     <div className="profile_div">
       <div className="nav_bar">
@@ -158,11 +157,6 @@ const ProfileUser = () => {
               <div>
                 {users ? (
                   users.map((element, index) => {
-                    {
-                      console.log(
-                        element.person_id == id && element.is_deleted == 1
-                      );
-                    }
                     return (
                       <div key={index}>
                         {element.person_id == id && element.is_deleted == 1 ? (
@@ -187,7 +181,18 @@ const ProfileUser = () => {
                             }}
                           >
                             {" "}
-                            <svg aria-label="Following" class="_ab6-" color="#262626" fill="#262626" height="15" role="img" viewBox="0 0 95.28 70.03" width="20"><path d="M64.23 69.98c-8.66 0-17.32-.09-26 0-3.58.06-5.07-1.23-5.12-4.94-.16-11.7 8.31-20.83 20-21.06 7.32-.15 14.65-.14 22 0 11.75.22 20.24 9.28 20.1 21 0 3.63-1.38 5.08-5 5-8.62-.1-17.28 0-25.98 0zm19-50.8A19 19 0 1164.32 0a19.05 19.05 0 0118.91 19.18zM14.76 50.01a5 5 0 01-3.37-1.31L.81 39.09a2.5 2.5 0 01-.16-3.52l3.39-3.7a2.49 2.49 0 013.52-.16l7.07 6.38 15.73-15.51a2.48 2.48 0 013.52 0l3.53 3.58a2.49 2.49 0 010 3.52L18.23 48.57a5 5 0 01-3.47 1.44z"></path></svg>                          </button>
+                            <svg
+                              aria-label="Following"
+                              className="_ab6-"
+                              color="#262626"
+                              height="15"
+                              role="img"
+                              viewBox="0 0 95.28 70.03"
+                              width="20"
+                            >
+                              <path d="M64.23 69.98c-8.66 0-17.32-.09-26 0-3.58.06-5.07-1.23-5.12-4.94-.16-11.7 8.31-20.83 20-21.06 7.32-.15 14.65-.14 22 0 11.75.22 20.24 9.28 20.1 21 0 3.63-1.38 5.08-5 5-8.62-.1-17.28 0-25.98 0zm19-50.8A19 19 0 1164.32 0a19.05 19.05 0 0118.91 19.18zM14.76 50.01a5 5 0 01-3.37-1.31L.81 39.09a2.5 2.5 0 01-.16-3.52l3.39-3.7a2.49 2.49 0 013.52-.16l7.07 6.38 15.73-15.51a2.48 2.48 0 013.52 0l3.53 3.58a2.49 2.49 0 010 3.52L18.23 48.57a5 5 0 01-3.47 1.44z"></path>
+                            </svg>{" "}
+                          </button>
                         )}
                       </div>
                     );
@@ -216,7 +221,7 @@ const ProfileUser = () => {
             </div>
             <div className="bio">
               <div>
-                <p className="pBio">Bio: We are ERROR 404 TEAM .. Join us</p>
+                <p className="pBio">{bio}</p>
               </div>
             </div>
           </div>
