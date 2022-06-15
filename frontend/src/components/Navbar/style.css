@@ -6,6 +6,7 @@
   justify-content: center;
   background-color: white;
 
+
 }
 .navbar {
   display: flex;
@@ -13,6 +14,7 @@
   height: 100%;
   width: 60%;
   justify-content: space-between;
+ 
 }
 
 .imggg {
@@ -206,7 +208,7 @@ border-bottom: #f2f3f5;
 }
   .search_popup {
     position: absolute;
-    height: 70%;
+    
     width: 58%;
     z-index: 10px;
     margin-top: 10%;
