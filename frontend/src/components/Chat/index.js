@@ -30,7 +30,7 @@ const Chat = () => {
   const [following, setFollowing] = useState(0);
 
   // get message
-  console.log(myUserid);
+
   const getMessages = () => {
     axios
       .get(`http://localhost:5000/message/${id}`, {
@@ -47,12 +47,32 @@ const Chat = () => {
       });
   };
 
+  const giveRoom = () => {
+    console.log(token, "am in giveROom");
+    axios
+      .post(
+        `http://localhost:5000/message/${id}
+      `,
+        { message },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result, "crreeeeaate message");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const joinRoom = () => {
     socket.emit("JOIN_ROOM", room);
   };
 
   const sendMessage = () => {
-    
     const messageContent = {
       room,
       content: {
@@ -80,26 +100,31 @@ const Chat = () => {
   };
 
   const send = () => {
+    giveRoom();
+
     socket.emit("reciveMessage", {
       message: message,
       idPerson: id,
     });
+
     socket.on("RECEIVE_MESSAGE", (data) => {
       setMessageList([...messageList, data]);
     });
   };
 
   socket.on("Get_Message", (data) => {
-    setMes([...mes , data.message]);
+    setMes([...mes, data.message]);
   });
   console.log(mes);
 
   useEffect(() => {
+    joinRoom();
+
     followingId();
     socket.on("RECEIVE_MESSAGE", (data) => {
       setMessageList([...messageList, data]);
     });
-    
+
     socket.on("connect", () => {
       socket.emit("info", {
         socketId: socket.id,
@@ -111,6 +136,8 @@ const Chat = () => {
     // getMessages();
   }, []);
 
+console.log(messageList);
+
   return (
     <div className="chat">
       <div className="nav_bar">
@@ -118,7 +145,6 @@ const Chat = () => {
       </div>
       <div className="DM">
         <div className="users-chat">
-          <div>{mes}</div>
           <div className="chatMain">
             {following
               ? following.map((element, index) => {
@@ -137,7 +163,16 @@ const Chat = () => {
         </div>
         <div className="chat-box">
           <div className="topGetMes">
-            <div className="mapareej">
+            <div>
+              <div>weeno</div>
+              {mes
+                ? mes.map((element, index) => {
+                    console.log(element);
+                    return <div className="fMes">{element}</div>;
+                  })
+                : []}
+            </div>
+            {/*  <div className="mapareej">
               {messageList
                 ? messageList.map((element, index) => {
                     {
@@ -166,7 +201,7 @@ const Chat = () => {
                     );
                   })
                 : []}
-            </div>
+            </div> */}
           </div>
           <div>
             <input
