@@ -50,14 +50,25 @@ CREATE TABLE bookmarks (
 );
 
 CREATE TABLE messages (
-    roomId INT AUTO_INCREMENT NOT NULL,
+    idMessage INT AUTO_INCREMENT NOT NULL,
     message VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
     persion_id INT NOT NULL,
+    room INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(idUser),
     FOREIGN KEY (persion_id) REFERENCES users(idUser),
+    FOREIGN KEY (room) REFERENCES room(idR),
     is_deleted TINYINT DEFAULT 0,
-    PRIMARY KEY (roomId)
+    PRIMARY KEY (idMessage)
+);
+CREATE TABLE room(
+     idR  INT AUTO_INCREMENT NOT NULL,
+     resive INT NOT NULL,
+     FOREIGN KEY (resive) REFERENCES users(idUser),
+     sender INT NOT NULL,
+     FOREIGN KEY (sender) REFERENCES users(idUser),
+     is_deleted TINYINT DEFAULT 0,
+     PRIMARY KEY (idR)
 );
 
 CREATE TABLE storys (

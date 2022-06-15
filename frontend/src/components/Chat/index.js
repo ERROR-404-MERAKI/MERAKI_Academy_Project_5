@@ -52,7 +52,9 @@ const Chat = () => {
   };
 
   const sendMessage = () => {
+    
     const messageContent = {
+      room,
       content: {
         sender: userName,
         message: message,
@@ -97,6 +99,7 @@ const Chat = () => {
     socket.on("RECEIVE_MESSAGE", (data) => {
       setMessageList([...messageList, data]);
     });
+    
     socket.on("connect", () => {
       socket.emit("info", {
         socketId: socket.id,

@@ -17,6 +17,8 @@ const followRouter = require("./routes/follow");
 const commentRouter = require("../backend/routes/comment");
 const bookmarkRouter = require("./routes/bookmark");
 const messageRouter = require("./routes/message");
+const roomRouter = require("./routes/room");
+
 
 //import middleware
 app.use(cors());
@@ -32,6 +34,8 @@ app.use("/user", followRouter);
 app.use("/comment", commentRouter);
 app.use("/bookmark", bookmarkRouter);
 app.use("/message", messageRouter);
+app.use("/room", roomRouter);
+
 
 //basic server
 
