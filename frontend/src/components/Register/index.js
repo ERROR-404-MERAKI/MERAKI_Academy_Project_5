@@ -10,7 +10,9 @@ const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState(0);
-  const [ProfilePicture, setProfilePicture] = useState("");
+  const [ProfilePicture, setProfilePicture] = useState(
+    "https://www.business2community.com/social-media-articles/importance-profile-picture-career-01899604"
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const roleId = "1";
@@ -40,15 +42,14 @@ const Register = () => {
         ProfilePicture: image,
       })
       .then((result) => {
-        setMessage('Account Successfully Created');
-        
+        setMessage("Account Successfully Created");
       })
       .catch((err) => {
         console.log(err.response.data.message);
         setMessage(err.response.data.message);
       });
   };
-  //console.log(image);
+
   const uploadImage = async () => {
     const data = new FormData();
     data.append("file", ProfilePicture);
@@ -61,7 +62,6 @@ const Register = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
         setUrl(data.url);
         setImage(data.url);
       })
@@ -81,7 +81,7 @@ const Register = () => {
         </div>
         <div>
           <p className="pp">
-            Sign up to see photos and videos <tr/> from your friends.
+            Sign up to see photos and videos <tr /> from your friends.
           </p>
         </div>
 
@@ -134,7 +134,6 @@ const Register = () => {
               setPassword(e.target.value);
             }}
           ></input>{" "}
-          
           <div>
             <label>
               <svg className="svg" width="16" height="16" viewBox="0 0 16 16">
@@ -146,7 +145,6 @@ const Register = () => {
                 className="choosePic"
                 type="file"
                 onChange={(e) => {
-                 
                   setProfilePicture(e.target.files[0]);
                 }}
               ></input>
@@ -163,17 +161,36 @@ const Register = () => {
               </svg>{" "}
             </button>
           </div>
-          <div><p className="pp rr">People who use our service may have uploaded your contact information to Instagram. Learn More</p></div>
           <div>
-            <button className="inputRegister butto divpp logFb" onClick={addUserToBackend}>Sign up</button>
+            <p className="pp rr">
+              People who use our service may have uploaded your contact
+              information to Instagram. Learn More
+            </p>
+          </div>
+          <div>
+            <button
+              className="inputRegister butto divpp logFb"
+              onClick={addUserToBackend}
+            >
+              Sign up
+            </button>
           </div>
         </div>
-        <div className="toLog"><p>Have an account? </p><button onClick={()=>{
-          history("/")
-        }} className="chan">Log in</button></div>
-          <div><h4 className="mee">{message}</h4></div>
-
-          </div>
+        <div className="toLog">
+          <p>Have an account? </p>
+          <button
+            onClick={() => {
+              history("/");
+            }}
+            className="chan"
+          >
+            Log in
+          </button>
+        </div>
+        <div>
+          <h4 className="mee">{message}</h4>
+        </div>
+      </div>
     </div>
   );
 };
