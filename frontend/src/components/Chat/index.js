@@ -88,9 +88,9 @@ const Chat = () => {
   };
 
   socket.on("Get_Message", (data) => {
-    console.log(data);
-     setMes(data.message)
+    setMes([...mes , data.message]);
   });
+  console.log(mes);
 
   useEffect(() => {
     followingId();
@@ -115,8 +115,8 @@ const Chat = () => {
       </div>
       <div className="DM">
         <div className="users-chat">
+          <div>{mes}</div>
           <div className="chatMain">
-            
             {following
               ? following.map((element, index) => {
                   return (
