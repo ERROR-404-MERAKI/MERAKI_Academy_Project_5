@@ -5,7 +5,7 @@ const createMessage = (req, res) => {
   const user_id = req.token.userId;
   const { message, room } = req.body;
   const query = `SELECT * FROM messages WHERE (user_id = ? AND persion_id=?)OR(persion_id=? AND user_id = ?  ) AND is_deleted=0`;
-  const data = [user_id, persion_id, persion_id, user_id];
+  const data = [user_id, persion_id, user_id, persion_id];
   console.log(query);
   connection.query(query, data, (err, result) => {
     console.log(result,"get mess");

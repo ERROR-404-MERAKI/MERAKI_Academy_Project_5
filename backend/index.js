@@ -19,7 +19,6 @@ const bookmarkRouter = require("./routes/bookmark");
 const messageRouter = require("./routes/message");
 const roomRouter = require("./routes/room");
 
-
 //import middleware
 app.use(cors());
 //built-in middleware
@@ -35,7 +34,6 @@ app.use("/comment", commentRouter);
 app.use("/bookmark", bookmarkRouter);
 app.use("/message", messageRouter);
 app.use("/room", roomRouter);
-
 
 //basic server
 
@@ -63,14 +61,19 @@ io.on("connection", (socket) => {
       return (element.id = data.idPerson);
     });
 
-    console.log(newArray,"hasan");
+    console.log(newArray, "hasan");
     socket.to(newArray.socketId).emit("Get_Message", data);
   });
-  console.log(array,"areej");
+  console.log(array, "areej");
 
-
+  socket.on("JOIN_ROOM", (data) => {
+    console.log("roomId ",data);
+    socket.join(data);
+  });
 
   socket.on("SEND_MESSAGE", (data) => {
+    console.log("SEND: ",data);
+
     socket.to(data.room).emit("RECEIVE_MESSAGE", data.content);
   });
 

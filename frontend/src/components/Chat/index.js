@@ -68,18 +68,24 @@ const Chat = () => {
       });
   };
 
+  //  first step
+
   const joinRoom = () => {
-    socket.emit("JOIN_ROOM", room);
+    axios
+    
+
+    socket.emit("JOIN_ROOM", 1);
   };
 
   const sendMessage = () => {
     const messageContent = {
-      room,
+      room:1,
       content: {
-        sender: userName,
+        sender: "hassan",
         message: message,
       },
     };
+    console.log(message, "mossa");
     socket.emit("SEND_MESSAGE", messageContent);
 
     setMessageList([...messageList, messageContent.content]);
@@ -88,7 +94,7 @@ const Chat = () => {
 
   const followingId = () => {
     axios
-      .get(`http://localhost:5000/user/following`, {
+      .get(`http://localhost:5000/user/followingProfile/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -99,44 +105,56 @@ const Chat = () => {
       .catch((err) => {});
   };
 
+  //  Not needed
   const send = () => {
-    giveRoom();
+    // sendMessage();
 
-    socket.emit("reciveMessage", {
-      message: message,
-      idPerson: id,
-    });
+    // socket.emit("reciveMessage", {
+    //   message: message,
+    //   idPerson: id,
+    // });
 
-    socket.on("RECEIVE_MESSAGE", (data) => {
-      setMessageList([...messageList, data]);
-    });
+    // socket.on("RECEIVE_MESSAGE", (data) => {
+    //   setMessageList([...messageList, data]);
+    // });
   };
 
+  //  not needed
   socket.on("Get_Message", (data) => {
     setMes([...mes, data.message]);
   });
+
   console.log(mes);
 
-  useEffect(() => {
-    joinRoom();
-
+  useEffect(()=>{
     followingId();
+  },[])
+
+  useEffect(() => {
+    // joinRoom();
+
     socket.on("RECEIVE_MESSAGE", (data) => {
+    console.log("RECEIVE: ",data);
+
       setMessageList([...messageList, data]);
     });
 
-    socket.on("connect", () => {
-      socket.emit("info", {
-        socketId: socket.id,
-        id: myUserid,
-      });
-    });
+    // -> [{sender,message}] -> filter[sender.id] = login ? [senderMessages]
 
-    getMessages();
+    //  Not needed
+    // socket.on("connect", () => {
+    //   console.log("CONNECTEDDDD 1000");
+    //   socket.emit("info", {
+    //     socketId: socket.id,
+    //     id: myUserid,
+    //   });
+    // });
+
     // getMessages();
-  }, []);
+    // getMessages();
+  });
 
-console.log(messageList);
+  console.log(messageList, "hassan");
 
   return (
     <div className="chat">
@@ -154,6 +172,9 @@ console.log(messageList);
                       <Link
                         className="linkName"
                         to={`/chat/${element.person_id}`}
+                        onClick={()=>{
+                          joinRoom()
+                        }}
                       >{`${element.firstName} ${element.lastName}`}</Link>
                     </div>
                   );
@@ -164,11 +185,17 @@ console.log(messageList);
         <div className="chat-box">
           <div className="topGetMes">
             <div>
-              <div>weeno</div>
-              {mes
+              {/* {mes
                 ? mes.map((element, index) => {
                     console.log(element);
-                    return <div className="fMes">{element}</div>;
+                    return <div className="SMes">{element}</div>;
+                  })
+                : []} */}
+              <div>weeno</div>
+              {messageList
+                ? messageList.map((element, index) => {
+                    console.log(element);
+                    return <div className="fMes">{element.message}</div>;
                   })
                 : []}
             </div>
@@ -211,7 +238,7 @@ console.log(messageList);
             />
             <button
               onClick={() => {
-                send();
+                sendMessage();
               }}
             >
               Send
