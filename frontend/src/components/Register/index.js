@@ -10,14 +10,14 @@ const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState(0);
-  const [ProfilePicture, setProfilePicture] = useState(
-    "https://www.business2community.com/social-media-articles/importance-profile-picture-career-01899604"
-  );
+  const [ProfilePicture, setProfilePicture] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const roleId = "1";
   const [message, setMessage] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(
+    "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+  );
   const [url, setUrl] = useState("");
 
   const history = useNavigate();
