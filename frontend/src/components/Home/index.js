@@ -4,14 +4,14 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePosts, setPosts } from "../../redux/reducers/posts";
 import { setUser } from "../../redux/reducers/auth";
-
+import Picker from "emoji-picker-react";
 import { addBookmark, deleteBookmark } from "../../redux/reducers/bookmark";
 import { addstorys, setStorys } from "../../redux/reducers/story";
 import Navbar from "../Navbar";
 import { addComment, setComments } from "../../redux/reducers/comment";
 import { BsHeart } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
-
+import InputEmoji from "react-input-emoji";
 //==================Home =====================
 const Home = () => {
   const dispatch = useDispatch();
@@ -21,12 +21,14 @@ const Home = () => {
   const [comment, setComment] = useState("");
   const [show, setShow] = useState(false);
   const [showStory, setShowStory] = useState(false);
-
+  const [chosenEmoji, setChosenEmoji] = useState(null);
   const [love, setLove] = useState(false);
   const [status_b, setStatus_b] = useState(false);
   const [showBook, setShowBook] = useState(0);
   const [removeBook, setRemoveBook] = useState(0);
   const [showButton, setShowButton] = useState(false);
+  const [showEmoji, setshowEmoji] = useState(false);
+  const [showEmoji2, setshowEmoji2] = useState(false);
 
   const { token, posts, storys, comments, user } = useSelector((state) => {
     return {
@@ -38,6 +40,10 @@ const Home = () => {
       user: state.auth.user,
     };
   });
+
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject);
+  };
 
   let numberOfPage = localStorage.getItem("NOP") || 1;
 
@@ -288,7 +294,7 @@ const Home = () => {
                   ? storys.map((element, index) => {
                       return (
                         <div key={index}>
-                          <img
+                          <img alt="art"
                             onClick={() => {
                               setShowStory(true);
                             }}
@@ -303,7 +309,17 @@ const Home = () => {
                             }}
                           >
                             <div className="sss">
-                              <img className="img-c" src={element.story} />
+                              <div className="close">
+                                <button
+                                  className="closeb"
+                                  onClick={() => {
+                                    setShowStory(false);
+                                  }}
+                                >
+                                  X
+                                </button>
+                              </div>
+                              <img alt="art" className="img_s" src={element.story} />
                             </div>
                           </div>
                         </div>
@@ -372,14 +388,19 @@ const Home = () => {
                     return (
                       <div className="map_post" key={index}>
                         <div className="headerName">
-                          <img
+                          <img alt="art"
                             className="imgpoUs"
                             src={element.ProfilePicture}
                           />{" "}
                           {element.firstName} {element.lastName}
                         </div>
-                        <div className="img_main">
-                          <img id="img_post" src={element.media} />
+                        <div
+                          className="img_main"
+                          onClick={() => {
+                            setshowEmoji2(false);
+                          }}
+                        >
+                          <img alt="art" id="img_post" src={element.media} />
                         </div>
                         <div className="icon_main">
                           <div className="headicon">
@@ -463,6 +484,27 @@ const Home = () => {
                                 setComment(e.target.value);
                               }}
                             ></input>
+                            <button
+                              onClick={() => {
+                                setshowEmoji2(true);
+                              }}
+                              className="bEmoji"
+                            >
+                              <svg width="16" height="16" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
+                              </svg>
+                            </button>
+                            <div
+                              className="emojiPopup2"
+                              style={{
+                                display: showEmoji2 ? "block" : "none",
+                              }}
+                            >
+                              <div>
+                                <Picker onEmojiClick={onEmojiClick} />
+                              </div>
+                            </div>
                             <p
                               className="cruser bbllue"
                               onClick={() => {
@@ -483,7 +525,7 @@ const Home = () => {
                             <div className="main_comment">
                               {/* ========img-comment======== */}
                               <div className="right_s">
-                                <img className="img-c" src={element.media} />
+                                <img alt="art" className="img-c" src={element.media} />
                               </div>
                               <div className="left_s">
                                 <div className="close">
@@ -500,7 +542,7 @@ const Home = () => {
                                 {/* ====================== */}
 
                                 <div className="fl_co">
-                                  <img
+                                  <img alt="art"
                                     className="imgpoUs"
                                     src={element.ProfilePicture}
                                   />
@@ -512,7 +554,12 @@ const Home = () => {
                                 </div>
                                 <br />
 
-                                <div className="comment_section">
+                                <div
+                                  className="comment_section"
+                                  onClick={() => {
+                                    setshowEmoji(false);
+                                  }}
+                                >
                                   {comments &&
                                     comments.map((e, i) => {
                                       return (
@@ -520,7 +567,7 @@ const Home = () => {
                                           {element.id === e.post_id ? (
                                             <div className="main_co">
                                               <div className="fl_co1">
-                                                <img
+                                                <img alt="art"
                                                   className="imgpoUs"
                                                   src={e.ProfilePicture}
                                                 />
@@ -553,6 +600,31 @@ const Home = () => {
                                       setComment(e.target.value);
                                     }}
                                   />
+                                  <button
+                                    onClick={() => {
+                                      setshowEmoji(true);
+                                    }}
+                                    className="bEmoji"
+                                  >
+                                    <svg
+                                      width="16"
+                                      height="16"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                      <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z" />
+                                    </svg>
+                                  </button>
+                                  <div
+                                    className="emojiPopup"
+                                    style={{
+                                      display: showEmoji ? "block" : "none",
+                                    }}
+                                  >
+                                    <div>
+                                      <Picker onEmojiClick={onEmojiClick} />
+                                    </div>
+                                  </div>
                                   <button
                                     className="buttonAdd"
                                     onClick={(e) => {
@@ -605,7 +677,7 @@ const Home = () => {
                 <div className="headerName1" key={i}>
                   <div className="onnne">
                     {" "}
-                    <img className="imgpoUs" src={u.ProfilePicture} />
+                    <img alt="art" className="imgpoUs" src={u.ProfilePicture} />
                   </div>
                   <div className="secconnd">
                     {" "}
