@@ -229,7 +229,29 @@ border-bottom: #f2f3f5;
     margin-top: 15px;
     gap: 5px;
     margin-left: 5px;
+   
   }
+  .main_sss{
+    height: 100%;
+    overflow-y: scroll;
+  }
+  .main_sss::-webkit-scrollbar-track {
+    border: 1px solid #cfcfcf;
+    padding: 2px 0;
+    background-color: #cfcfcf;
+  }
+  .main_sss::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .main_sss::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #cfcfcf;
+    border: 1px solid #cfcfcf;
+  }
+  
+  
   .p_pic {
     border-radius: 9999px;
     width: 30px;
