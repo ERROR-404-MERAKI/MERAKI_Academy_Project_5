@@ -326,9 +326,10 @@ const Navbar = () => {
           <h3>Search results</h3>
         </div>
         {names ? (
-          <>
+          <div className="main_sss">
             {names.map((user, index) => {
               return (
+                
                 <div key={index} className="search_user">
                   <div>
                     <img className="p_pic" src={user.ProfilePicture} />
@@ -351,7 +352,7 @@ const Navbar = () => {
                 </div>
               );
             })}{" "}
-          </>
+          </div>
         ) : (
           []
         )}

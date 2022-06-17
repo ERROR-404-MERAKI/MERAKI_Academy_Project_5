@@ -71,7 +71,7 @@ const Chat = () => {
   //  first step
 
   const joinRoom = () => {
-    axios
+  
     
 
     socket.emit("JOIN_ROOM", 1);
