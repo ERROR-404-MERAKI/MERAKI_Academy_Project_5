@@ -62,7 +62,7 @@ Now the App is ready ..
 
 
 
-<img width=200px height=200px src="https://ibb.co/QpX2H0W" alt="Register"></a>
+<img width=200px height=200px src="https://i.ibb.co/XjVh5Hn/register.jpg" alt="Register"></a>
 </p>
 
 
@@ -70,7 +70,7 @@ Now the App is ready ..
 - you must Login to the add
 
 
-## <img width=200px height=200px src="https://ibb.co/g3vfFhy" alt="Login"></a>
+## <img width=200px height=200px src="https://i.ibb.co/CzJYsDB/Login.jpg" alt="Login"></a>
 </p>
 
 
@@ -78,7 +78,7 @@ Now the App is ready ..
 - You can add Tweet from here
 
 
-<img width=200px height=200px src="https://ibb.co/vYSqZp2" alt="Instagram Profile"></a>
+<img width=200px height=200px src="https://i.ibb.co/sHZRynL/Tweet.jpg" alt="Instagram Profile"></a>
 </p>
 
 ## ⛏️ Built Using <a name = "built_using"></a>
