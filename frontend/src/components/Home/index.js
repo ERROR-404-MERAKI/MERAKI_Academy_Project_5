@@ -72,7 +72,7 @@ const Home = () => {
   //================git All User=========
   const getAllUser = () => {
     axios
-      .get(`http://localhost:5000/register?page=1`)
+      .get(`http://localhost:5000/register?page=2`)
       .then((result) => {
         dispatch(setUser(result.data.result));
       })
@@ -681,8 +681,8 @@ const Home = () => {
                   </div>
                   <div className="secconnd">
                     {" "}
-                    <h6>{u.firstName}</h6>
-                    <h6>{u.lastName}</h6>
+                    <h6>{u.firstName }</h6> 
+                    <h6 className="haa">{u.lastName}</h6>
                   </div>
                   <div className="ff410">
                     {" "}
