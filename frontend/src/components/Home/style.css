@@ -418,6 +418,10 @@ justify-content: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  
+}
+.haa{
+  margin-left: 5px;
 }
 .headerName{
   display: flex;
