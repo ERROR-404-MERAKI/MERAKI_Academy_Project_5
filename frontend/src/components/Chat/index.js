@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useSyncExternalStore } from "react";
 import "./style.css";
 import { io } from "socket.io-client";
 import Navbar from "../Navbar";
@@ -25,11 +25,33 @@ const Chat = () => {
   const [message, setMessage] = useState("");
   const [room, setRoom] = useState("");
   const [userName, setUserName] = useState("");
+  const [img, setImg] = useState("");
+  const [name, setName] = useState("");
+  const [media, setMedia] = useState("");
+
   const [messageList, setMessageList] = useState("");
   const [mes, setMes] = useState("");
   const [following, setFollowing] = useState(0);
 
   // get message
+
+  const userInfo = () => {
+    axios
+      .get(`http://localhost:5000/user/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((result) => {
+        if (result.data.success) {
+          setMedia(result.data.user[0].ProfilePicture);
+          setName(result.data.user[0].firstName);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getMessages = () => {
     axios
@@ -40,6 +62,7 @@ const Chat = () => {
       })
       .then((result) => {
         setMessageList(result.data.message);
+        console.log(result);
       })
       .catch((err) => {});
   };
@@ -75,7 +98,6 @@ const Chat = () => {
       },
     };
     socket.emit("SEND_MESSAGE", messageContent);
-
     setMessageList([...messageList, messageContent.content]);
     setMessage("");
   };
@@ -104,6 +126,7 @@ const Chat = () => {
 
   useEffect(() => {
     // joinRoom();
+    userInfo();
 
     socket.on("RECEIVE_MESSAGE", (data) => {
       setMes([...mes, data]);
@@ -128,6 +151,8 @@ const Chat = () => {
                         to={`/chat/${element.person_id}`}
                         onClick={() => {
                           joinRoom();
+                          setUserName(element.firstName);
+                          setImg(element.ProfilePicture);
                         }}
                       >{`${element.firstName} ${element.lastName}`}</Link>
                     </div>
@@ -143,8 +168,13 @@ const Chat = () => {
                 {mes
                   ? mes.map((element, index) => {
                       return (
-                        <div className="SMes">
-                          <img src={element} /> <p>{element.message}</p>
+                        <div className="flexImg">
+                          <img className="imgchat" src={img} />{" "}
+                          <div key={index} className="SMes">
+                            <p>
+                              {userName} : {element.message}
+                            </p>
+                          </div>
                         </div>
                       );
                     })
@@ -154,8 +184,13 @@ const Chat = () => {
                 {messageList
                   ? messageList.map((element, index) => {
                       return (
-                        <div className="fMes">
-                          <img src={element} /> <p>{element.message}</p>
+                        <div className="flexImg1">
+                          <div key={index} className="fMes">
+                            <p>
+                              {element.message} : {name}
+                            </p>
+                          </div>
+                          <img className="imgchat" src={media} />{" "}
                         </div>
                       );
                     })
@@ -171,6 +206,7 @@ const Chat = () => {
                 onChange={(e) => setMessage(e.target.value)}
               />
               <button
+                className="sendButton"
                 onClick={() => {
                   sendMessage();
                 }}
