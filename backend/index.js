@@ -53,6 +53,15 @@ let array = [];
 let arrayToperson = [];
 
 io.on("connection", (socket) => {
+  socket.on("JOIN_ROOM", (data) => {
+    console.log("roomId ", data);
+    socket.join(data);
+  });
+  socket.on("SEND_MESSAGE", (data) => {
+    console.log("SEND: ", data);
+
+    socket.to(data.room).emit("RECEIVE_MESSAGE", data.content);
+  });
   socket.on("info", (data) => {
     array.push(data);
   });
@@ -65,17 +74,6 @@ io.on("connection", (socket) => {
     socket.to(newArray.socketId).emit("Get_Message", data);
   });
   console.log(array, "areej");
-
-  socket.on("JOIN_ROOM", (data) => {
-    console.log("roomId ",data);
-    socket.join(data);
-  });
-
-  socket.on("SEND_MESSAGE", (data) => {
-    console.log("SEND: ",data);
-
-    socket.to(data.room).emit("RECEIVE_MESSAGE", data.content);
-  });
 
   socket.on("disconnect", () => {
     array = array.filter((element) => {
